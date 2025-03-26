@@ -1,20 +1,81 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from 'expo-status-bar'
+import React, { useEffect, useState } from 'react'
+import { Dimensions } from 'react-native'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
+import { Ionicons } from '@expo/vector-icons';
+import LandingPage from './Component/LandingPage'
+import LoginPage from './Component/LoginPage'
+import EmailLoginPage from './Component/EmailLoginPage'
+import HomePage from './Component/HomePage'
 
+
+const Stack = createStackNavigator();
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+  const [screen, setScreen] = useState(Dimensions.get('window'))
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+  useEffect(() => {
+    const onChange = ({ window }) => {
+      setScreen(window)
+    }
+    const eventremove = Dimensions.addEventListener('change', onChange)
+    return () => {
+      eventremove?.remove()
+    }
+  }, [])
+
+  return (
+    <>
+      <StatusBar style='auto'/>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen 
+            name="landing" 
+            component={LandingPage} 
+            options={{
+              title:false,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 }
+            }}
+          />
+          <Stack.Screen 
+            name="login" 
+            component={LoginPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => null,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('landing')} style={{ marginRight: 20 }}>
+                  <Ionicons name="close" size={28} color="black" />
+                </TouchableOpacity>
+              ),
+            })} 
+          />
+          <Stack.Screen 
+            name="email" 
+            component={EmailLoginPage} 
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => null,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('landing')} style={{ marginRight: 20 }}>
+                  <Ionicons name="close" size={28} color="black" />
+                </TouchableOpacity>
+              ),
+            })}
+          />
+          <Stack.Screen 
+            name="home" 
+            component={HomePage} 
+            options={{
+              title:false,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 }
+            }}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </>
+  )
+}

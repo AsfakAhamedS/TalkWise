@@ -1,0 +1,1049 @@
+[
+    {
+        "section": "Beginner",
+        "levels": [
+            {
+                "level" : 1,
+                "lesson_title": "Basic Greetings & Introductions",
+                "description": "Learn how to greet people and introduce yourself in English.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Hello! Welcome to your first spoken English lesson. Let’s start with greetings. When you meet someone, how do you say hello?",
+                        "expected_responses": ["Hi", "Hello", "Hey", "Good morning"],
+                        "correct_response": "Great job! Yes, 'Hi' and 'Hello' are common greetings. Now, let’s continue!",
+                        "fallback_response": "No worries! You can say 'Hi,' 'Hello,' or 'Hey.' Now, try saying one of these back to me!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Hi! How are you?",
+                        "expected_responses": ["I’m good", "I’m fine", "I’m okay", "Not bad"],
+                        "correct_response": "Well done! 'I’m fine, thank you' is a polite response.",
+                        "fallback_response": "If someone asks 'How are you?' you can say 'I’m good!' or 'I’m fine, thank you!' Now, try saying one of these!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Let’s introduce ourselves! My name is Alex. What’s your name?",
+                        "expected_responses": ["My name is [Learner’s Name]"],
+                        "correct_response": "Nice to meet you, [Learner’s Name]! You can also say, 'Nice to meet you too!'",
+                        "fallback_response": "If you’re unsure, you can say, 'My name is Alex.' Go ahead and try it!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Where are you from?",
+                        "expected_responses": ["I’m from [Country]"],
+                        "correct_response": "That’s great! 'I’m from [Country]' is the correct way to answer.",
+                        "fallback_response": "If you’re not sure, here’s an example: 'I’m from India!' Now, try answering with your own country!"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Now, let’s put everything together! Imagine we just met for the first time. I’ll start: Hello! My name is Alex. What’s your name?",
+                        "expected_responses": ["My name is [Learner's Name]"],
+                        "correct_response": "Perfect! Now, you can use this in real conversations!",
+                        "fallback_response": "No worries! You can say, 'My name is Alex.' Try repeating that!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "How do you greet someone in the morning?",
+                        "options": ["Goodbye", "Nice to meet you", "Good morning", "See you later"],
+                        "correct_answer": "Good morning",
+                        "correct_response": "Correct! 'Good morning' is used before noon."
+                    },
+                    {
+                        "question": "How do you introduce yourself?",
+                        "options": ["Where do you live?", "How are you?", "What is your name?", "What do you do?"],
+                        "correct_answer": "What is your name?",
+                        "correct_response": "Nice job! 'What is your name?' is the right way to ask someone’s name."
+                    },
+                    {
+                        "question": "What do you say when meeting someone for the first time?",
+                        "options": ["Nice to meet you", "Goodbye", "See you later", "Thank you"],
+                        "correct_answer": "Nice to meet you",
+                        "correct_response": "Yes! 'Nice to meet you' is a polite way to greet a new person."
+                    },
+                    {
+                        "question": "How do you ask where someone is from?",
+                        "options": ["I am from Canada", "I am a doctor", "Good morning!", "Where are you from?"],
+                        "correct_answer": "Where are you from?",
+                        "correct_response": "That's correct! 'Where are you from?' is the right question."
+                    },
+                    {
+                        "question": "Which of the following is an informal greeting?",
+                        "options": ["Good morning", "Good afternoon", "Hi", "Good evening"],
+                        "correct_answer": "Hi",
+                        "correct_response": "Great! 'Hi' is a casual way to greet friends or family."
+                    }
+                ]
+            },
+            {
+                "level" : 2,
+                "lesson_title": "Introducing Yourself",
+                "description": "Learn how to introduce yourself and ask for someone's name in English.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Hi! What’s your name?",
+                        "expected_responses": ["My name is [Learner’s Name]"],
+                        "correct_response": "Nice to meet you, [Learner’s Name]! You can also say, 'Nice to meet you too!'",
+                        "fallback_response": "If you’re unsure, you can say, 'My name is Alex.' Go ahead and try it!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Where are you from?",
+                        "expected_responses": ["I’m from [Country]"],
+                        "correct_response": "That’s great! 'I’m from [Country]' is the correct way to answer.",
+                        "fallback_response": "If you’re not sure, here’s an example: 'I’m from India!' Now, try answering with your own country!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "It’s nice to meet new people! What do you do?",
+                        "expected_responses": ["I’m a student", "I’m a teacher", "I work as a [Profession]"],
+                        "correct_response": "Great! That’s the right way to talk about your job or studies.",
+                        "fallback_response": "You can say, 'I’m a student' or 'I work as a teacher.' Now, try it!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "How old are you?",
+                        "expected_responses": ["I’m [Age] years old"],
+                        "correct_response": "Nice! That’s the correct way to answer.",
+                        "fallback_response": "If you’re unsure, here’s an example: 'I’m 25 years old.' Try saying your age!"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Now, let’s practice! Imagine we just met. Start by introducing yourself!",
+                        "expected_responses": ["Hi! My name is [Learner’s Name]. I’m from [Country]."],
+                        "correct_response": "Perfect! Now, you can use this in real conversations!",
+                        "fallback_response": "If you’re stuck, try saying: 'Hi! My name is Alex. I’m from Canada.' Now, your turn!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "What do you say when you meet someone for the first time?",
+                        "options": ["Goodbye", "Nice to meet you", "See you later", "Thank you"],
+                        "correct_answer": "Nice to meet you",
+                        "correct_response": "Correct! 'Nice to meet you' is a polite introduction."
+                    },
+                    {
+                        "question": "How do you ask someone’s name?",
+                        "options": ["Where do you live?", "How are you?", "What is your name?", "What do you do?"],
+                        "correct_answer": "What is your name?",
+                        "correct_response": "Great! 'What is your name?' is the right way to ask."
+                    },
+                    {
+                        "question": "How do you respond if someone asks 'Where are you from?'",
+                        "options": ["I am from Canada", "I am a doctor", "Good morning!", "What’s your name?"],
+                        "correct_answer": "I am from Canada",
+                        "correct_response": "Correct! You should respond with 'I am from [your country].'"
+                    },
+                    {
+                        "question": "Which of these is NOT an introduction?",
+                        "options": ["My name is John", "Nice to meet you", "Where are you from?", "I like pizza"],
+                        "correct_answer": "I like pizza",
+                        "correct_response": "That’s right! 'I like pizza' is not an introduction."
+                    }
+                ]
+
+            },
+            {
+                "level" : 3,
+                "lesson_title": "Asking About Someone’s Origin",
+                "description": "Learn how to ask where someone is from and respond.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Hello! My name is Sophia. What’s your name?",
+                        "expected_responses": ["My name is [Learner’s Name]"],
+                        "correct_response": "Nice to meet you, [Learner’s Name]!",
+                        "fallback_response": "You can say, 'My name is Alex.' Try it!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Nice to meet you too! Where are you from?",
+                        "expected_responses": ["I’m from [Country]"],
+                        "correct_response": "That’s great! 'I’m from [Country]' is the correct way to answer.",
+                        "fallback_response": "You can say, 'I’m from Spain.' Try answering with your own country!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "I’m from Canada. And you?",
+                        "expected_responses": ["I’m from [Country]"],
+                        "correct_response": "Nice! That’s a great way to keep the conversation going.",
+                        "fallback_response": "Try saying: 'I’m from India.' Now, your turn!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "How do you ask where someone is from?",
+                        "options": ["Where are you from?", "What’s your name?", "How old are you?", "Where do you live?"],
+                        "correct_answer": "Where are you from?",
+                        "correct_response": "Correct! 'Where are you from?' is the right question."
+                    },
+                    {
+                        "question": "How do you respond if someone asks 'Where are you from?'",
+                        "options": ["I’m from Canada", "I am a teacher", "I live in a house", "I like coffee"],
+                        "correct_answer": "I’m from Canada",
+                        "correct_response": "Correct! You should respond with 'I’m from [your country].'"
+                    }
+                ]
+
+            },
+            {
+                "level": 4,
+                "lesson_title": "Small Talk with a New Friend",
+                "description": "Learn how to make small talk and ask about someone's job.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Good morning!",
+                        "expected_responses": ["Good morning!", "Morning!"],
+                        "correct_response": "Good morning! That’s a great way to start a conversation.",
+                        "fallback_response": "You can say 'Good morning!' Try it!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "How are you today?",
+                        "expected_responses": ["I’m fine", "I’m good", "I’m okay"],
+                        "correct_response": "That’s great! It’s always good to check on someone’s well-being.",
+                        "fallback_response": "You can say, 'I’m fine, thank you!' Try answering!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "By the way, where do you work?",
+                        "expected_responses": ["I work at [Company]", "I am a [Job Title]"],
+                        "correct_response": "Nice! That’s how you talk about your job.",
+                        "fallback_response": "You can say, 'I work at a bank.' Now, try answering with your job!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which of these is a polite way to start a small talk conversation?",
+                        "options": ["What’s your problem?", "How are you?", "What’s your name?", "See you later"],
+                        "correct_answer": "How are you?",
+                        "correct_response": "Correct! 'How are you?' is a common way to start a conversation."
+                    },
+                    {
+                        "question": "How do you ask about someone’s job?",
+                        "options": ["Where do you work?", "What’s your name?", "Where are you from?", "How old are you?"],
+                        "correct_answer": "Where do you work?",
+                        "correct_response": "Nice! 'Where do you work?' is the correct question."
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "lesson_title": "Extended Conversation at a Café",
+                "description": "Learn how to have a longer conversation by asking about preferences.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Hi there! Is this seat taken?",
+                        "expected_responses": ["No, please go ahead", "No, it’s free"],
+                        "correct_response": "Thanks! That’s a polite response.",
+                        "fallback_response": "You can say, 'No, please go ahead!' Try it!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "By the way, my name is James. What’s your name?",
+                        "expected_responses": ["My name is [Learner’s Name]"],
+                        "correct_response": "Nice to meet you, [Learner’s Name]!",
+                        "fallback_response": "You can say, 'My name is Alex.' Try it!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Do you come here often?",
+                        "expected_responses": ["Yes, I come here a lot", "No, it’s my first time"],
+                        "correct_response": "That’s great! Talking about favorite places helps build connections.",
+                        "fallback_response": "You can say, 'Yes, I come here a lot.' Try it!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "What do you usually order?",
+                        "expected_responses": ["I usually order a cappuccino", "I like black coffee"],
+                        "correct_response": "That’s nice! Talking about preferences makes conversations more engaging.",
+                        "fallback_response": "You can say, 'I usually order tea.' Now, try it!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which is a polite way to ask if a seat is free?",
+                        "options": ["Is this seat taken?", "Move over!", "Sit somewhere else!", "Get up!"],
+                        "correct_answer": "Is this seat taken?",
+                        "correct_response": "Correct! 'Is this seat taken?' is a polite question."
+                    },
+                    {
+                        "question": "How do you ask about someone’s favorite drink?",
+                        "options": ["What do you usually order?", "Where do you work?", "How old are you?", "What’s your name?"],
+                        "correct_answer": "What do you usually order?",
+                        "correct_response": "Nice! 'What do you usually order?' is the right question."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "section": "Intermediate",
+        "levels": [
+            {
+                "level" : 1,
+                "lesson_title": "Past, Present & Future Tenses",
+                "description": "Learn how to talk about past, present, and future actions correctly.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s talk about the past! What did you do yesterday?",
+                        "expected_responses": ["I went to the park", "I studied English", "I watched a movie"],
+                        "correct_response": "Great! In the past, we use verbs like 'went' or 'watched.'",
+                        "fallback_response": "Try saying, 'I watched a movie yesterday.' Now, your turn!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Now, let’s talk about the present! What are you doing right now?",
+                        "expected_responses": ["I am learning English", "I am studying", "I am reading"],
+                        "correct_response": "Well done! We use 'am' or 'is' with -ing for present continuous tense.",
+                        "fallback_response": "Try saying, 'I am learning English.' Now, give it a try!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Let’s talk about the future! What will you do tomorrow?",
+                        "expected_responses": ["I will go to work", "I will meet my friends", "I will study"],
+                        "correct_response": "Perfect! 'Will' is used to talk about future plans.",
+                        "fallback_response": "You can say, 'I will study tomorrow.' Try responding!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Can you make a sentence using past, present, and future tense?",
+                        "expected_responses": ["Yesterday I studied, today I am learning, tomorrow I will practice"],
+                        "correct_response": "Excellent! Mixing tenses helps you speak naturally.",
+                        "fallback_response": "Try saying, 'Yesterday I studied, today I am learning, tomorrow I will practice.'"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Let’s review! Tell me something you did yesterday, what you are doing now, and your plan for tomorrow.",
+                        "expected_responses": ["Yesterday I went shopping, now I am talking to you, tomorrow I will work"],
+                        "correct_response": "Awesome! You’ve used all three tenses correctly.",
+                        "fallback_response": "No problem! Try saying, 'Yesterday I went shopping, now I am talking to you, tomorrow I will work.'"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which sentence is in the past tense?",
+                        "options": ["I go to school", "I went to school", "I will go to school", "I am going to school"],
+                        "correct_answer": "I went to school",
+                        "correct_response": "Correct! 'Went' is the past form of 'go'."
+                    },
+                    {
+                        "question": "Which sentence is in the future tense?",
+                        "options": ["I eat breakfast", "I ate breakfast", "I will eat breakfast", "I am eating breakfast"],
+                        "correct_answer": "I will eat breakfast",
+                        "correct_response": "Nice! 'Will' shows the future tense."
+                    },
+                    {
+                        "question": "What is the present continuous form of 'He writes a book'?",
+                        "options": ["He wrote a book", "He writes a book", "He is writing a book", "He will write a book"],
+                        "correct_answer": "He is writing a book",
+                        "correct_response": "Correct! 'Is writing' shows something happening now."
+                    },
+                    {
+                        "question": "Which verb is in the past tense?",
+                        "options": ["Go", "Will go", "Going", "Went"],
+                        "correct_answer": "Went",
+                        "correct_response": "Yes! 'Went' is the past tense of 'go'."
+                    },
+                    {
+                        "question": "Which sentence is correct?",
+                        "options": ["I was go to the market", "I went to the market", "I will went to the market", "I am go to the market"],
+                        "correct_answer": "I went to the market",
+                        "correct_response": "Good job! 'Went' is the correct past tense."
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "lesson_title": "Making Comparisons",
+                "description": "Learn how to compare things using adjectives and adverbs.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s compare two things! Which one is bigger, an elephant or a cat?",
+                        "expected_responses": ["An elephant is bigger", "The elephant is bigger"],
+                        "correct_response": "Yes! 'Bigger' is the comparative form of 'big.'",
+                        "fallback_response": "Try saying, 'An elephant is bigger.' Now, your turn!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Which one is more expensive, a bicycle or a car?",
+                        "expected_responses": ["A car is more expensive"],
+                        "correct_response": "Correct! 'More expensive' compares two things.",
+                        "fallback_response": "Try saying, 'A car is more expensive.' Now, your turn!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Let’s try another! Which is faster, a plane or a train?",
+                        "expected_responses": ["A plane is faster"],
+                        "correct_response": "Yes! 'Faster' is the comparative form of 'fast.'",
+                        "fallback_response": "Try saying, 'A plane is faster.' Now, your turn!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Now, let’s compare yourself to your best friend. Who is taller?",
+                        "expected_responses": ["I am taller", "My friend is taller"],
+                        "correct_response": "Good answer! 'Taller' is used for comparing height.",
+                        "fallback_response": "Try saying, 'I am taller' or 'My friend is taller.'"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Let’s review! Give me one sentence comparing two things.",
+                        "expected_responses": ["A phone is smaller than a laptop", "Chocolate is sweeter than bread"],
+                        "correct_response": "Great! Using 'smaller' or 'sweeter' makes comparisons clear.",
+                        "fallback_response": "Try saying, 'A phone is smaller than a laptop.' Now, your turn!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which word is the comparative form of 'good'?",
+                        "options": ["Goodest", "More good", "Better", "Best"],
+                        "correct_answer": "Better",
+                        "correct_response": "Correct! 'Better' is the comparative form of 'good'."
+                    },
+                    {
+                        "question": "Which sentence is correct?",
+                        "options": ["This book is interestinger", "This book is more interesting", "This book is most interesting", "This book is interestingest"],
+                        "correct_answer": "This book is more interesting",
+                        "correct_response": "Good job! 'More interesting' is the correct comparative form."
+                    },
+                    {
+                        "question": "What is the superlative form of 'fast'?",
+                        "options": ["Fastest", "More fast", "Most fast", "Faster"],
+                        "correct_answer": "Fastest",
+                        "correct_response": "Yes! 'Fastest' is used when comparing more than two things."
+                    },
+                    {
+                        "question": "Which sentence compares two things?",
+                        "options": ["This is the best cake", "This cake is better than that one", "This cake is tasty", "This cake is good"],
+                        "correct_answer": "This cake is better than that one",
+                        "correct_response": "Nice! 'Better than' compares two things."
+                    },
+                    {
+                        "question": "Which is NOT a comparison word?",
+                        "options": ["Bigger", "Smaller", "Fastest", "Jump"],
+                        "correct_answer": "Jump",
+                        "correct_response": "Correct! 'Jump' is a verb, not a comparison."
+                    }
+                ]
+            },
+            {
+                "level": 3,
+                "lesson_title": "Modal Verbs - Can, Should, Must, Might",
+                "description": "Learn how to use modal verbs for ability, advice, obligation, and possibility.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s start with ability! What can you do well?",
+                        "expected_responses": ["I can swim", "I can cook", "I can play the guitar"],
+                        "correct_response": "Great! 'Can' is used to talk about abilities.",
+                        "fallback_response": "Try saying, 'I can swim' or 'I can cook.' Now, your turn!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Now, let’s give advice. What should you do if you feel sick?",
+                        "expected_responses": ["I should see a doctor", "I should rest", "I should drink water"],
+                        "correct_response": "Correct! 'Should' is used to give recommendations.",
+                        "fallback_response": "You can say, 'I should rest.' Try responding!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Let’s talk about obligations. What must you do at work or school?",
+                        "expected_responses": ["I must arrive on time", "I must do my homework"],
+                        "correct_response": "Yes! 'Must' is used for strong obligations.",
+                        "fallback_response": "Try saying, 'I must do my homework.' Now, your turn!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Now, let’s talk about possibilities. What might you do this weekend?",
+                        "expected_responses": ["I might go to the park", "I might visit my friends"],
+                        "correct_response": "Good answer! 'Might' is used for possibilities.",
+                        "fallback_response": "Try saying, 'I might visit my friends.' Your turn!"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Let’s review! Make a sentence using 'can', 'should', 'must', or 'might'.",
+                        "expected_responses": ["I can dance", "I should sleep early", "I must study", "I might go shopping"],
+                        "correct_response": "Excellent! You used modal verbs correctly.",
+                        "fallback_response": "Try saying, 'I must study.' Now, your turn!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which sentence uses 'can' correctly?",
+                        "options": ["I can to swim", "I can swim", "I can swimming", "I cans swim"],
+                        "correct_answer": "I can swim",
+                        "correct_response": "Correct! 'Can' is followed by a base verb."
+                    },
+                    {
+                        "question": "Which sentence gives advice?",
+                        "options": ["You must finish your homework", "You should drink more water", "You can run fast", "You might be late"],
+                        "correct_answer": "You should drink more water",
+                        "correct_response": "Yes! 'Should' is used for recommendations."
+                    },
+                    {
+                        "question": "Which sentence shows obligation?",
+                        "options": ["I might go to the gym", "I should eat healthy", "I must wear a seatbelt", "I can play the piano"],
+                        "correct_answer": "I must wear a seatbelt",
+                        "correct_response": "Correct! 'Must' expresses strong obligation."
+                    },
+                    {
+                        "question": "Which modal verb expresses possibility?",
+                        "options": ["Can", "Should", "Might", "Must"],
+                        "correct_answer": "Might",
+                        "correct_response": "Great! 'Might' is used for uncertainty."
+                    },
+                    {
+                        "question": "Which sentence is incorrect?",
+                        "options": ["I must to go now", "I must go now", "I should study", "I can dance"],
+                        "correct_answer": "I must to go now",
+                        "correct_response": "Good job! 'Must' is not followed by 'to'."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "lesson_title": "Idioms & Phrasal Verbs",
+                "description": "Learn common English expressions and how to use them in conversations.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Do you know what 'break the ice' means?",
+                        "expected_responses": ["It means to start a conversation"],
+                        "correct_response": "Yes! 'Break the ice' means to begin talking in a new situation.",
+                        "fallback_response": "Try saying, 'It means to start a conversation.' Now, your turn!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Let’s try another! What does 'give up' mean?",
+                        "expected_responses": ["It means to stop trying"],
+                        "correct_response": "Correct! 'Give up' means to stop doing something.",
+                        "fallback_response": "You can say, 'It means to stop trying.' Your turn!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "What does 'run into' mean?",
+                        "expected_responses": ["It means to meet someone unexpectedly"],
+                        "correct_response": "Yes! 'Run into' means to meet someone by chance.",
+                        "fallback_response": "Try saying, 'It means to meet someone unexpectedly.' Now, your turn!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Can you make a sentence using 'break the ice'?",
+                        "expected_responses": ["I broke the ice by telling a joke"],
+                        "correct_response": "Good job! That’s a great way to use it.",
+                        "fallback_response": "Try saying, 'I broke the ice by telling a joke.' Your turn!"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Let’s review! Use 'give up', 'run into', or 'break the ice' in a sentence.",
+                        "expected_responses": ["I never give up", "I ran into my friend", "I broke the ice at the party"],
+                        "correct_response": "Perfect! Idioms make conversations more natural.",
+                        "fallback_response": "Try saying, 'I never give up.' Now, your turn!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "What does 'break the ice' mean?",
+                        "options": ["To break something", "To make people comfortable", "To freeze water", "To stop talking"],
+                        "correct_answer": "To make people comfortable",
+                        "correct_response": "Correct! It means to start a conversation in a new situation."
+                    },
+                    {
+                        "question": "What does 'give up' mean?",
+                        "options": ["To stop trying", "To keep going", "To start a task", "To pass something"],
+                        "correct_answer": "To stop trying",
+                        "correct_response": "Great! 'Give up' means to quit."
+                    },
+                    {
+                        "question": "Which sentence uses 'run into' correctly?",
+                        "options": ["I run into a problem", "I ran into my old friend yesterday", "I run into the store", "I give up on running"],
+                        "correct_answer": "I ran into my old friend yesterday",
+                        "correct_response": "Correct! 'Run into' means to meet someone unexpectedly."
+                    },
+                    {
+                        "question": "What does 'give up' mean in this sentence? 'I gave up learning guitar.'",
+                        "options": ["To stop trying", "To continue learning", "To start playing", "To give a gift"],
+                        "correct_answer": "To stop trying",
+                        "correct_response": "Yes! 'Gave up' means stopped trying."
+                    },
+                    {
+                        "question": "Which phrasal verb means 'to continue'?",
+                        "options": ["Give up", "Keep going", "Run into", "Break the ice"],
+                        "correct_answer": "Keep going",
+                        "correct_response": "Nice! 'Keep going' means to continue."
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "section": "Advanced",
+        "levels": [
+            {
+                "level": 1,
+                "lesson_title": "Advanced Grammar & Complex Sentences",
+                "description": "Master conditionals, passive voice, and complex sentence structures.",
+                "conversations": [
+                {
+                    "step": 1,
+                    "ai_prompt": "Let’s begin! Can you make a sentence using ‘If I had known…’?",
+                    "expected_responses": ["If I had known [something], I would have [done something]."],
+                    "correct_response": "Great! This is a third conditional sentence.",
+                    "fallback_response": "Try: 'If I had known about the test, I would have studied.'"
+                },
+                {
+                    "step": 2,
+                    "ai_prompt": "Now, try a passive voice sentence: 'The book was written by…'",
+                    "expected_responses": ["The book was written by [author]."],
+                    "correct_response": "Nice! Passive voice emphasizes the action over the subject.",
+                    "fallback_response": "You can say, 'The book was written by J.K. Rowling.' Try one!"
+                },
+                {
+                    "step": 3,
+                    "ai_prompt": "Can you combine these two sentences into one? 'She was tired. She still finished her work.'",
+                    "expected_responses": ["Although she was tired, she still finished her work."],
+                    "correct_response": "Well done! Complex sentences improve fluency.",
+                    "fallback_response": "Try: 'Although she was tired, she still finished her work.'"
+                },
+                {
+                    "step": 4,
+                    "ai_prompt": "Create a sentence using ‘Not only... but also…’",
+                    "expected_responses": ["Not only [something] but also [something else]."],
+                    "correct_response": "Nice! This structure emphasizes two ideas.",
+                    "fallback_response": "You can say, 'Not only is he smart, but also hardworking.'"
+                },
+                {
+                    "step": 5,
+                    "ai_prompt": "Now, use a relative clause: 'The person who…'",
+                    "expected_responses": ["The person who [action] is [result]."],
+                    "correct_response": "Excellent! Relative clauses add extra information.",
+                    "fallback_response": "Try: 'The person who helped me was very kind.'"
+                }
+                ],
+                "quiz": [
+                    {
+                        "question": "Which sentence is correct?",
+                        "options": [
+                        "If I knew, I would have gone.",
+                        "If I had known, I would have gone.",
+                        "If I have known, I would go.",
+                        "If I would have known, I go."
+                        ],
+                        "correct_answer": "If I had known, I would have gone.",
+                        "correct_response": "Correct! The third conditional uses 'had known' + 'would have'."
+                    },
+                    {
+                        "question": "Which sentence is in passive voice?",
+                        "options": [
+                        "She wrote the book.",
+                        "The book was written by her.",
+                        "She is writing the book.",
+                        "She has written the book."
+                        ],
+                        "correct_answer": "The book was written by her.",
+                        "correct_response": "Correct! The action is more important than the subject."
+                    },
+                    {
+                        "question": "Which sentence is a complex sentence?",
+                        "options": [
+                        "She is tired.",
+                        "She finished her work.",
+                        "Although she was tired, she finished her work.",
+                        "She is tired, and she finished her work."
+                        ],
+                        "correct_answer": "Although she was tired, she finished her work.",
+                        "correct_response": "Right! A complex sentence has a dependent and independent clause."
+                    },
+                    {
+                        "question": "How do we correctly use ‘Not only... but also…’?",
+                        "options": [
+                        "Not only he is smart but also hardworking.",
+                        "Not only is he smart, but he is also hardworking.",
+                        "Not only smart, but also hardworking he is.",
+                        "He is not only smart, but also is hardworking."
+                        ],
+                        "correct_answer": "Not only is he smart, but he is also hardworking.",
+                        "correct_response": "Great! This structure requires subject-verb inversion."
+                    },
+                    {
+                        "question": "What does a relative clause do?",
+                        "options": [
+                        "Connects two sentences without changing meaning.",
+                        "Adds extra information about a noun.",
+                        "Shows a cause-and-effect relationship.",
+                        "Is used only in passive voice."
+                        ],
+                        "correct_answer": "Adds extra information about a noun.",
+                        "correct_response": "Correct! Relative clauses describe a noun in more detail."
+                    }
+                ]
+            },
+            {
+                "level": 2,
+                "lesson_title": "Business English & Professional Communication",
+                "description": "Learn formal email writing, presentations, and professional vocabulary.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s start! How would you formally begin an email to a manager?",
+                        "expected_responses": ["Dear [Name],"],
+                        "correct_response": "Great! 'Dear' is a polite and formal way to begin an email.",
+                        "fallback_response": "Try: 'Dear Mr. Smith,'."
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "How do you politely request information in an email?",
+                        "expected_responses": ["Could you please provide information on [topic]?"],
+                        "correct_response": "Well done! Politeness is key in business communication.",
+                        "fallback_response": "Try: 'Could you please provide details on the meeting?'"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "What phrase would you use to express appreciation at the end of an email?",
+                        "expected_responses": ["Thank you for your time.", "I appreciate your help."],
+                        "correct_response": "Nice! Appreciation makes your emails more professional.",
+                        "fallback_response": "Try: 'Thank you for your time and support.'"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "How do you politely decline a request?",
+                        "expected_responses": ["Unfortunately, I am unable to..."],
+                        "correct_response": "Great! Professional refusals should be polite.",
+                        "fallback_response": "Try: 'Unfortunately, I am unable to attend the meeting.'"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "What’s a professional way to schedule a meeting?",
+                        "expected_responses": ["Would it be possible to schedule a meeting on [date]?"],
+                        "correct_response": "Perfect! Clear and polite requests are essential in business.",
+                        "fallback_response": "Try: 'Would it be possible to schedule a meeting on Monday?'"
+                    }
+                    ],
+                    "quiz": [
+                        {
+                            "question": "Which is the most formal email greeting?",
+                            "options": ["Hey!", "Hello!", "Dear Mr. Smith,", "Hi there!"],
+                            "correct_answer": "Dear Mr. Smith,",
+                            "correct_response": "Correct! 'Dear' is the most formal greeting."
+                        },
+                        {
+                            "question": "How do you formally request information?",
+                            "options": [
+                            "Send me the details.",
+                            "Can you send me details?",
+                            "Could you please provide the details?",
+                            "I want details now."
+                            ],
+                            "correct_answer": "Could you please provide the details?",
+                            "correct_response": "Right! 'Could you please' is polite and professional."
+                        },
+                        {
+                            "question": "Which is a polite way to decline a request?",
+                            "options": [
+                            "No, I can’t.",
+                            "I’m busy.",
+                            "Unfortunately, I am unable to...",
+                            "I don’t want to."
+                            ],
+                            "correct_answer": "Unfortunately, I am unable to...",
+                            "correct_response": "Correct! This sounds professional and respectful."
+                        },
+                        {
+                            "question": "Which phrase is best for scheduling a meeting?",
+                            "options": [
+                            "Let’s meet.",
+                            "We need to talk.",
+                            "Would it be possible to schedule a meeting on [date]?",
+                            "I want to meet."
+                            ],
+                            "correct_answer": "Would it be possible to schedule a meeting on [date]?",
+                            "correct_response": "Great! This is polite and formal."
+                        },
+                        {
+                            "question": "How should you end a professional email?",
+                            "options": [
+                            "See ya!",
+                            "Talk later.",
+                            "Best regards, [Your Name]",
+                            "Bye!"
+                            ],
+                            "correct_answer": "Best regards, [Your Name]",
+                            "correct_response": "Correct! 'Best regards' is a professional closing."
+                        }
+                    ]
+            },
+            {
+                "level": 3,
+               "lesson_title": "Public Speaking & Debate",
+                "description": "Learn how to structure arguments and speak persuasively.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s begin! Can you tell me a topic you are passionate about?",
+                        "expected_responses": ["I am passionate about [topic]"],
+                        "correct_response": "Great! Passionate topics make for strong arguments.",
+                        "fallback_response": "You can say, 'I am passionate about climate change.' Try sharing yours!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "When debating, stating a clear opinion is key. Try: 'I strongly believe that...'",
+                        "expected_responses": ["I strongly believe that [opinion]"],
+                        "correct_response": "Nice! A strong opening makes a powerful argument.",
+                        "fallback_response": "You can say, 'I strongly believe that education should be free.' Try it!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Now, provide one reason to support your opinion.",
+                        "expected_responses": ["One reason is [reason]"],
+                        "correct_response": "Good! Supporting reasons make arguments convincing.",
+                        "fallback_response": "You can say, 'One reason is that it helps people get jobs.' Now, try your own!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Can you acknowledge an opposing view respectfully?",
+                        "expected_responses": ["Some people might say that... but I think..."],
+                        "correct_response": "Well done! Addressing opposing views strengthens your argument.",
+                        "fallback_response": "Try: 'Some people might say it’s too expensive, but I think it’s an investment.'"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Now, let’s conclude your argument. Try summarizing your points in one sentence.",
+                        "expected_responses": ["In conclusion, [summary]"],
+                        "correct_response": "Excellent! A strong conclusion leaves a lasting impression.",
+                        "fallback_response": "You can say, 'In conclusion, free education creates more opportunities.' Now, try!"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "What is a good way to start a debate speech?",
+                        "options": ["I think maybe...", "I strongly believe that...", "You are wrong!", "Well, um..."],
+                        "correct_answer": "I strongly believe that...",
+                        "correct_response": "Correct! A strong opening grabs attention."
+                    },
+                    {
+                        "question": "Why is it important to acknowledge an opposing view?",
+                        "options": ["To agree with your opponent", "To sound uncertain", "To strengthen your argument", "To avoid conflict"],
+                        "correct_answer": "To strengthen your argument",
+                        "correct_response": "Right! Acknowledging counterpoints shows confidence."
+                    },
+                    {
+                        "question": "Which phrase is best for concluding a speech?",
+                        "options": ["That’s all.", "In conclusion...", "Maybe I’m wrong, but...", "I don’t know..."],
+                        "correct_answer": "In conclusion...",
+                        "correct_response": "Correct! 'In conclusion' signals a strong ending."
+                    },
+                    {
+                        "question": "Which technique makes an argument more persuasive?",
+                        "options": ["Speaking quickly", "Using strong reasoning", "Ignoring other views", "Avoiding eye contact"],
+                        "correct_answer": "Using strong reasoning",
+                        "correct_response": "Yes! Strong reasoning makes arguments convincing."
+                    },
+                    {
+                        "question": "How can you sound more persuasive?",
+                        "options": ["Using confident language", "Saying 'um' a lot", "Talking in a monotone", "Avoiding eye contact"],
+                        "correct_answer": "Using confident language",
+                        "correct_response": "Great! Confidence makes your argument more persuasive."
+                    }
+                ]
+            },
+            {
+                "level": 4,
+                "lesson_title": "Understanding Accents & Fast Speech",
+                "description": "Improve your listening skills and understand different English accents.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Let’s start! Can you name two different English accents?",
+                        "expected_responses": ["British and American", "Australian and Canadian"],
+                        "correct_response": "Yes! There are many English accents worldwide.",
+                        "fallback_response": "You can say 'British and American.' Try it!"
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "British English uses words like 'lift' instead of 'elevator.' Can you name another difference?",
+                        "expected_responses": ["Flat vs. apartment", "Holiday vs. vacation"],
+                        "correct_response": "Right! British and American English have different vocabulary.",
+                        "fallback_response": "You can say, 'Holiday vs. vacation.' Try one!"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Listen to this fast sentence: 'Gonna grab some coffee.' What does 'gonna' mean?",
+                        "expected_responses": ["Going to"],
+                        "correct_response": "Correct! 'Gonna' is a common reduction in fast speech.",
+                        "fallback_response": "You can say, 'Going to.' Try it!"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Which is more natural? 'Did you eat?' or 'Didja eat?'",
+                        "expected_responses": ["Didja eat?"],
+                        "correct_response": "Great! Native speakers often blend words in fast speech.",
+                        "fallback_response": "Try 'Didja eat?' It’s common in spoken English!"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Now, try speaking naturally! Say, 'I’m gonna go to the store.'",
+                        "expected_responses": ["I’m gonna go to the store."],
+                        "correct_response": "Nice! You sound more natural now.",
+                        "fallback_response": "Try saying, 'I’m gonna go to the store.'"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "What does 'gonna' mean?",
+                        "options": ["Going to", "Got to", "Gone", "Good"],
+                        "correct_answer": "Going to",
+                        "correct_response": "Correct! 'Gonna' is short for 'going to.'"
+                    },
+                    {
+                        "question": "Which word is more British?",
+                        "options": ["Sidewalk", "Elevator", "Holiday", "Truck"],
+                        "correct_answer": "Holiday",
+                        "correct_response": "Right! British speakers say 'holiday' instead of 'vacation.'"
+                    },
+                    {
+                        "question": "Which phrase sounds more natural in spoken English?",
+                        "options": ["Did you eat?", "Didja eat?", "Did you go?", "Did going?"],
+                        "correct_answer": "Didja eat?",
+                        "correct_response": "Correct! 'Didja eat?' is a common spoken contraction."
+                    },
+                    {
+                        "question": "Which is an example of fast speech?",
+                        "options": ["I am going to", "I’m gonna", "I will go", "I go"],
+                        "correct_answer": "I’m gonna",
+                        "correct_response": "Right! 'I’m gonna' is how people speak quickly."
+                    },
+                    {
+                        "question": "What’s a common American phrase?",
+                        "options": ["Lorry", "Lift", "Trash can", "Holiday"],
+                        "correct_answer": "Trash can",
+                        "correct_response": "Correct! Americans say 'trash can' instead of 'bin.'"
+                    }
+                ]
+            },
+            {
+                "level": 5,
+                "lesson_title": "Public Speaking & Debate",
+                "description": "Develop persuasive speech skills, structure arguments, and improve confidence in public speaking.",
+                "conversations": [
+                    {
+                        "step": 1,
+                        "ai_prompt": "Public speaking begins with a strong opening. How would you start a speech about climate change?",
+                        "expected_responses": [
+                        "Ladies and gentlemen, today I want to talk about a critical issue...",
+                        "Imagine a world where clean air is a luxury..."
+                        ],
+                        "correct_response": "Great! A strong opening captures the audience’s attention.",
+                        "fallback_response": "Try: 'Imagine a world where clean air is a luxury…'."
+                    },
+                    {
+                        "step": 2,
+                        "ai_prompt": "Now, make a clear argument: Why should people reduce plastic usage?",
+                        "expected_responses": [
+                        "Reducing plastic helps protect marine life and reduces pollution.",
+                        "Plastic pollution is harmful to the environment and wildlife."
+                        ],
+                        "correct_response": "Well done! A strong argument is clear and backed by evidence.",
+                        "fallback_response": "You can say: 'Reducing plastic helps protect marine life and reduces pollution.'"
+                    },
+                    {
+                        "step": 3,
+                        "ai_prompt": "Use a rhetorical question to strengthen your argument. Example: ‘Do we want our future generations to suffer?’",
+                        "expected_responses": [
+                        "Can we afford to ignore the impact of climate change?",
+                        "Is convenience worth the damage to our planet?"
+                        ],
+                        "correct_response": "Nice! Rhetorical questions engage the audience emotionally.",
+                        "fallback_response": "Try: 'Can we afford to ignore the impact of climate change?'"
+                    },
+                    {
+                        "step": 4,
+                        "ai_prompt": "Now, let’s conclude. How would you end your speech on climate change?",
+                        "expected_responses": [
+                        "It’s time for us to take responsibility and act now!",
+                        "Together, we can make a difference by making sustainable choices."
+                        ],
+                        "correct_response": "Excellent! A strong conclusion motivates the audience.",
+                        "fallback_response": "You can say: 'It’s time for us to take responsibility and act now!'"
+                    },
+                    {
+                        "step": 5,
+                        "ai_prompt": "Debates require counterarguments. How would you respond if someone said, ‘Plastic is convenient, so we can’t stop using it’?",
+                        "expected_responses": [
+                        "While plastic is convenient, its long-term harm outweighs its short-term benefits.",
+                        "There are sustainable alternatives that are just as convenient."
+                        ],
+                        "correct_response": "Great! A strong counterargument acknowledges the point but refutes it with logic.",
+                        "fallback_response": "Try: 'While plastic is convenient, its long-term harm outweighs its short-term benefits.'"
+                    }
+                ],
+                "quiz": [
+                    {
+                        "question": "What makes a strong opening for a speech?",
+                        "options": [
+                        "Starting with ‘Hello, my name is…’",
+                        "A shocking fact or rhetorical question",
+                        "Reading from notes",
+                        "Speaking very fast"
+                        ],
+                        "correct_answer": "A shocking fact or rhetorical question",
+                        "correct_response": "Correct! Engaging openings grab the audience’s attention."
+                    },
+                    {
+                        "question": "Which is an example of a rhetorical question?",
+                        "options": [
+                        "Climate change is a big problem.",
+                        "We must act now to save the planet.",
+                        "Do we want to live in a world without clean air?",
+                        "Recycling helps the environment."
+                        ],
+                        "correct_answer": "Do we want to live in a world without clean air?",
+                        "correct_response": "Right! Rhetorical questions encourage audience reflection."
+                    },
+                    {
+                        "question": "What is a key element of a strong argument?",
+                        "options": [
+                        "Using emotional appeals only",
+                        "Clear reasoning and supporting evidence",
+                        "Repeating the same point multiple times",
+                        "Speaking loudly"
+                        ],
+                        "correct_answer": "Clear reasoning and supporting evidence",
+                        "correct_response": "Correct! A strong argument is logical and backed by facts."
+                    },
+                    {
+                        "question": "What makes a powerful conclusion?",
+                        "options": [
+                        "Thanking the audience and leaving",
+                        "Restating the main points and a call to action",
+                        "Introducing new arguments",
+                        "Asking the audience to debate"
+                        ],
+                        "correct_answer": "Restating the main points and a call to action",
+                        "correct_response": "Right! A strong conclusion reinforces the message and inspires action."
+                    },
+                    {
+                        "question": "How do you respond effectively in a debate?",
+                        "options": [
+                        "Ignore the opponent’s points",
+                        "Agree with everything they say",
+                        "Acknowledge their point, then counter with logic",
+                        "Get angry and interrupt"
+                        ],
+                        "correct_answer": "Acknowledge their point, then counter with logic",
+                        "correct_response": "Correct! A strong rebuttal is logical and respectful."
+                    }
+                ]
+            }
+        ]
+    }
+]
+    
+    
+
+  
