@@ -48,6 +48,8 @@ app.post('/user-login', async(req,res) => {
     let client
     try{
         const { useremail, userpsd } = req.body
+        console.log(useremail)
+        console.log(userpsd)
         if(!useremail || !userpsd){
             return res.status(400).json({ error: "Email and Password are required" })
         }
@@ -63,7 +65,7 @@ app.post('/user-login', async(req,res) => {
         console.log(matchFound)
         if(matchFound){
             const token = jwt.sign({ id: result._id, email: result.email }, JWT_SECRET, { expiresIn: "7d" })
-            return res.status(200).json({ message: "Successfully logged in", token })
+            return res.status(200).json({ message: "Login Successfully", token })
         }else{
             return res.status(401).json({ error: "Invalid Email or Password" })
         }
@@ -155,6 +157,7 @@ app.post('/forget-password', async(req,res) => {
         }
     }
 })
+
 app.post('/passwword-change', async(req,res) => {
     let client
     try{

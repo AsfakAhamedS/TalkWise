@@ -3,11 +3,10 @@ import { StyleSheet } from 'react-native'
 export default StyleSheet.create({
     // Landing Page
     body: {
-        flex: 1, 
-        backgroundColor:"#fff",
-        paddingLeft: 40,
-        paddingRight: 40,
-        fontFamily: 'Poppins_400Regular'
+        flex: 1,
+        backgroundColor: '#fff',
+        paddingHorizontal: 40,
+        justifyContent: 'center',
     },
     container: {
         flex:1,
@@ -60,62 +59,132 @@ export default StyleSheet.create({
         fontSize: 28,
         fontWeight: 600,
         marginBottom: 20,
+        textAlign: 'center',
     },
-    input_label: {
-        fontSize: 18,
-        marginTop: 9
+    inputcontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderBottomWidth: 1,
+        borderColor: '#ccc',
+        marginBottom: 20,
+        paddingVertical: 5,
     },
-    input_ph: {
-        fontSize: 18,
-    },
-    input_otp: {
-        marginTop: 14,
-        marginLeft: 100
-    },
-    login_form_grp: {
-        marginTop:10,
-        marginBottom: 20
-    },
-    log_signup:{
-        fontSize: 16,
-        lineHeight:24,
+    icon: {
+        marginRight: 10,
         color: '#bababa',
-        marginTop:30
     },
-    log_signup_btn:{
+    input: {
+        flex: 1,
         fontSize: 16,
-        lineHeight:24,
-        fontWeight: 'bold'
+        color: '#000',
+    },
+    login_error: {
+        color: 'red',
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginTop: 3,
+        marginBottom:5,
+        alignSelf: 'center',
+    },
+    log_forget_btn: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        textAlign: 'right',
+        color: '#252525',
+        marginBottom: 15,
     },
     login_btn: {
-        justifyContent: 'flex-end',
+        justifyContent: 'center',
         alignItems: 'center',
-        marginTop: 25
     },
     login_btn_to: {
-        width: 100,
+        width: 120,
         borderRadius: 30,
         alignItems: 'center',
         backgroundColor: '#252525',
-        padding: 7,
+        paddingVertical: 10,
     },
     login_btn_text: {
         fontSize: 18,
         fontWeight: 'bold',
         color: '#fff',
-        padding: 5,
     },
-    log_signup:{
-        flex:1,
-        justifyContent:'flex-end',
-        alignItems:'center',
+    log_signup: {
+        flex: 1,
+        justifyContent: 'flex-end',
+        alignItems: 'center',
         position:'relative',
-        bottom:50
+        bottom:40
     },
-    log_signup_text:{
-      fontSize:16,
-      fontWeight:535,
+    log_signup_text: {
+        fontSize: 16,
+        fontWeight: '500',
+        color: '#777',
     },
+    log_signup_btn:{
+        fontSize:17,
+        fontWeight:'bold',
+    },
+    success: ({ text1, text2 }) => ({
+        text1,
+        text2,
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        topOffset: 50,
+        bottomOffset: 40,
+        text1Style: {
+            color: '#00B386',
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        text2Style: {
+            color: '#000',
+            fontSize: 14,
+        },
+        style: {
+            width: '90%',
+            backgroundColor: '#28a745', 
+            borderRadius: 10,
+            padding: 10,
+            shadowColor: '#000',
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+            elevation: 5,
+        },
+    }),
+    error: ({ text1, text2 }) => ({
+        text1,
+        text2,
+        position: 'top',
+        visibilityTime: 3000,
+        autoHide: true,
+        topOffset: 50,
+        bottomOffset: 40,
+        text1Style: {
+            color: '#EB5B3C',
+            fontSize: 16,
+            fontWeight: 'bold',
+        },
+        text2Style: {
+            color: '#000',
+            fontSize: 14,
+        },
+        style: {
+            width: '90%',
+            backgroundColor: '#dc3545', 
+            borderRadius: 10,
+            padding: 10,
+            shadowColor: '#000',
+            shadowOpacity: 0.3,
+            shadowRadius: 4,
+            elevation: 5,
+        },
+    }),
+    
+    
+    // Forget Page
     forget_label:{
         fontSize:18,
         fontWeight:'bold',
