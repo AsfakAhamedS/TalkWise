@@ -1,4 +1,4 @@
-import express from "express";
+import express, { urlencoded } from "express";
 import cors from "cors";
 import { MongoClient } from "mongodb";
 import jwt from "jsonwebtoken";
@@ -10,9 +10,6 @@ import { Stream } from "groq-sdk/lib/streaming.mjs";
 import fs from "fs";
 import FormData from "form-data";
 import speakeasy from "speakeasy";
-
-
-
 
 dotenv.config();
 
@@ -127,17 +124,17 @@ app.post('/user-create-account', async(req,res) => {
     }
 })
 
-app.post('/forget-passwword', async(req,res) => {
+app.post('/forget-password', async(req,res) => {
     let client
     try{
-        const { userphoneno } = req.body
-        if(!userphoneno){
-            return res.status(400).json({ error: "Phone number is required" })
+        const { useremail } = req.body
+        if(!useremail){
+            return res.status(400).json({ error: "Email address is required" })
         }
         const dbconnection = await getCollection("TalkWise", "Users")
         client = dbconnection.client
         const collection = dbconnection.collection
-        const result = await collection.findOne({ phone: userphoneno })
+        const result = await collection.findOne({ email: useremail })
         if(!result){
             return res.status(404).json({ error: "User not found" })
         }
@@ -148,6 +145,33 @@ app.post('/forget-passwword', async(req,res) => {
             digits: 6
         })
         res.status(200).json({ message: "OTP sent successfully", otp })
+    }catch(e){
+        console.error("Error:", e)
+        res.status(500).json({ error: "Server error" })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+app.post('/passwword-change', async(req,res) => {
+    let client
+    try{
+        const { useremail, usernewpsd } = req.body
+        if(!useremail || !usernewpsd){
+            return res.status(400).json({ error: "All fields is required" })
+        }
+        const password = await hashPassword(usernewpsd)
+        const dbconnection = await getCollection("TalkWise", "Users")
+        client = dbconnection.client
+        const collection = dbconnection.collection
+        const result =  await collection.findOne({ email: useremail })
+        if(!result){
+            return res.status(404).json({ error: "User not found" })
+        }
+        await collection.updateOne({ email: useremail },{ $set:{ password: password }})
+        res.status(200).json({ message: "OTP successfully updated"})
     }catch(e){
         console.error("Error:", e)
         res.status(500).json({ error: "Server error" })

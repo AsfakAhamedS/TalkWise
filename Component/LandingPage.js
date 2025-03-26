@@ -24,7 +24,7 @@ export default function LandingPage() {
         <View style={style.land_btn}>
             <TouchableOpacity 
                 style={style.land_btn_to} 
-                activeOpacity={0.7}
+                activeOpacity={0.4}
                 onPress={() => navigation.navigate('login')}
             >
                 <Text style={style.land_btn_text}>Get Started</Text>

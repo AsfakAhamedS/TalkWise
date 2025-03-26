@@ -7,7 +7,7 @@ import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
 import { Ionicons } from '@expo/vector-icons';
 import LandingPage from './Component/LandingPage'
 import LoginPage from './Component/LoginPage'
-import EmailLoginPage from './Component/EmailLoginPage'
+import ForgetPage from './Component/ForgetPage'
 import HomePage from './Component/HomePage'
 
 
@@ -53,18 +53,18 @@ export default function App() {
             })} 
           />
           <Stack.Screen 
-            name="email" 
-            component={EmailLoginPage} 
+            name="forget" 
+            component={ForgetPage}
             options={({ navigation }) => ({
               title:false,
               headerLeft: () => null,
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
               headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('landing')} style={{ marginRight: 20 }}>
+                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
                   <Ionicons name="close" size={28} color="black" />
                 </TouchableOpacity>
               ),
-            })}
+            })} 
           />
           <Stack.Screen 
             name="home" 

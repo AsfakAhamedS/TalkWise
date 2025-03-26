@@ -73,6 +73,7 @@ export default StyleSheet.create({
         marginLeft: 100
     },
     login_form_grp: {
+        marginTop:10,
         marginBottom: 20
     },
     log_signup:{
@@ -104,32 +105,67 @@ export default StyleSheet.create({
         color: '#fff',
         padding: 5,
     },
-    log_social_media: {
-        flex: 1,
+    log_signup:{
+        flex:1,
+        justifyContent:'flex-end',
+        alignItems:'center',
+        position:'relative',
+        bottom:50
+    },
+    log_signup_text:{
+      fontSize:16,
+      fontWeight:535,
+    },
+    forget_label:{
+        fontSize:18,
+        fontWeight:'bold',
+        marginBottom:5,
+    },
+    forget_input: {
+        fontSize: 18,
+    },
+    forget_btn: {
         justifyContent: 'flex-end',
         alignItems: 'center',
-        position:'relative',
-        bottom:30
+        marginTop: 40
     },
-    social_media: {
-        flexDirection: 'row',
+    forget_btn_to: {
+        width: 100,
+        borderRadius: 30,
         alignItems: 'center',
-        gap: 10,
-        paddingTop:7,
-        paddingBottom:7,
-        paddingLeft:70,
-        paddingRight:70,
+        backgroundColor: '#252525',
+        padding: 7,
     },
-    social_media_shadow: {
+    forget_btn_text: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
+        padding: 5,
+    },
+    otp_text: {
+        position:'relative',
+        top:13,
+        left:80,
+        fontWeight:'bold',
+        color:'#bababa'
+    },
+    otpContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop:10,
+    },
+    otpInput: {
+        width: 40,
+        height: 50,
         borderWidth: 1,
-        borderColor: '#bababa',
-        borderRadius: 15,
-        marginBottom: 20,
-        backgroundColor: '#fff', 
-        shadowColor:'#000000',
-        shadowOffset: { width: -2,height: 2,},
-        shadowOpacity: 0,
-        shadowRadius: 5,
-        elevation: 4,     
-    }
+        borderRadius: 8,
+        textAlign: 'center',
+        fontSize: 20,
+        marginHorizontal: 5,
+    },
+    forget_btn_psd: {
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        marginTop: 5
+    },
 })
