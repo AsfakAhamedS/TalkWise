@@ -9,6 +9,8 @@ import LandingPage from './Component/LandingPage'
 import LoginPage from './Component/LoginPage'
 import ForgetPage from './Component/ForgetPage'
 import SignupPage from './Component/SignupPage'
+import UserDetailPage from './Component/UserDetailPage'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import HomePage from './Component/HomePage'
 
 
@@ -79,6 +81,19 @@ export default function App() {
                   <Ionicons name="close" size={28} color="black" />
                 </TouchableOpacity>
               ),
+            })} 
+          />
+          <Stack.Screen 
+            name="userdetailpage" 
+            component={UserDetailPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
             })} 
           />
           <Stack.Screen 

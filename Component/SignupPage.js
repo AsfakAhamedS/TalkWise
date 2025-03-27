@@ -5,8 +5,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
 import {useNavigation} from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
+import Checkbox from 'expo-checkbox'
 import Octicons from 'react-native-vector-icons/Octicons'
-import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
@@ -17,21 +17,13 @@ export default function SignupPage() {
     const navigation = useNavigation()
     const [show, setShow] = useState(true)
     const [conshow, setConshow] = useState(true)
+    const [checked, setChecked] = useState(false);
 
 
     return (
         <View style={style.body}>
              <View style={{ flex: 3 }}>
                 <Text style={style.login_signup_head}>Join us today!</Text>
-                <View style={style.inputcontainer}>
-                    <Feather name="user" size={22} style={style.icon} />
-                    <TextInput
-                        style={style.input}
-                        placeholder="Enter your name"
-                        // value={email}
-                        // onChangeText={setEmail}
-                    />
-                </View>
                 <View style={style.inputcontainer}>
                     <MaterialCommunityIcons name="email-outline" size={22} style={style.icon}/>
                     <TextInput
@@ -76,8 +68,21 @@ export default function SignupPage() {
                         <Ionicons name={conshow ? "eye-off-outline" : "eye-outline"} size={22} style={style.icon} />
                     </TouchableOpacity>
                 </View>
+                <View style={style.section}>
+                    <Checkbox
+                    style={style.checkbox}
+                    value={checked}
+                    onValueChange={setChecked}
+                    />
+                    <Text style={style.paragraph}>I agree to the <Text style={{color:'blue'}}>Terms & Conditions</Text></Text>
+                </View>
                 <View style={style.signup_btn}>
-                    <TouchableOpacity style={style.signup_btn_to} activeOpacity={0.4}>
+                    <TouchableOpacity 
+                        onPress={() => navigation.navigate('userdetailpage')}
+                        style={style.signup_btn_to} 
+                        activeOpacity={0.4}
+                        disabled = {!checked}
+                    >
                         <Text style={style.signup_btn_text}>Sign Up</Text>
                     </TouchableOpacity>
                 </View>

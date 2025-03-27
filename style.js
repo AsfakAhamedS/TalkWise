@@ -256,4 +256,61 @@ export default StyleSheet.create({
         fontWeight: 'bold',
         color: '#fff',
     },
+    section: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginTop:15,
+        marginBottom:10
+    },
+    paragraph: {
+        fontSize: 17,
+    },
+    checkbox: {
+        marginRight:10,
+        width: 16, 
+        height: 16,
+    },
+
+    // UserDetailPage
+    userdp_heading:{
+        flex:1,
+        flexDirection:'column',
+        gap:3,
+        marginTop:15
+    },
+    userdp_subhead:{
+        fontSize:32,
+        fontWeight:600
+    },
+    age_btn: {
+        borderWidth: 1,
+        borderColor: "#fff",
+        backgroundColor:'#FAFAFA',
+        marginBottom: 15,
+        paddingVertical: 20,
+        paddingHorizontal: 20,
+        borderRadius: 10,
+    },    
+    age_btn_text:{
+        fontSize:18,
+        fontWeight:600
+    },
+    propic_upload:{
+        alignItems:'center',
+        marginTop:20
+    },
+    propic_circle: {
+        borderWidth: 2,
+        width: 100,
+        height: 100,
+        borderRadius: 50, 
+        borderColor: "blue",
+        justifyContent: "center", 
+        alignItems: "center", 
+    },
+    alter_text:{
+        fontSize:17,
+        fontWeight:700,
+        marginTop:40
+    }
 })
