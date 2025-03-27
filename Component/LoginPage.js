@@ -9,7 +9,7 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import style from '../style'
-const url = "http://192.168.84.252:4500/" 
+const url = "http://192.168.1.23:4500/" 
 
 export default function LoginPage() {
     const navigation = useNavigation()
@@ -46,10 +46,10 @@ export default function LoginPage() {
     return (
         <View style={style.body}>
             <View style={style.login_hero_img}>
-                <Image source={require('../assets/loginimg.png')} style={{ width: '100%', height: '100%' }} />
+                <Image source={require('../assets/loginpage/loginimg.png')} style={{ width: '100%', height: '100%' }} />
             </View>
             <View style={{ flex: 3 }}>
-                <Text style={style.login_head}>Welcome Back!</Text>
+                <Text style={style.login_signup_head}>Welcome Back!</Text>
                 <View style={style.inputcontainer}>
                     <Feather name="user" size={22} style={style.icon} />
                     <TextInput
@@ -78,13 +78,13 @@ export default function LoginPage() {
                 
                 <View style={style.login_btn}>
                     <TouchableOpacity style={style.login_btn_to} activeOpacity={0.4} onPress={handleLogin}>
-                        <Text style={style.login_btn_text}>Log in</Text>
+                        <Text style={style.login_btn_text}>Login</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={style.log_signup}>
                     <Text style={style.log_signup_text}>
                         Don't have an account?
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => navigation.navigate('signup')}>
                             <Text style={style.log_signup_btn}> Sign up</Text>
                         </TouchableOpacity>
                     </Text>

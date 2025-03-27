@@ -55,7 +55,7 @@ export default StyleSheet.create({
         width:'100%',
         height:'100%'
     },
-    login_head: {
+    login_signup_head: {
         fontSize: 28,
         fontWeight: 600,
         marginBottom: 20,
@@ -236,5 +236,24 @@ export default StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         marginTop: 5
+    },
+
+    // Signup Page
+    signup_btn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:20
+    },
+    signup_btn_to: {
+        width: 120,
+        borderRadius: 30,
+        alignItems: 'center',
+        backgroundColor: '#252525',
+        paddingVertical: 10,
+    },
+    signup_btn_text: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#fff',
     },
 })

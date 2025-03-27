@@ -8,6 +8,7 @@ import { Ionicons } from '@expo/vector-icons';
 import LandingPage from './Component/LandingPage'
 import LoginPage from './Component/LoginPage'
 import ForgetPage from './Component/ForgetPage'
+import SignupPage from './Component/SignupPage'
 import HomePage from './Component/HomePage'
 
 
@@ -55,6 +56,20 @@ export default function App() {
           <Stack.Screen 
             name="forget" 
             component={ForgetPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => null,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
+                  <Ionicons name="close" size={28} color="black" />
+                </TouchableOpacity>
+              ),
+            })} 
+          />
+          <Stack.Screen 
+            name="signup" 
+            component={SignupPage}
             options={({ navigation }) => ({
               title:false,
               headerLeft: () => null,
