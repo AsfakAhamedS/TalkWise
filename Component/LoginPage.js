@@ -9,7 +9,7 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import style from '../style'
-const url = "http://192.168.1.23:4500/" 
+const url = process.env.EXPO_PUBLIC_API_URL || '' 
 
 export default function LoginPage() {
     const navigation = useNavigation()
@@ -18,17 +18,15 @@ export default function LoginPage() {
     const [password, setPassword] = useState('')
 
     function handleLogin() {
-        console.log(email, password)
+        console.log("url ===>",url)
         axios.post(url + 'user-login', { useremail: email, userpsd: password })
         .then(response => {
             if (response.status === 200) {
                 AsyncStorage.setItem('Token', response.data.token)
                 .then(() => {
                     console.log(response.data.message)
-                    Toast.show(style.success({
-                        text1: response.data.message,
-                        text2: 'Welcome back!',
-                    }))
+                  
+                    
                     setTimeout(() => navigation.navigate('home'), 1500)
                 })
                 .catch(err => console.error("Error storing token:", err))

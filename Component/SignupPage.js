@@ -11,7 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import SimpleLineIcons from 'react-native-vector-icons/SimpleLineIcons'
 import style from '../style'
-const url = "http://192.168.1.23:4500/" 
+const url = process.env.EXPO_PUBLIC_API_URL || '' 
 
 export default function SignupPage() {
     const navigation = useNavigation()

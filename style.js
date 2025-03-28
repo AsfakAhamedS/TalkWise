@@ -307,10 +307,41 @@ export default StyleSheet.create({
         borderColor: "blue",
         justifyContent: "center", 
         alignItems: "center", 
+        position:'relative'
     },
     alter_text:{
         fontSize:17,
         fontWeight:700,
         marginTop:40
-    }
+    },
+    avatar:{
+        flexDirection:'column',
+        gap:10,
+        marginTop: 15
+    },
+    men_avatar:{
+        flexDirection: 'row'
+    },
+    women_avatar:{
+        flexDirection: 'row'
+    },
+    image: {
+        width: 100,
+        height: 100,
+        borderRadius:50,
+        zIndex:-1
+      },
+      inside_icon:{
+        position:'absolute',
+        top:'76%',
+        left:'70%',
+        borderWidth:1,
+        width:25,
+        height:25,
+        borderRadius:50,
+        borderColor: "blue",
+        backgroundColor:'blue',
+        justifyContent: "center", 
+        alignItems: "center", 
+      }
 })

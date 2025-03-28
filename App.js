@@ -96,6 +96,7 @@ export default function App() {
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
             })} 
           />
+
           <Stack.Screen 
             name="home" 
             component={HomePage} 
