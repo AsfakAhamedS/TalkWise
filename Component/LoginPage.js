@@ -24,12 +24,14 @@ export default function LoginPage() {
             if (response.status === 200) {
                 AsyncStorage.setItem('Token', response.data.token)
                 .then(() => {
-                    console.log(response.data.message)
-                  
-                    
-                    setTimeout(() => navigation.navigate('home'), 1500)
+                    // console.log(response.data.message)
+                    Toast.show(style.success({
+                        text1: response.data.message,
+                        text2: 'Welcome back!',
+                    }))
+                    setTimeout(() => navigation.navigate('main'), 1500)
                 })
-                .catch(err => console.error("Error storing token:", err))
+                .catch(err => console.error("Token error:", err))
             }
         })
         .catch(error => {
@@ -37,7 +39,7 @@ export default function LoginPage() {
                 text1: 'Login Failed',
                 text2: error.response?.data?.error || 'Invalid email or password!',
             }))
-            console.error("Login Error:", error)
+            // console.error("Login Error:", error)
         })
     }
 

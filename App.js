@@ -3,18 +3,20 @@ import React, { useEffect, useState } from 'react'
 import { Dimensions } from 'react-native'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+// import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native'
-import { Ionicons } from '@expo/vector-icons';
+import { Ionicons } from '@expo/vector-icons'
 import LandingPage from './Component/LandingPage'
 import LoginPage from './Component/LoginPage'
 import ForgetPage from './Component/ForgetPage'
 import SignupPage from './Component/SignupPage'
 import UserDetailPage from './Component/UserDetailPage'
+import TabNavPage from './Component/TabNavPage'
+import SubscriptionPage from './Component/SubscriptionPage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
-import HomePage from './Component/HomePage'
 
-
-const Stack = createStackNavigator();
+const Stack = createStackNavigator()
+// const Tab = createBottomTabNavigator()
 export default function App() {
   const [screen, setScreen] = useState(Dimensions.get('window'))
 
@@ -33,6 +35,7 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
+
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -96,14 +99,15 @@ export default function App() {
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
             })} 
           />
-
           <Stack.Screen 
-            name="home" 
-            component={HomePage} 
-            options={{
-              title:false,
-              headerStyle: { backgroundColor: '#fff', elevation: 0 }
-            }}
+            name="plan" 
+            component={SubscriptionPage}
+            options={{headerShown:false}} 
+          />
+          <Stack.Screen 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
           />
         </Stack.Navigator>
       </NavigationContainer>

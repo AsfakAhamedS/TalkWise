@@ -343,5 +343,66 @@ export default StyleSheet.create({
         backgroundColor:'blue',
         justifyContent: "center", 
         alignItems: "center", 
-      }
+      },
+
+    //  Subscription
+    plan: {
+        flex:1,
+        borderWidth:1,
+        borderColor:'#fff',
+        backgroundColor:'#fff',
+        borderTopLeftRadius:35,
+        borderTopRightRadius:35,
+        zIndex:1,
+        position:'relative',
+        bottom:20,
+    },
+    above_text:{
+        zIndex:10,
+        position:'relative',
+    },
+    subscription_text:{
+        position:'relative',
+        bottom:150,
+        paddingHorizontal: 30,
+        flexDirection:'row',
+        gap:7,
+        marginBottom:10,
+    },
+    subscription_main_text:{
+        position:'relative',
+        bottom:150,
+        paddingHorizontal: 30,
+    },
+    plan_text: {
+        fontSize: 16,
+        fontWeight:600,
+        color:'#fff'
+    },
+    subscription_icon:{
+        position:'relative',
+        left:'85%',
+        bottom:'330%',
+        width:30,
+        height:30,
+        borderWidth:1,
+        borderRadius:50,
+        borderColor:'rgba(0,0,0,0.5)',
+        backgroundColor:'rgba(0,0,0,0.5)',
+        justifyContent:'center',
+        alignItems:'center',
+    },
+    plan_card_view:{
+        flexDirection:'row',
+        gap:30,
+        padding:30,
+    },
+    plan_card:{
+        borderWidth:2,
+        width:150,
+        height:200,
+        borderRadius:20,
+        borderColor:'#bababa',
+        alignItems:'center'
+    },
 })

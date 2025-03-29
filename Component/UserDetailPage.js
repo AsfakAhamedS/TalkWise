@@ -145,7 +145,7 @@ export default function UserDetailPage() {
                     <Text style={[style.userdp_subhead,{marginBottom:20}]}>How's your English?</Text>
                     <View>
                         <TouchableOpacity style={[style.age_btn, true ? { backgroundColor: '#ECECEC' } : {}]}
-                            onPress={() => setTimeout(() =>  navigation.navigate('home'), 1500)}
+                            onPress={() => setTimeout(() =>  navigation.navigate('plan'), 1500)}
                         >
 
                             <Text style={style.age_btn_text}>1 - Beginner</Text>
