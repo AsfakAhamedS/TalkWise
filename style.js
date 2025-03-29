@@ -185,12 +185,34 @@ export default StyleSheet.create({
     
     
     // Forget Page
+    forget_head: {
+        fontSize: 28,
+        fontWeight: 600,
+        marginBottom: 20,
+    },
     forget_label:{
         fontSize:18,
         fontWeight:'bold',
         marginBottom:5,
     },
+    forget_inputcontainer:{
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderWidth: 1,
+        borderColor:'#bababa',
+        padding: 3,
+        marginBottom: 20,
+        borderRadius: 10,
+        justifyContent: 'space-between',
+    },
+    forget_code:{
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 5,
+    },
     forget_input: {
+        flex: 1, 
+        marginLeft: 10,
         fontSize: 18,
     },
     forget_btn: {
@@ -211,14 +233,7 @@ export default StyleSheet.create({
         color: '#fff',
         padding: 5,
     },
-    otp_text: {
-        position:'relative',
-        top:13,
-        left:80,
-        fontWeight:'bold',
-        color:'#bababa'
-    },
-    otpContainer: {
+    otpcontainer: {
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop:10,
@@ -227,6 +242,7 @@ export default StyleSheet.create({
         width: 40,
         height: 50,
         borderWidth: 1,
+        borderColor:'#bababa',
         borderRadius: 8,
         textAlign: 'center',
         fontSize: 20,

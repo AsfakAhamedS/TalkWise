@@ -1,21 +1,22 @@
-import express, { urlencoded } from "express";
-import cors from "cors";
-import { MongoClient } from "mongodb";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import bcrypt from "bcrypt";
-import axios from "axios";
-import multer from "multer";
-import { Stream } from "groq-sdk/lib/streaming.mjs";
-import fs from "fs";
-import FormData from "form-data";
-import speakeasy from "speakeasy";
+import express, { urlencoded } from "express"
+import cors from "cors"
+import { MongoClient } from "mongodb"
+import jwt from "jsonwebtoken"
+import dotenv from "dotenv"
+import bcrypt from "bcrypt"
+import axios from "axios"
+import multer from "multer"
+import { Stream } from "groq-sdk/lib/streaming.mjs"
+import fs from "fs"
+import FormData from "form-data"
+import speakeasy from "speakeasy"
+import nodemailer from 'nodemailer'
 
 dotenv.config();
 
 const app = express();
 const port = 4500;
-const uri = "mongodb://127.0.0.1:27017/";
+const uri = "mongodb://127.0.0.1:27017/"
 
 app.use(express.json());
 app.use(cors());
@@ -130,6 +131,7 @@ app.post('/forget-password', async(req,res) => {
     let client
     try{
         const { useremail } = req.body
+        console.log(useremail)
         if(!useremail){
             return res.status(400).json({ error: "Email address is required" })
         }
@@ -146,6 +148,17 @@ app.post('/forget-password', async(req,res) => {
             step: 30,
             digits: 6
         })
+        const mainacc = nodemailer.createTransport({
+            service: 'gmail', 
+            auth: { user: 'asfakahamed.a@gmail.com', pass: process.env.APP_PSD || '' }
+        })
+        const mailgenerate = {
+            from: 'asfakahamed.a@gmail.com',
+            to: useremail,
+            subject: 'Password Reset OTP',
+            text: `Your OTP for password reset is: ${otp}. This OTP is valid for 30 seconds.`
+        }
+        await mainacc.sendMail(mailgenerate)
         res.status(200).json({ message: "OTP sent successfully", otp })
     }catch(e){
         console.error("Error:", e)
@@ -158,12 +171,16 @@ app.post('/forget-password', async(req,res) => {
     }
 })
 
-app.post('/passwword-change', async(req,res) => {
+app.post('/password-change', async(req,res) => {
     let client
     try{
         const { useremail, usernewpsd } = req.body
+        console.log("Opens")
         if(!useremail || !usernewpsd){
             return res.status(400).json({ error: "All fields is required" })
+        }
+        if (usernewpsd.length < 6) {
+            return res.status(400).json({ error: "Password must be at least 6 characters long" })
         }
         const password = await hashPassword(usernewpsd)
         const dbconnection = await getCollection("TalkWise", "Users")
@@ -174,7 +191,7 @@ app.post('/passwword-change', async(req,res) => {
             return res.status(404).json({ error: "User not found" })
         }
         await collection.updateOne({ email: useremail },{ $set:{ password: password }})
-        res.status(200).json({ message: "OTP successfully updated"})
+        res.status(200).json({ message: "Password successfully updated"})
     }catch(e){
         console.error("Error:", e)
         res.status(500).json({ error: "Server error" })

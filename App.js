@@ -35,7 +35,20 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-
+          <Stack.Screen 
+            name="forget" 
+            component={ForgetPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => null,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
+                  <Ionicons name="close" size={28} color="black" />
+                </TouchableOpacity>
+              ),
+            })} 
+          />
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -58,20 +71,9 @@ export default function App() {
               ),
             })} 
           />
-          <Stack.Screen 
-            name="forget" 
-            component={ForgetPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => null,
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-              headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
-                  <Ionicons name="close" size={28} color="black" />
-                </TouchableOpacity>
-              ),
-            })} 
-          />
+          
+
+
           <Stack.Screen 
             name="signup" 
             component={SignupPage}
