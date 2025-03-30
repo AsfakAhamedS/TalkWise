@@ -4,10 +4,12 @@ import { StatusBar } from 'expo-status-bar'
 import {useNavigation} from '@react-navigation/native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import style from '../style'
 
 export default function SubscriptionPage(){
     const navigation = useNavigation()
+    const [selectedPlan, setSelectedPlan] = useState(null)
     return(
         <>
          <StatusBar style='false'/>
@@ -32,18 +34,39 @@ export default function SubscriptionPage(){
              </View>
              <View style={style.plan}>
                 <View style={style.plan_card_view}>
-                    <View style={style.plan_card}>
-                        <Text style={{fontSize:22,fontWeight:700,lineHeight:30,marginTop:35}}>Yearly</Text>
-                        <Text style={{fontSize:22,fontWeight:700,lineHeight:30,marginBottom:35}}>₹12,000</Text>
-                        <Text style={{fontSize:14,fontWeight:400,lineHeight:20}}>Only ₹1000 / monthly</Text>
-                        <Text style={{fontSize:14,fontWeight:400,lineHeight:20}}>Billed yearly</Text>
-                    </View>
-                    <View style={style.plan_card}>
-                        <Text style={{fontSize:22,fontWeight:700,lineHeight:30,marginTop:35}}>3 Months</Text>
-                        <Text style={{fontSize:22,fontWeight:700,lineHeight:30,marginBottom:35}}>₹6,000</Text>
-                        <Text style={{fontSize:14,fontWeight:400,lineHeight:20}}>Only ₹2000 / monthly</Text>
-                        <Text style={{fontSize:14,fontWeight:400,lineHeight:20}}>Billed every 3 month</Text>
-                    </View>
+                    <TouchableOpacity 
+                        style={[style.plan_card, selectedPlan === "yearly" ? { borderColor: '#007AFF' } : {}]}
+                        onPress={() => setSelectedPlan("yearly")}>
+                        <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Yearly</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹12,000</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Only ₹1000 / monthly</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed yearly</Text>
+                        {selectedPlan === "yearly" ? 
+                        (<View style={style.plan_circle}>
+                            <FontAwesome name="check" color="#fff" size={13} />
+                        </View>) : null}
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={[style.plan_card,selectedPlan === "months" ? { borderColor: '#007AFF' } : {}]}
+                        onPress={() => setSelectedPlan("months")}>
+                        <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>3 Months</Text>
+                        <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹6,000</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Only ₹2000 / monthly</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed every 3 months</Text>
+                        {selectedPlan === "months" ?
+                        (<View style={style.plan_circle}>
+                            <FontAwesome name="check" color="#fff" size={13} />
+                        </View>) : null}
+                    </TouchableOpacity>
+                </View>
+                <View style={style.subscribe_btn}>
+                    <TouchableOpacity style={style.subscribe_btn_to} activeOpacity={0.4} >
+                        <Text style={style.subscribe_btn_text}>Subscribe now</Text>
+                    </TouchableOpacity>
+                </View>
+                <View>
+                    <Text style={style.subscribe_txt}>Prices are in INR</Text>
+                    <Text style={style.subscribe_txt}>Auto renewal, Cancel anytime</Text>
                 </View>
              </View>
         </View>

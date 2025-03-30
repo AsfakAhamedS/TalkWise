@@ -11,6 +11,7 @@ import fs from "fs"
 import FormData from "form-data"
 import speakeasy from "speakeasy"
 import nodemailer from 'nodemailer'
+import { error } from "console"
 
 dotenv.config();
 
@@ -35,15 +36,15 @@ async function hashPassword(password) {
     const hashedPassword = await bcrypt.hash(password, saltRounds)
     return hashedPassword
 }
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb) => {
-//         cb(null, 'uploads/');
-//     },
-//     filename: (req, file, cb) => {
-//         cb(null, Date.now() + '-' + file.originalname);
-//     }
-// })
-// const upload = multer({ storage: storage })
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, 'UserProfilePic/');
+    },
+    filename: (req, file, cb) => {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+})
+const upload = multer({ storage: storage })
 
 app.post('/user-login', async(req,res) => {
     let client
@@ -84,38 +85,42 @@ app.post('/user-login', async(req,res) => {
 app.post('/user-create-account', async(req,res) => {
     let client
     try{
-        const { username, useremail, userphoneno, userpsd } = req.body
-        if(!username || !useremail || !userphoneno || !userpsd){
+        const { useremail, userphoneno, userpsd } = req.body
+        if(!useremail || !userphoneno || !userpsd){
             return res.status(400).json({ error: "All fields are required"})
         }
         const password = await hashPassword(userpsd)
         const dbconnection = await getCollection("TalkWise","Users")
         client = dbconnection.client
         const collection = dbconnection.collection
-        const existuser = await collection.findOne({$or: [{ username: username },{ email: useremail },{ phone: userphoneno }]})
+        const existuser = await collection.findOne({$or: [{ email: useremail },{ phone: userphoneno }]})
         console.log(existuser)
         if(existuser){
-            if (existuser.username === username) {
-                return res.status(401).send('This username already exists')
-            }
             if (existuser.email === useremail) {
-                return res.status(401).send('This email address already exists')
+                return res.status(401).json({error : 'This email address already exists'})
             }
             if (existuser.phone === userphoneno) {
-                return res.status(401).send('This phone number already exists')
+                return res.status(401).json({error: 'This phone number already exists'})
             }
         }
         const userid =  Date.now()
         const result = await collection.insertOne({
             id: userid,
-            username: username,
-            phone: userphoneno,
+            userprofile:null,
+            username:null,
             email: useremail,
             password: password,
+            phone: userphoneno,
+            age:null,
+            communicationlevel:null,
             createdAt: new Date()
         })
-        console.log(result)
-        res.status(200).json({ message: "Successfully signed up", result})
+        if(result.acknowledged){
+            const token = jwt.sign({ id: result.insertedId, email: useremail }, JWT_SECRET, { expiresIn: "7d" })
+            return res.status(200).json({ message: "Account created successfully!", token})
+        }else {
+            res.status(500).json({ error: "Failed to create account"})
+        }
     }catch(e){
         console.error("Error:", e)
         res.status(500).send("Server error")
@@ -202,6 +207,85 @@ app.post('/password-change', async(req,res) => {
         }
     }
 })
+
+app.post('/get-user-details', async(req,res) => {
+    let client
+    try{
+        const { type, useremail, username, userage, usercomlevel } = req.body
+        const dbconnection = await getCollection("TalkWise", "Users")
+        client = dbconnection.client
+        const collection = dbconnection.collection
+        const result =  await collection.findOne({ email: useremail })
+        if(!result){
+            return res.status(404).json({ error: "User not found" })
+        }
+        if(type === 'name'){
+            if(!username){
+                return res.status(400).json({ error: "User Name is required" })
+            }
+            const updateResult = await collection.updateOne({ email:useremail },{ $set: { username:username.trim() }})
+            res.status(200).json({ message: "Name updated"})
+        }
+        if(type === 'age'){
+            if(!userage){
+                return res.status(400).json({ error: "User age is required" })
+            }
+            const updateResult = await collection.updateOne({ email:useremail },{ $set: { age:userage }})
+            res.status(200).json({ message: "Age updated"})
+        }
+        if(type === 'comlevel'){
+            if(!usercomlevel){
+                return res.status(400).json({ error: "User communication level is required" })
+            }
+            const updateResult = await collection.updateOne({ email:useremail },{ $set: { communicationlevel:usercomlevel }})
+            res.status(200).json({ message: "Communication level is updated"})
+        }     
+    }catch(e){
+        console.error("Error:", e)
+        res.status(500).json({ error: "Server error" })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
+app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
+    let client
+    try{
+        const {useremail} = req.body
+        console.log("img works")
+        if(!req.file){
+            return res.status(400).json({ error: 'No file uploaded' })
+        }
+        const dbconnection = await getCollection("TalkWise", "Users")
+        client = dbconnection.client
+        const collection = dbconnection.collection
+        const result =  await collection.findOne({ email: useremail })
+        if(!result){
+            return res.status(404).json({ error: "User not found" })
+        }
+        const fileUrl = req.file.filename
+        const updateResult = await collection.updateOne(
+            { email: useremail },
+            { $set: { userprofile: fileUrl } }
+        )
+        if (updateResult.modifiedCount === 0) {
+            return res.status(400).json({ error: 'Profile picture update failed' })
+        }
+        res.status(200).json({ message: 'Profile picture updated successfully',fileUrl: fileUrl})
+    }catch(e){
+        console.error("Error:", e)
+        res.status(500).json({ error: "Server error" })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
 
 
 
@@ -311,38 +395,6 @@ app.post('/password-change', async(req,res) => {
 //     }
     
 // });
-
-
-// const secret = speakeasy.generateSecret({ length: 20 }).base32; 
-// function generateOtp(){
-//     const otp = speakeasy.totp({
-//         secret: secret,
-//         encoding: "base32",
-//         step:30,
-//         digits:6,
-//     })
-//     console.log("Generated OTP:",otp)
-//     return otp
-    
-// }
-// const onetime = generateOtp() 
-// function verifyOtp(userOtp) {
-//     console.log("===>",userOtp) 
-//     const isValid = speakeasy.totp.verify({
-//         secret: secret, 
-//         encoding: "base32",
-//         token: userOtp,
-//         window: 1
-//     });
-//     console.log(isValid)
-
-//     if (isValid) {
-//         console.log("OTP is valid!");
-//     } else {
-//         console.log("Invalid OTP!");
-//     }
-// }
-// verifyOtp(onetime);
 
 
 

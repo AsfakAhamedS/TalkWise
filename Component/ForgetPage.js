@@ -7,6 +7,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import Toast from 'react-native-toast-message'
 import Feather from 'react-native-vector-icons/Feather'
 import Octicons from 'react-native-vector-icons/Octicons'
+import Ionicons from 'react-native-vector-icons/Ionicons'
 import style from '../style'
 const url = process.env.EXPO_PUBLIC_API_URL || '' 
 
@@ -14,17 +15,18 @@ export default function ForgetPage() {
     const navigation = useNavigation()
     const [select,setSelect] = useState(true)
     const [email, setEmail] = useState('')
-    const [otp, setOtp] = useState(["", "", "", "", "", ""])
+    const [otp, setOtp] = useState(['','','','','',''])
     const inputref = useRef([])
     const [password, setPassword] = useState('')
     const [confirmpassword, setConfirmpassword] = useState('')
+    const [show, setShow] = useState(true)
+    const [conshow, setConshow] = useState(true)
 
     function handleChange(text, index){
         if (text.length > 1) return
         const newOtp = [...otp]
         newOtp[index] = text
         setOtp(newOtp)
-
         if (text && index < 5) {
         inputref.current[index + 1].focus()
         }
@@ -37,12 +39,8 @@ export default function ForgetPage() {
         }
     }
 
-    function validateEmail(email){
-        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
-        return emailRegex.test(email)
-    }
-
     function generateOTP(){
+        const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/
         if(!email){
             Toast.show({
                 type: 'error',
@@ -51,7 +49,7 @@ export default function ForgetPage() {
             })
             return
         }
-        if(!validateEmail(email)){
+        if(!emailRegex.test(email)){
             Toast.show(style.error({
                 text1: 'Invalid Email',
                 text2: 'Enter a valid email',
@@ -100,13 +98,9 @@ export default function ForgetPage() {
         }
     }
 
-    function validatePassword(password){
-        const passwordRegex = /^.{6,}$/ 
-        return passwordRegex.test(password)
-    }
-
     function handleSubmit(){
-        if (!validatePassword(password)) {
+        const passwordRegex = /^.{6,}$/ 
+        if (!passwordRegex.test(password)) {
             Toast.show(style.error({
                 text1: 'Invalid Password',
                 text2: 'Password must be at least 6 characters long',
@@ -157,6 +151,7 @@ export default function ForgetPage() {
                                 placeholder='Enter your email'
                                 value={email}
                                 onChangeText={setEmail}
+                            
                             />
                             <TouchableOpacity 
                                 onPress={generateOTP}
@@ -183,9 +178,7 @@ export default function ForgetPage() {
                             <TouchableOpacity 
                                 style={style.forget_btn_to}
                                 activeOpacity={0.7}
-                                // onPress={verifyOTP}
-                                onPress={() => setSelect(!select)}
-                            >
+                                onPress={verifyOTP}>
                                 <Text style={style.forget_btn_text}>Submit</Text>
                             </TouchableOpacity>
                         </View>
@@ -199,10 +192,13 @@ export default function ForgetPage() {
                             <Octicons name="lock" size={20} style={{ marginLeft: 10, color: '#bababa' }} />
                             <TextInput
                                 style={style.forget_input} 
+                                secureTextEntry={show}
                                 placeholder='Enter your email'
-                                secureTextEntry
                                 value={password}
                                 onChangeText={setPassword}/>
+                                <TouchableOpacity onPress={() => setShow(!show)}>
+                                    <Ionicons name={show ? "eye-off-outline" : "eye-outline"} size={22} style={style.icon} />
+                                </TouchableOpacity>
                         </View>
                         <View>
                             <Text style={style.forget_label} >Confirm Password</Text>
@@ -211,10 +207,13 @@ export default function ForgetPage() {
                             <Octicons name="lock" size={20} style={{ marginLeft: 10, color: '#bababa' }}/>
                             <TextInput
                                 style={style.forget_input} 
+                                secureTextEntry={conshow}
                                 placeholder='Enter your email'
-                                secureTextEntry
                                 value={confirmpassword}
                                 onChangeText={setConfirmpassword}/>
+                                <TouchableOpacity onPress={() => setConshow(!conshow)}>
+                                    <Ionicons name={conshow ? "eye-off-outline" : "eye-outline"} size={22} style={style.icon} />
+                                </TouchableOpacity>
                         </View>
                         <View style={style.forget_btn_psd}>
                             <TouchableOpacity 

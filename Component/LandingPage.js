@@ -2,16 +2,16 @@ import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { useFonts, Poppins_400Regular, Poppins_700Bold } from '@expo-google-fonts/poppins';
 import {useNavigation} from '@react-navigation/native';
 import style from  '../style'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 
 
 export default function LandingPage() {
-    const navigation = useNavigation();
-
+    const navigation = useNavigation()
     const [fontsLoaded] = useFonts({
         Poppins_400Regular,
         Poppins_700Bold,
-      });
+      })
   return (
     <View style={style.body}>
         <View style={style.container}>

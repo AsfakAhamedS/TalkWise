@@ -65,9 +65,10 @@ export default StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         borderBottomWidth: 1,
+        height: 50,
         borderColor: '#ccc',
         marginBottom: 20,
-        paddingVertical: 5,
+        paddingVertical: 5, 
     },
     icon: {
         marginRight: 10,
@@ -77,6 +78,8 @@ export default StyleSheet.create({
         flex: 1,
         fontSize: 16,
         color: '#000',
+        height: '100%', 
+        textAlignVertical: 'center',
     },
     login_error: {
         color: 'red',
@@ -200,10 +203,13 @@ export default StyleSheet.create({
         alignItems: 'center',
         borderWidth: 1,
         borderColor:'#bababa',
-        padding: 3,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        height: 50, 
         marginBottom: 20,
         borderRadius: 10,
         justifyContent: 'space-between',
+        overflow: 'hidden', 
     },
     forget_code:{
         paddingHorizontal: 10,
@@ -214,6 +220,7 @@ export default StyleSheet.create({
         flex: 1, 
         marginLeft: 10,
         fontSize: 18,
+        overflow: 'hidden',
     },
     forget_btn: {
         justifyContent: 'flex-end',
@@ -255,23 +262,6 @@ export default StyleSheet.create({
     },
 
     // Signup Page
-    signup_btn: {
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop:20
-    },
-    signup_btn_to: {
-        width: 120,
-        borderRadius: 30,
-        alignItems: 'center',
-        backgroundColor: '#252525',
-        paddingVertical: 10,
-    },
-    signup_btn_text: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
     section: {
         flexDirection: 'row',
         alignItems: 'center',
@@ -286,7 +276,35 @@ export default StyleSheet.create({
         width: 16, 
         height: 16,
     },
-
+    errortext: {
+        color: 'red',
+        fontSize: 13,
+        position:'relative',
+        bottom:15
+    },
+    signup_btn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:20
+    },
+    signup_btn_to: {
+        width: 120,
+        borderRadius: 30,
+        alignItems: 'center',
+        backgroundColor: '#252525',
+        paddingVertical: 10,
+    },
+    disabledButton: {
+        backgroundColor: '#b0b0b0', 
+    },
+    signup_btn_text: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    disabledText: {
+        color: '#808080' 
+    },
     // UserDetailPage
     userdp_heading:{
         flex:1,
@@ -306,6 +324,11 @@ export default StyleSheet.create({
         paddingVertical: 20,
         paddingHorizontal: 20,
         borderRadius: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.2,
+        shadowRadius: 5,
+        elevation: 5,
     },    
     age_btn_text:{
         fontSize:18,
@@ -331,8 +354,9 @@ export default StyleSheet.create({
         marginTop:40
     },
     avatar:{
-        flexDirection:'column',
-        gap:10,
+        flexDirection:'row',
+        flexWrap:'wrap',
+        gap:5,
         marginTop: 15
     },
     men_avatar:{
@@ -346,8 +370,8 @@ export default StyleSheet.create({
         height: 100,
         borderRadius:50,
         zIndex:-1
-      },
-      inside_icon:{
+    },
+    inside_icon:{
         position:'absolute',
         top:'76%',
         left:'70%',
@@ -359,7 +383,7 @@ export default StyleSheet.create({
         backgroundColor:'blue',
         justifyContent: "center", 
         alignItems: "center", 
-      },
+    },
 
     //  Subscription
     plan: {
@@ -421,4 +445,42 @@ export default StyleSheet.create({
         borderColor:'#bababa',
         alignItems:'center'
     },
+    plan_circle:{
+        position:'absolute',
+        top:'93%',
+        left:'41%',
+        borderWidth:1,
+        width:25,
+        height:25,
+        borderRadius:50,
+        borderColor: "#007AFF",
+        backgroundColor:'#007AFF',
+        justifyContent: "center", 
+        alignItems: "center", 
+    },
+    subscribe_btn: {
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop:80,
+        marginBottom:5
+    },
+    subscribe_btn_to: {
+        width: 120,
+        borderRadius: 30,
+        alignItems: 'center',
+        backgroundColor: '#252525',
+        paddingVertical: 10,
+    },
+    subscribe_btn_text: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#fff',
+    },
+    subscribe_txt:{
+        fontSize:13,
+        fontWeight:400,
+        textAlign:'center',
+        color:'#bababa',
+    },
+
 })

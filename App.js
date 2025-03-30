@@ -10,7 +10,10 @@ import LandingPage from './Component/LandingPage'
 import LoginPage from './Component/LoginPage'
 import ForgetPage from './Component/ForgetPage'
 import SignupPage from './Component/SignupPage'
-import UserDetailPage from './Component/UserDetailPage'
+import UserNamePage from './Component/UserNamePage'
+import UserAgePage from './Component/UserAgePage'
+import UserProfilePage from './Component/UserProfilePage'
+import UserComLevelPage from './Component/UserComLevelPage'
 import TabNavPage from './Component/TabNavPage'
 import SubscriptionPage from './Component/SubscriptionPage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
@@ -35,20 +38,7 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen 
-            name="forget" 
-            component={ForgetPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => null,
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-              headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
-                  <Ionicons name="close" size={28} color="black" />
-                </TouchableOpacity>
-              ),
-            })} 
-          />
+      
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -71,9 +61,20 @@ export default function App() {
               ),
             })} 
           />
-          
-
-
+          <Stack.Screen 
+            name="forget" 
+            component={ForgetPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => null,
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerRight: () => (
+                <TouchableOpacity onPress={() => navigation.navigate('login')} style={{ marginRight: 20 }}>
+                  <Ionicons name="close" size={28} color="black" />
+                </TouchableOpacity>
+              ),
+            })} 
+          />
           <Stack.Screen 
             name="signup" 
             component={SignupPage}
@@ -89,8 +90,47 @@ export default function App() {
             })} 
           />
           <Stack.Screen 
-            name="userdetailpage" 
-            component={UserDetailPage}
+            name="username" 
+            component={UserNamePage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
+          <Stack.Screen 
+            name="userage" 
+            component={UserAgePage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
+          <Stack.Screen 
+            name="userpic" 
+            component={UserProfilePage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
+          <Stack.Screen 
+            name="userlevel" 
+            component={UserComLevelPage}
             options={({ navigation }) => ({
               title:false,
               headerLeft: () => (
@@ -106,6 +146,8 @@ export default function App() {
             component={SubscriptionPage}
             options={{headerShown:false}} 
           />
+          
+          
           <Stack.Screen 
             name="main" 
             component={TabNavPage} 

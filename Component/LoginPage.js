@@ -26,7 +26,7 @@ export default function LoginPage() {
                 .then(() => {
                     // console.log(response.data.message)
                     Toast.show(style.success({
-                        text1: response.data.message,
+                        text1: response?.data?.message,
                         text2: 'Welcome back!',
                     }))
                     setTimeout(() => navigation.navigate('main'), 1500)
