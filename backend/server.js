@@ -13,14 +13,15 @@ import speakeasy from "speakeasy"
 import nodemailer from 'nodemailer'
 import { error } from "console"
 
-dotenv.config();
+dotenv.config()
 
-const app = express();
-const port = 4500;
+const app = express()
+const port = 4500
 const uri = "mongodb://127.0.0.1:27017/"
 
-app.use(express.json());
-app.use(cors());
+app.use(express.json())
+app.use(cors())
+app.use("/uploads", express.static("UserProfilePic"))
 
 
 const JWT_SECRET=process.env.JWT_TOKEN||"sample"
@@ -266,7 +267,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
         if(!result){
             return res.status(404).json({ error: "User not found" })
         }
-        const fileUrl = req.file.filename
+        const fileUrl = `http://192.168.0.106:4500/uploads/${req.file.filename}`
         const updateResult = await collection.updateOne(
             { email: useremail },
             { $set: { userprofile: fileUrl } }
@@ -278,6 +279,30 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
     }catch(e){
         console.error("Error:", e)
         res.status(500).json({ error: "Server error" })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
+app.post('/get-user-avatar', async (req, res) => {
+    let client
+    try {
+        const { useremail } = req.body
+        console.log(useremail)
+        const dbconnection = await getCollection("TalkWise", "Users")
+        client = dbconnection.client
+        const collection = dbconnection.collection
+        
+        const result = await collection.findOne({ email:useremail })
+        if(!result){
+            return res.status(404).json({ message: "User not found"})
+        }
+        res.status(200).json({ message: "Get Image", name: result.username, email: result.email, phone:result.phone, age: result.age, level:result.communicationlevel, image:result.userprofile})
+    }catch(e){
+        res.status(500).json({ error: "Server error", e });
     }finally{
         if(client){
             await client.close()

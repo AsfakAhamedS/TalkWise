@@ -10,9 +10,17 @@ const url = process.env.EXPO_PUBLIC_API_URL || ''
 export default function UserAgePage() {
     const navigation = useNavigation()
     const [age, setAge] = useState(null)
+    const [username, setUsername] = useState('')
     const agegroups = [
         "Under 12", "12 - 15", "16 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 64", "65 or Older"
     ]
+
+    useEffect(() => {
+        (async () => {
+            const storedName = await AsyncStorage.getItem('Name')
+            setUsername(storedName || "Guest");
+        })()
+    }, [])
 
     useEffect(() => {
         if (age) {
@@ -42,7 +50,7 @@ export default function UserAgePage() {
     return(
         <View style={style.body}>
             <View style={style.userdp_heading}>
-                <Text style={[style.userdp_subhead,{fontWeight:300}]}>Hi Asfak</Text>
+                <Text style={[style.userdp_subhead,{fontWeight:300}]}>Hi {username}</Text>
                 <Text style={[style.userdp_subhead,{marginBottom:20}]}>How old are you?</Text>
                 <View>
                     {agegroups.map((item) => (

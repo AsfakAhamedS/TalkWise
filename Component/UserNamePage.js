@@ -14,6 +14,9 @@ export default function UserNamePage() {
 
     async function handleNext() {
         console.log("url ===>",url)
+        AsyncStorage.setItem('Name', name)
+        .then(() => console.log("Name stored"))
+        .catch(err => console.error("Name error:", err))
         const email = await AsyncStorage.getItem('Email')
         // const email = 'asfak@gmail.com'
         console.log(email)

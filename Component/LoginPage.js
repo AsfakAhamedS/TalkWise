@@ -17,7 +17,11 @@ export default function LoginPage() {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    function handleLogin() {
+    async function handleLogin() {
+        AsyncStorage.setItem('Email', email)
+        .then(() => console.log("Email stored"))
+        .catch(err => console.error("Email error:", err))
+        console.log("email ===>",await AsyncStorage.getItem('Email'))
         console.log("url ===>",url)
         axios.post(url + 'user-login', { useremail: email, userpsd: password })
         .then(response => {

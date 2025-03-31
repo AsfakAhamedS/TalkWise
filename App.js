@@ -16,6 +16,7 @@ import UserProfilePage from './Component/UserProfilePage'
 import UserComLevelPage from './Component/UserComLevelPage'
 import TabNavPage from './Component/TabNavPage'
 import SubscriptionPage from './Component/SubscriptionPage'
+import EditProfilePage from './Component/EditProfilePage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Stack = createStackNavigator()
@@ -38,7 +39,8 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-      
+          
+
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -146,13 +148,36 @@ export default function App() {
             component={SubscriptionPage}
             options={{headerShown:false}} 
           />
-          
-          
           <Stack.Screen 
             name="main" 
             component={TabNavPage} 
             options={{headerShown:false}}
           />
+          <Stack.Screen 
+            name="edit" 
+            component={EditProfilePage}
+            options={({ navigation }) => ({
+              headerTitle: () => (
+                <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
+                  Edit Profile
+                </Text>),
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>),
+              headerRight: () => (
+                <TouchableOpacity style={{ marginRight: 25,fontSize:18 }}>
+                  <Text style={{ fontSize: 16, fontWeight: "bold", color: "#007AFF" }}>Save</Text>
+                </TouchableOpacity>),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerTitleAlign: "center",
+            })} 
+          />
+
+
+          
+          
+          
         </Stack.Navigator>
       </NavigationContainer>
     </>

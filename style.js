@@ -8,6 +8,11 @@ export default StyleSheet.create({
         paddingHorizontal: 40,
         justifyContent: 'center',
     },
+    tab_body: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'center',
+    },
     container: {
         flex:1,
     },
@@ -383,6 +388,8 @@ export default StyleSheet.create({
         backgroundColor:'blue',
         justifyContent: "center", 
         alignItems: "center", 
+        borderWidth: 2,
+        borderColor: "#fff",
     },
 
     //  Subscription
@@ -483,4 +490,101 @@ export default StyleSheet.create({
         color:'#bababa',
     },
 
+    // profile
+    profile: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal:20,
+        paddingVertical: 20,
+        borderBottomWidth: 10,
+        borderBottomColor: '#f0f0f0',
+    },
+    pro_avatar: {
+        width: 60,
+        height: 60,
+        borderRadius: 30,
+        marginRight: 15,
+    },
+    profileName: {
+        fontSize: 18,
+        fontWeight: 'bold',
+    },
+    editprofile: {
+        fontSize: 14,
+        color: 'blue',
+        marginTop: 5,
+    },
+    settingitem: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        paddingHorizontal:20,
+        paddingVertical: 20,
+        borderBottomWidth: 1,
+        borderBottomColor: '#f0f0f0',
+    },
+    settingtitle: {
+        fontSize: 16,
+    },
+    logoutbutton: {
+        marginTop: 20,
+        paddingVertical: 15,
+    },
+    logouttext: {
+        fontSize: 17,
+        fontWeight:600,
+        color: 'blue',
+        textAlign: 'center',
+    },
+
+    // EditProfile Page
+    edit_pro_container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: 20,
+        alignItems: 'center',
+    },
+    edit_avatar_container: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: 50,
+        marginBottom:50,
+        position: 'relative',
+    },
+    edit_pro_avatar: {
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+    },
+    edit_pro_icon: {
+        position: 'absolute',
+        bottom: 0,
+        right: 0,
+        width: 30,
+        height: 30,
+        borderRadius: 15,
+        backgroundColor: 'blue',
+        justifyContent: "center", 
+        alignItems: "center",
+        borderWidth: 2,
+        borderColor: "#fff",
+    },
+    edit_input_container: {
+        width: '100%',
+        marginTop: 20,
+    },
+    edit_label: {
+        fontSize: 14,
+        color: '#bababa',
+        fontWeight: "bold",
+        marginBottom: 5,
+    },
+    edit_input: {
+        borderBottomWidth: 1,
+        borderBottomColor: "blue",
+        fontSize: 16,
+        paddingVertical: 5,
+        width: '100%',
+        textAlign: 'left',
+    },
 })
