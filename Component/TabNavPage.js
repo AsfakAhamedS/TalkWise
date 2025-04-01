@@ -53,14 +53,13 @@ export default function TabNavPage() {
         component={HomePage} 
         options={{
           headerTitle: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20,}}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20}}>
               <Image 
                 source={require('../assets/talkwisepng/Asset 2.png')} 
                 style={{ width: 40, height: 40, marginRight: 7 }} 
                 resizeMode="contain"
               />
-              <Image 
-                source={require('../assets/talkwisepng/Asset 3.png')} 
+              <Image source={require('../assets/talkwisepng/Asset 3.png')} 
                 style={{ width: 100, height: 100 }} 
                 resizeMode="contain"
               />

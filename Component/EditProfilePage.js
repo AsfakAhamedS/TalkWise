@@ -25,8 +25,11 @@ export default function EditProfilePage() {
         })()
     }, [])
     useEffect(() => {
-        avatar()
-    }, [])
+        if (useremail) {
+            console.log("avatar trigged")
+            avatar()
+        }
+    }, [useremail])
     
     function avatar() {
         axios.post(url + "get-user-avatar", { useremail: useremail })

@@ -17,6 +17,8 @@ import UserComLevelPage from './Component/UserComLevelPage'
 import TabNavPage from './Component/TabNavPage'
 import SubscriptionPage from './Component/SubscriptionPage'
 import EditProfilePage from './Component/EditProfilePage'
+import LessonPage from './Component/LessonPage'
+import UserChat from './Component/UserChat'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Stack = createStackNavigator()
@@ -39,7 +41,19 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-          
+          <Stack.Screen 
+            name="chat" 
+            component={UserChat}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
 
           <Stack.Screen 
             name="landing" 
@@ -153,6 +167,21 @@ export default function App() {
             component={TabNavPage} 
             options={{headerShown:false}}
           />
+          <Stack.Screen 
+            name="lesson" 
+            component={LessonPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          /> 
+
+
           <Stack.Screen 
             name="edit" 
             component={EditProfilePage}

@@ -23,9 +23,11 @@ export default function ProfileSettings() {
         })()
     }, [])
     useEffect(() => {
-        console.log("avatar trigged")
-        avatar()
-    }, [])
+        if (useremail) {
+            console.log("avatar trigged")
+            avatar()
+        }
+    }, [useremail])
     
     async function avatar(){
         console.log("email ==>",useremail)
@@ -39,6 +41,12 @@ export default function ProfileSettings() {
         .catch(error => {
             console.log("error ==> ",error.response?.data || "error")
         }) 
+    }
+
+    async function handleLogout(navigation){
+        await AsyncStorage.clear()
+        console.log("All data cleared from asyncStorage")
+        navigation.navigate('login')
     }
 
     return (
@@ -103,7 +111,7 @@ export default function ProfileSettings() {
                 </View>
                 <TouchableOpacity 
                     style={style.logoutbutton}
-                    onPress={() => navigation.navigate('login')}>
+                    onPress={() => handleLogout(navigation)}>
                     <Text style={style.logouttext}>Log out</Text>
                 </TouchableOpacity>
             </ScrollView>

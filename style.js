@@ -587,4 +587,157 @@ export default StyleSheet.create({
         width: '100%',
         textAlign: 'left',
     },
+
+    // HomePage
+    homepage_body: {
+        flex: 1,
+        alignItems: 'center',
+        backgroundColor: '#f8f8f8',
+    },
+    home_card: {
+        width: 320,
+        padding: 20,
+        backgroundColor: 'white',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+        marginTop:50,
+        marginBottom: 20,
+    },
+    home_card_image: {
+        width: '100%',
+        height: 150,
+        borderRadius: 10,
+        marginBottom: 10,
+    },
+    home_card_title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 10,
+    },
+    home_card_description: {
+        fontSize: 14,
+        lineHeight:24,
+        color: '#666',
+        marginBottom: 20,
+    },
+    card_button: {
+        backgroundColor: '#242424',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    card_button_text: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight:600
+    },
+
+    // LessonPage
+    lessonpage_body: {
+        flex: 1,
+        backgroundColor: '#f8f8f8',
+        padding: 20,
+    },
+    lesson_pagetitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    lesson_card: {
+        backgroundColor: 'white',
+        padding: 20,
+        borderRadius: 10,
+        marginBottom: 15,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+    },
+    lesson_cardtitle: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginBottom: 5,
+    },
+    lesson_carddescription: {
+        fontSize: 14,
+        color: '#666',
+        marginBottom: 15,
+    },
+    lesson_cardbtn: {
+        backgroundColor: '#252525',
+        padding: 10,
+        borderRadius: 5,
+        alignItems: 'center',
+    },
+    lesson_cardbtntext: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+
+    // UserChatPage
+    home_body: {
+        flex: 1,
+        backgroundColor: '#f8f8f8',
+        padding: 20,
+    },
+    pageTitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        textAlign: 'center',
+        marginBottom: 20,
+    },
+    chatControls: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        marginTop: 20,
+    },
+    recordButton: {
+        backgroundColor: '#e74c3c',
+        padding: 15,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginHorizontal: 10,
+    },
+    playButton: {
+        backgroundColor: '#2ecc71',
+        padding: 15,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginHorizontal: 10,
+    },
+    sendButton: {
+        backgroundColor: '#252525',
+        padding: 15,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginHorizontal: 10,
+    },
+    buttonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    messageCard: {
+        padding: 15,
+        borderRadius: 10,
+        marginBottom: 10,
+        maxWidth: '80%',
+    },
+    userMessage: {
+        backgroundColor: '#3498db',
+        alignSelf: 'flex-end',
+    },
+    botMessage: {
+        backgroundColor: '#2ecc71',
+        alignSelf: 'flex-start',
+    },
+    messageText: {
+        color: 'white',
+        fontSize: 14,
+    },
 })
