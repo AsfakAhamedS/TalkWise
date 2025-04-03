@@ -26,12 +26,13 @@ export default function LessonPage() {
     }, [useremail])
     
     function avatar() {
-        axios.post(url + "get-user-avatar", { useremail: useremail })
+        axios.post(url + "get-user-avatar", { type:'getuserdata', useremail: useremail })
         .then(response => {
             if(response.status == 200) {
                 AsyncStorage.setItem('Section', response?.data?.level)
                 .then(() => {
                     setLevel(response?.data?.level)
+                    console.log(level)
                 })
                 .catch(err => console.error("Section error:", err))
             }
@@ -62,6 +63,8 @@ export default function LessonPage() {
         <View style={style.lessonpage_body}>
             <Text style={style.lesson_pagetitle}>{level} Level</Text>
             <FlatList
+                showsHorizontalScrollIndicator={false}
+                showsVerticalScrollIndicator={false}
                 data={lessondata}
                 keyExtractor={(item) => item.level.toString()}
                 renderItem={({item}) => (

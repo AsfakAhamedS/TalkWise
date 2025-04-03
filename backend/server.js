@@ -1,4 +1,4 @@
-import express, { urlencoded } from "express"
+import express, { response, urlencoded } from "express"
 import cors from "cors"
 import { MongoClient } from "mongodb"
 import jwt from "jsonwebtoken"
@@ -267,7 +267,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
         if(!result){
             return res.status(404).json({ error: "User not found" })
         }
-        const fileUrl = `http://192.168.7.252:4500/uploads/${req.file.filename}`
+        const fileUrl = `http://192.168.250.252:4500/uploads/${req.file.filename}`
         const updateResult = await collection.updateOne({ email: useremail },{ $set: { userprofile: fileUrl } })
         if (updateResult.modifiedCount === 0) {
             return res.status(400).json({ error: 'Profile picture update failed' })
@@ -287,7 +287,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
 app.post('/get-user-avatar', async (req, res) => {
     let client
     try {
-        const { useremail } = req.body
+        const { type, useremail, name, email, phone, age , level  } = req.body
         console.log(useremail)
         const dbconnection = await getCollection("TalkWise", "Users")
         client = dbconnection.client
@@ -297,14 +297,21 @@ app.post('/get-user-avatar', async (req, res) => {
         if(!result){
             return res.status(404).json({ message: "User not found"})
         }
-        res.status(200).json({ 
-            message: "Get Image", 
-            name: result.username, 
-            email: result.email, 
-            phone:result.phone, 
-            age: result.age, 
-            level:result.communicationlevel, 
-            image:result.userprofile})
+        if(type === 'getuserdata'){
+            res.status(200).json({ 
+                message: "Get Image", 
+                name: result.username, 
+                email: result.email, 
+                phone:result.phone, 
+                age: result.age, 
+                level:result.communicationlevel, 
+                credit:result.usercredit,
+                image:result.userprofile})
+        }
+        if(type === 'updateuserdata'){
+            const updateresult = await collection.updateOne({ email:useremail },{ $set: { username:name.trim(),phone:phone,age:age,communicationlevel:level.trim() }})
+            res.status(200).json({message: "Updated Successfully"})
+        }
     }catch(e){
         res.status(500).json({ error: "Server error", e })
     }finally{
@@ -408,6 +415,58 @@ app.post('/chat', upload.single('audioFile'), async (req, res) => {
         return res.status(500).json({ error: 'Internal server error' })
     }
 })
+
+app.post("/lesson", async(req, res) => {
+    let client
+    let aires
+    try {
+        const { section, level, user } = req.body
+        if (!section) {
+            return res.status(400).json({ error: "Section is required" })
+        }
+        const dbConnection = await getCollection("TalkWise", "Lesson")
+        client = dbConnection.client
+        const collection = dbConnection.collection
+        const lesson = await collection.findOne({ section:section })
+        if (!lesson) {
+            return res.status(404).json({ message: "No lessons found for this section" })
+        }
+        if(level === lesson.levels[0].level){
+            console.log("level 1")
+          
+            aires = lesson.levels[0].conversations.map(step => ({
+                step:(step.step === 2 ? step.ai_prompt : null),
+            }))
+        }
+        let question = aires[1].step
+        let usercontent = `{This is system prompt,generate based on these, question: ${question} and expected answer : ${lesson.levels[0].conversations[1].expected_responses}, if user give correct answer : ${lesson.levels[0].conversations[1].correct_response} and user give wrong answer : ${lesson.levels[0].conversations[1].fallback_response}. if user tells not related these question,you says, focus on your lesson}`
+        console.log(usercontent)
+        const aiResponse = await axios.post(
+            'https://api.groq.com/openai/v1/chat/completions',
+            {
+                model: 'llama-3.1-8b-instant',
+                messages: [{ role: 'system', content: usercontent },{ role: 'user', content: user }],
+                temperature: 1,
+                max_tokens: 500,
+                stream: false,
+            },
+            {
+                headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+            }
+        )
+        const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
+        console.log('AI Response:', aiMessage)
+        res.status(200).json({ message: `Get lesson for ${section}`, Question:question, User:user, Ai: aiMessage})
+    }catch(e){
+        res.status(500).json({ error: "Server error", e })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
 
 
 app.listen(port, () => {

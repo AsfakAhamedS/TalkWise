@@ -20,7 +20,7 @@ export default function TabNavPage() {
 
           if(route.name === 'Home'){
             return <FontAwesome name="home" size={23} color={color} />
-          }else if(route.name === 'Plan'){
+          }else if(route.name === 'Subscription'){
             return <MaterialCommunityIcons name="crown-outline" size={25} color={color} />
           }else if(route.name === 'Profile'){
             iconName = focused ? 'person' : 'person-outline'
@@ -46,33 +46,9 @@ export default function TabNavPage() {
     >
       <Tab.Screen name="Home" 
         component={HomePage} 
-        options={{
-          headerTitle: () => (
-            <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 20}}>
-              <Image 
-                source={require('../assets/talkwisepng/Asset 2.png')} 
-                style={{ width: 40, height: 40, marginRight: 7 }} 
-                resizeMode="contain"
-              />
-              <Image source={require('../assets/talkwisepng/Asset 3.png')} 
-                style={{ width: 100, height: 100 }} 
-                resizeMode="contain"
-              />
-            </View>
-          ),
-          headerStyle: {
-            shadowColor: '#000',
-            shadowOpacity: 0.1,
-            shadowRadius: 10,
-            elevation: 2,
-          },
-          headerTitleStyle: {
-            fontSize: 18, 
-            fontWeight: 'bold',
-          },
-        }}
+        options={{headerShown:false}}
       />
-      <Tab.Screen name="Plan"
+      <Tab.Screen name="Subscription"
         component={SubscriptionPage} 
         options={{ headerShown: false }} 
       />

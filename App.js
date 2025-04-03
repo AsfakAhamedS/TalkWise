@@ -15,7 +15,7 @@ import UserAgePage from './Component/UserAgePage'
 import UserProfilePage from './Component/UserProfilePage'
 import UserComLevelPage from './Component/UserComLevelPage'
 import TabNavPage from './Component/TabNavPage'
-import SubscriptionPage from './Component/SubscriptionPage'
+import PlanPage from './Component/PlanPage'
 import EditProfilePage from './Component/EditProfilePage'
 import LessonPage from './Component/LessonPage'
 import UserChat from './Component/UserChat'
@@ -41,6 +41,11 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
+          <Stack.Screen 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
+          />
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -145,14 +150,12 @@ export default function App() {
           />
           <Stack.Screen 
             name="plan" 
-            component={SubscriptionPage}
+            component={PlanPage}
             options={{headerShown:false}} 
           />
-         <Stack.Screen 
-            name="main" 
-            component={TabNavPage} 
-            options={{headerShown:false}}
-          />
+          
+
+
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}
@@ -188,12 +191,8 @@ export default function App() {
                   Edit Profile
                 </Text>),
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ marginLeft: 15 }}>
                   <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>),
-              headerRight: () => (
-                <TouchableOpacity style={{ marginRight: 25,fontSize:18 }}>
-                  <Text style={{ fontSize: 16, fontWeight: "bold", color: "#007AFF" }}>Save</Text>
                 </TouchableOpacity>),
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
               headerTitleAlign: "center",

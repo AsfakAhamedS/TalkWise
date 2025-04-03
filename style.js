@@ -442,7 +442,8 @@ export default StyleSheet.create({
     plan_card_view:{
         flexDirection:'row',
         gap:30,
-        padding:30,
+        paddingHorizontal:30,
+        paddingVertical:20
     },
     plan_card:{
         borderWidth:2,
@@ -468,7 +469,7 @@ export default StyleSheet.create({
     subscribe_btn: {
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:80,
+        marginTop:20,
         marginBottom:5
     },
     subscribe_btn_to: {
@@ -547,7 +548,7 @@ export default StyleSheet.create({
     edit_avatar_container: {
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 50,
+        marginTop: 30,
         marginBottom:50,
         position: 'relative',
     },
@@ -586,6 +587,13 @@ export default StyleSheet.create({
         paddingVertical: 5,
         width: '100%',
         textAlign: 'left',
+    },
+    edit_save_btn: {
+        fontSize: 16, 
+        fontWeight: "bold", 
+        color: "#007AFF",
+        textAlign:'center',
+        marginTop:50,
     },
 
     // HomePage
@@ -633,6 +641,34 @@ export default StyleSheet.create({
         color: 'white',
         fontSize: 16,
         fontWeight:600
+    },
+    home_header:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        paddingHorizontal: 20, 
+        position:'relative',
+        top:10,
+        right:'15%',
+    },
+    home_credit:{
+        flexDirection:'column',
+        justifyContent:'center', 
+        position:'relative',
+        left:'10%',
+        top:'10%'   
+    },
+    home_credit_text: {
+        width:45,
+        fontSize: 16,
+        fontWeight:700,
+        textAlign:'center',
+        borderWidth:1,
+        borderRadius:50,
+        borderColor:'#252525',
+        backgroundColor:'transparent',
+        color:'#252525',
+        paddingHorizontal:10,
+        paddingVertical:5,  
     },
 
     // LessonPage

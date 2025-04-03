@@ -9,10 +9,12 @@ const url = process.env.EXPO_PUBLIC_API_URL || ''
 export default function HomePage(){
     const navigation = useNavigation()
     const [useremail, setUseremail] = useState('')
+    const [credit, setCredit] = useState(null)
     const [level, setLevel] = useState('')
 
     useEffect(() => {
         (async () => {
+            console.log("loading")
             const uemail = await AsyncStorage.getItem('Email')
             setUseremail( uemail)
         })()
@@ -25,10 +27,12 @@ export default function HomePage(){
     }, [useremail])
     
     function avatar() {
-        axios.post(url + "get-user-avatar", { useremail: useremail })
+        axios.post(url + "get-user-avatar", { type:'getuserdata', useremail: useremail })
             .then(response => {
                 if (response.status == 200) {
+                    setCredit(response?.data?.credit)
                     setLevel(response?.data?.level)
+                    console.log("credit ==>",credit)
                 }
             })
             .catch(error => {
@@ -37,6 +41,22 @@ export default function HomePage(){
     }
     return(
         <View style={style.homepage_body}>
+            <View style={{flexDirection:'row'}}>
+                <View style={style.home_header}>
+                    <Image 
+                    source={require('../assets/talkwisepng/Asset 2.png')} 
+                    style={{ width: 40, height: 40, marginRight: 7 }} 
+                    resizeMode="contain"
+                    />
+                    <Image source={require('../assets/talkwisepng/Asset 3.png')} 
+                    style={{ width: 100, height: 100 }} 
+                    resizeMode="contain"
+                    />
+                </View>
+                <View style={style.home_credit}>
+                    <Text style={style.home_credit_text}>{credit}</Text>
+                </View>
+            </View>
             <ScrollView 
                 showsHorizontalScrollIndicator={false}
                 showsVerticalScrollIndicator={false}

@@ -15,6 +15,7 @@ export default function ProfileSettings() {
 
     useEffect(() => {
         (async () => {
+            console.log("loading")
             console.log("email trigged")
             const uemail = await AsyncStorage.getItem('Email')
             console.log("pro email",uemail)
@@ -31,7 +32,7 @@ export default function ProfileSettings() {
     
     async function avatar(){
         console.log("email ==>",useremail)
-        await axios.post(url+"get-user-avatar", {useremail:useremail})
+        await axios.post(url+"get-user-avatar", {type:'getuserdata', useremail:useremail})
         .then(response => {
             if(response.status==200){
                 setName(response?.data?.name)

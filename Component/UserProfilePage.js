@@ -30,7 +30,7 @@ export default function UserProfilePage() {
         })()
     }, [])
 
-    const pickImage = async () => {
+    async function pickImage(){
         let result = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ['images'],
             allowsEditing: true,
