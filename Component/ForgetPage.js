@@ -75,7 +75,6 @@ export default function ForgetPage() {
                     text1: error.response?.data?.error,
                     text2: 'Failed to send OTP',
                 }))
-                // console.error("OTP Error:", error)
             })
     }
 

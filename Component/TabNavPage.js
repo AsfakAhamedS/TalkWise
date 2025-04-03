@@ -44,11 +44,6 @@ export default function TabNavPage() {
         },
       })}
     >
-      
-
-
-
-
       <Tab.Screen name="Home" 
         component={HomePage} 
         options={{

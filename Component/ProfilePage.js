@@ -85,9 +85,9 @@ export default function ProfileSettings() {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Areas of interest</Text>
+                        <Text style={style.settingtitle}>Level</Text>
                         <View style={{flexDirection:'row',gap:15}}>
-                            <Text style={[style.settingtitle,{color:'#bababa'}]}>Multi</Text>
+                            <Text style={[style.settingtitle,{color:'#bababa'}]}>Beginner</Text>
                             <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
                         </View>
                     </TouchableOpacity>

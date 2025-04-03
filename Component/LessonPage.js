@@ -8,7 +8,7 @@ const url = process.env.EXPO_PUBLIC_API_URL || ''
 
 export default function LessonPage() {
     const navigation = useNavigation()
-    const [useremail, setUseremail] = useState('' || 'Mani@gmail.com')
+    const [useremail, setUseremail] = useState('')
     const [level, setLevel] = useState('')
     const [lessondata, setLessondata] = useState('')
 
@@ -53,7 +53,7 @@ export default function LessonPage() {
                 }
             })
             .catch(error => {
-                console.log("error ==> ", error.response?.data || "error")
+                console.log("error ==> ", error?.response?.data || "error")
             })
         }
     }

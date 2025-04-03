@@ -703,6 +703,14 @@ export default StyleSheet.create({
         alignItems: 'center',
         marginHorizontal: 10,
     },
+    playButtonTop: {
+        backgroundColor: '#2ecc71',
+        padding: 10,
+        borderRadius: 50,
+        alignItems: 'center',
+        marginHorizontal: 10,
+        marginTop:10
+    },
     playButton: {
         backgroundColor: '#2ecc71',
         padding: 15,

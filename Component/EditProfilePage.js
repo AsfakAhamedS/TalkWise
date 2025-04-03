@@ -74,18 +74,21 @@ export default function EditProfilePage() {
                 <Text style={style.edit_label}>PHONE</Text>
                 <TextInput
                     value={phone}
+                    onChangeText={setPhone}
                     style={style.edit_input}/>
             </View>
             <View style={style.edit_input_container}>
                 <Text style={style.edit_label}>Age</Text>
                 <TextInput
                     value={age}
+                    onChangeText={setAge}
                     style={style.edit_input}/>
             </View>
             <View style={style.edit_input_container}>
                 <Text style={style.edit_label}>Communication Level</Text>
                 <TextInput
                     value={level}
+                    onChangeText={setLevel}
                     style={style.edit_input}/>
             </View>
         </View>

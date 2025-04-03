@@ -42,20 +42,6 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen 
-            name="chat" 
-            component={UserChat}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
-          />
-
-          <Stack.Screen 
             name="landing" 
             component={LandingPage} 
             options={{
@@ -162,7 +148,7 @@ export default function App() {
             component={SubscriptionPage}
             options={{headerShown:false}} 
           />
-          <Stack.Screen 
+         <Stack.Screen 
             name="main" 
             component={TabNavPage} 
             options={{headerShown:false}}
@@ -180,8 +166,19 @@ export default function App() {
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
             })} 
           /> 
-
-
+          <Stack.Screen 
+            name="chat" 
+            component={UserChat}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
           <Stack.Screen 
             name="edit" 
             component={EditProfilePage}

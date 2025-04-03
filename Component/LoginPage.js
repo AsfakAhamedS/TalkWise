@@ -43,7 +43,6 @@ export default function LoginPage() {
                 text1: 'Login Failed',
                 text2: error.response?.data?.error || 'Invalid email or password!',
             }))
-            // console.error("Login Error:", error)
         })
     }
 
