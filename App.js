@@ -16,9 +16,12 @@ import UserProfilePage from './Component/UserProfilePage'
 import UserComLevelPage from './Component/UserComLevelPage'
 import TabNavPage from './Component/TabNavPage'
 import PlanPage from './Component/PlanPage'
+import PayMethodPage from './Component/PayMethodPage'
+import PaymentPage from './Component/PaymentPage'
 import EditProfilePage from './Component/EditProfilePage'
 import LessonPage from './Component/LessonPage'
 import UserChat from './Component/UserChat'
+import AiChatPage from './Component/AiChatPage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Stack = createStackNavigator()
@@ -41,6 +44,19 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
+        {/* <Stack.Screen 
+            name="ai" 
+            component={AiChatPage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          /> */}
           <Stack.Screen 
             name="main" 
             component={TabNavPage} 
@@ -153,7 +169,34 @@ export default function App() {
             component={PlanPage}
             options={{headerShown:false}} 
           />
-          
+          <Stack.Screen 
+            name="paymethod" 
+            component={PayMethodPage}
+            options={({ navigation }) => ({
+              title: 'Payment', 
+              headerTitleAlign: 'center',       
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
+          <Stack.Screen 
+            name="payment" 
+            component={PaymentPage}
+            options={({ navigation }) => ({
+              title: 'Payment', 
+              headerTitleAlign: 'center',       
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
 
 
           <Stack.Screen 

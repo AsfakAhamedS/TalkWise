@@ -3,6 +3,7 @@ import { View, Text, Image, TouchableOpacity, styleheet, ScrollView } from 'reac
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
+import Modal from 'react-native-modal'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import style from '../style'
 const url = process.env.EXPO_PUBLIC_API_URL || ''
@@ -12,6 +13,8 @@ export default function ProfileSettings() {
     const [image, setImage] = useState(null)
     const [useremail, setUseremail] = useState(null)
     const [name, setName] = useState(null)
+      const [modalVisible, setModalVisible] = useState(false)
+      const [theme, setTheme] = useState("Light")
 
     useEffect(() => {
         (async () => {
@@ -51,12 +54,12 @@ export default function ProfileSettings() {
     }
 
     return (
-        <View style={style.tab_body}>
-            <ScrollView style={{marginTop:35}}>
+        <View style={[style.tab_body,theme === 'Dark' ? {backgroundColor:'#252525'} : {}]}>
+            <View style={{marginTop:10}}>
                 <View style={style.profile}>
                     <Image source={{uri:image}} style={style.pro_avatar}/>
                     <View>
-                        <Text style={style.profileName}>{name}</Text>
+                        <Text style={[style.profileName,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>{name}</Text>
                         <TouchableOpacity 
                             onPress={() => navigation.navigate('edit')}>
                             <Text style={style.editprofile}>Edit profile</Text>
@@ -65,49 +68,89 @@ export default function ProfileSettings() {
                 </View>
                 <View>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Native language</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Native language</Text>
                         <View style={{flexDirection:'row',gap:15}}>
                             <Text style={[style.settingtitle,{color:'#bababa'}]}>Tamil</Text>
                             <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>App language</Text>
-                        <View style={{flexDirection:'row',gap:15}}>
-                            <Text style={[style.settingtitle,{color:'#bababa'}]}>English</Text>
-                            <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Learning goal</Text>
-                        <View style={{flexDirection:'row',gap:15}}>
-                            <Text style={[style.settingtitle,{color:'#bababa'}]}>Education</Text>
-                            <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
-                        </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Level</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Level</Text>
                         <View style={{flexDirection:'row',gap:15}}>
                             <Text style={[style.settingtitle,{color:'#bababa'}]}>Beginner</Text>
                             <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
                         </View>
                     </TouchableOpacity>
+                    <TouchableOpacity style={style.settingitem}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Upgrade</Text>
+                        <View style={{flexDirection:'row',gap:15}}>
+                            <Text style={[style.settingtitle,{color:'#bababa'}]}>Free</Text>
+                            <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
+                        </View>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={style.settingitem}
+                        onPress={() => setModalVisible(true)}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Mode</Text>
+                        <View style={{flexDirection:'row',gap:15}}>
+                            <Text style={[style.settingtitle,{color:'#bababa'}]}>{theme}</Text>
+                            <Fontisto name="angle-right" color="gray" size={14} style={{marginTop:3}}/>
+                        </View>
+                    </TouchableOpacity>
+                    <Modal 
+                        animationType="slide"
+                        transparent={true}
+                        visible={modalVisible}
+                        onRequestClose={() => setModalVisible(false)}>
+                            <View style={style.modalcontainer}>
+                              <View style={style.modalcontent}>
+                                <Text style={style.modaltitle}>Select Theme</Text>
+                    
+                                <TouchableOpacity 
+                                  style={style.modaloption} 
+                                  onPress={() => {
+                                    setTheme("Light")
+                                    setModalVisible(false)
+                                  }}
+                                >
+                                  <Text style={style.modaloptiontxt}>Light Mode</Text>
+                                </TouchableOpacity>
+                    
+                                <TouchableOpacity 
+                                  style={style.modaloption} 
+                                  onPress={() => {
+                                    setTheme("Dark")
+                                    setModalVisible(false)
+                                  }}
+                                >
+                                  <Text style={style.modaloptiontxt}>Dark Mode</Text>
+                                </TouchableOpacity>
+                    
+                                <TouchableOpacity 
+                                  style={style.modalclosebtn} 
+                                  onPress={() => setModalVisible(false)}
+                                >
+                                  <Text style={style.modalclosebtntxt}>Cancel</Text>
+                                </TouchableOpacity>
+                              </View>
+                            </View>
+                          </Modal>
                     <TouchableOpacity style={[style.settingitem,{borderBottomWidth:10}]}>
-                        <Text style={style.settingtitle}>Notification</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>MyProgress</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Privacy policy</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Privacy policy</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Terms of use</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Terms of use</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.settingitem}>
-                        <Text style={style.settingtitle}>Support</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Support</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={[style.settingitem,{borderBottomWidth:10}]}
                         onPress={() => navigation.navigate('plan')}>
-                        <Text style={style.settingtitle}>Plan</Text>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Plan</Text>
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity 
@@ -115,9 +158,9 @@ export default function ProfileSettings() {
                     onPress={() => handleLogout(navigation)}>
                     <Text style={style.logouttext}>Log out</Text>
                 </TouchableOpacity>
-            </ScrollView>
+            </View>
         </View>
-    );
+    )
 }
 
 

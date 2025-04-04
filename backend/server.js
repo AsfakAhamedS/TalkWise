@@ -267,7 +267,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
         if(!result){
             return res.status(404).json({ error: "User not found" })
         }
-        const fileUrl = `http://192.168.250.252:4500/uploads/${req.file.filename}`
+        const fileUrl = `${process.env.EXPO_PUBLIC_API_URL}uploads/${req.file.filename}`
         const updateResult = await collection.updateOne({ email: useremail },{ $set: { userprofile: fileUrl } })
         if (updateResult.modifiedCount === 0) {
             return res.status(400).json({ error: 'Profile picture update failed' })
@@ -435,11 +435,11 @@ app.post("/lesson", async(req, res) => {
             console.log("level 1")
           
             aires = lesson.levels[0].conversations.map(step => ({
-                step:(step.step === 2 ? step.ai_prompt : null),
+                step:(step.step === 1 ? step.ai_prompt : null),
             }))
         }
-        let question = aires[1].step
-        let usercontent = `{This is system prompt,generate based on these, question: ${question} and expected answer : ${lesson.levels[0].conversations[1].expected_responses}, if user give correct answer : ${lesson.levels[0].conversations[1].correct_response} and user give wrong answer : ${lesson.levels[0].conversations[1].fallback_response}. if user tells not related these question,you says, focus on your lesson}`
+        let question = aires[0].step
+        let usercontent = `{This is system prompt,generate based on these, question: ${question} and expected answer : ${lesson.levels[0].conversations[0].expected_responses}, if user give correct answer : ${lesson.levels[0].conversations[0].correct_response} and user give wrong answer : ${lesson.levels[0].conversations[0].fallback_response}. if user tells not related these question,you says, focus on your lesson}`
         console.log(usercontent)
         const aiResponse = await axios.post(
             'https://api.groq.com/openai/v1/chat/completions',
@@ -457,6 +457,37 @@ app.post("/lesson", async(req, res) => {
         const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
         console.log('AI Response:', aiMessage)
         res.status(200).json({ message: `Get lesson for ${section}`, Question:question, User:user, Ai: aiMessage})
+    }catch(e){
+        res.status(500).json({ error: "Server error", e })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
+app.post("/payment", async(req, res) => {
+    let client
+    try {
+        const { planoption, paymethod } = req.body
+        if (!planoption) {
+            return res.status(400).json({ error: "Plan is required" })
+        }
+        const dbConnection = await getCollection("TalkWise", "Lesson")
+        client = dbConnection.client
+        const collection = dbConnection.collection
+        const lesson = await collection.findOne({ section:section })
+        if (!lesson) {
+            return res.status(404).json({ message: "No lessons found for this section" })
+        }
+        res.status(200).json({ 
+            message: "Get section", 
+            levels: lesson.levels.map(level => ({
+                level: level.level,
+                title: level.lesson_title,
+                description: level.description
+            }))})
     }catch(e){
         res.status(500).json({ error: "Server error", e })
     }finally{

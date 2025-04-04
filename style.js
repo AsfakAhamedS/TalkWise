@@ -451,7 +451,7 @@ export default StyleSheet.create({
         height:200,
         borderRadius:20,
         borderColor:'#bababa',
-        alignItems:'center'
+        alignItems:'center',
     },
     plan_circle:{
         position:'absolute',
@@ -489,6 +489,111 @@ export default StyleSheet.create({
         fontWeight:400,
         textAlign:'center',
         color:'#bababa',
+    },
+
+    // PaymentMethod
+    payment_container: { 
+        flex: 1,
+        // backgroundColor: '#f8f8f8',
+        backgroundColor: '#fff',
+        paddingHorizontal:20,
+        paddingVertical:20
+    },
+    payment_title: { 
+        fontSize: 22, 
+        fontWeight: 'bold', 
+        textAlign:'center',
+        marginBottom: 30 
+    },
+    payment_option: { 
+        padding: 15, 
+        width: '100%',
+        height:70, 
+        backgroundColor: '#f5f5f5', 
+        marginBottom: 10, 
+        borderRadius: 10, 
+        alignItems: 'center',
+        justifyContent:'center' 
+    },
+    payment_inbtn:{
+        flex:1,
+        flexDirection:'row',
+        alignItems:'center',
+    },
+    pay_icon_container:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    pay_txt_container:{
+        flex:4,
+        marginLeft:50
+    },
+    payment_text: { 
+        fontSize: 22,
+        fontWeight:600
+    },
+    method_selected: { 
+        borderColor: '#252525', 
+        borderWidth: 2 
+    },
+    pay_btn_container:{
+        alignItems:'center'
+    },
+    pay_btn: { 
+        width:'100%',
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor: '#252525', 
+        paddingHorizontal:15,
+        paddingVertical:15,
+        borderRadius: 10,
+        marginTop:30,
+    },
+    pay_btn_txt: { 
+        color: '#fff', 
+        fontSize: 18, 
+        fontWeight: 'bold' 
+    },
+
+    // PaymentPage
+    paycontainer: { 
+        flex: 1, 
+        backgroundColor: '#fff', 
+        paddingHorizontal:20,
+        paddingVertical:20
+    },
+    paytitle: { 
+        fontSize: 22, 
+        fontWeight: '700', 
+        textAlign: 'center', 
+        marginBottom: 20 
+    },
+    detailsbox: { 
+        padding: 15, 
+        backgroundColor: '#f5f5f5', 
+        borderRadius: 10, 
+        marginBottom: 20 
+    },
+    courseTitle: { 
+        fontSize: 18, 
+        fontWeight: '700', 
+        color: '#333' 
+    },
+    courseText: { 
+        fontSize: 16, 
+        color: '#666' 
+    },
+    priceText: { 
+        fontSize: 18, 
+        fontWeight: '700', 
+        color: '#000', 
+        marginTop: 5 
+    },
+    creditText: { 
+        fontSize: 16, 
+        color: '#007AFF', 
+        marginTop: 5 
     },
 
     // profile
@@ -536,6 +641,44 @@ export default StyleSheet.create({
         fontWeight:600,
         color: 'blue',
         textAlign: 'center',
+    },
+    modalcontainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0,0,0,0.3)",
+    },
+    modalcontent: {
+        backgroundColor: "#fff",
+        padding: 20,
+        borderRadius: 10,
+        width: 250,
+        alignItems: "center",
+    },
+    modaltitle: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 15,
+    },
+    modaloption: {
+        padding: 10,
+        width: "100%",
+        alignItems: "center",
+    },
+    modaloptiontxt: {
+        fontSize: 16,
+    },
+    modalclosebtn: {
+        marginTop: 10,
+        padding: 10,
+        width: "100%",
+        alignItems: "center",
+        backgroundColor: "#ddd",
+        borderRadius: 5,
+    },
+    modalclosebtntxt: {
+        fontSize: 16,
+        fontWeight: "bold",
     },
 
     // EditProfile Page

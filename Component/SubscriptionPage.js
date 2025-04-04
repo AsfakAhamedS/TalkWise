@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react'
-import { Text, View,Touchable, TouchableOpacity, TextInput, Image } from 'react-native'
+import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
 import {useNavigation} from '@react-navigation/native'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import style from '../style'
-import { ScrollView } from 'react-native-gesture-handler'
+import { Pressable, ScrollView } from 'react-native-gesture-handler'
 
 export default function SubscriptionPage(){
     const navigation = useNavigation()
-    const [selectedPlan, setSelectedPlan] = useState(null)
+    const [selectedPlan, setSelectedPlan] = useState('free')
     return(
         <>
          <StatusBar style='false'/>
@@ -30,61 +30,65 @@ export default function SubscriptionPage(){
              </View>
              <View style={style.plan}>
                 <ScrollView style={{marginTop:50}}>
-                    <View style={style.plan_card_view}>
-                        <TouchableOpacity 
-                            style={[style.plan_card, selectedPlan === "onemonth" ? { borderColor: '#007AFF' } : {}]}
-                            onPress={() => setSelectedPlan("onemonth")}>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>1 Month</Text>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹299</Text>
-                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 50 Credits</Text>
-                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed month</Text>
-                            {selectedPlan === "onemonth" ? 
+                    <View style={style.plan_card_view} >
+                        <Pressable 
+                            style={[style.plan_card, selectedPlan === "free" ? { borderColor: '#007AFF' } : {}]}
+                            onPress={() => setSelectedPlan("free")}>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Free</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹0</Text>
+                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Limited Credits</Text>
+                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Limited access only</Text>
+                            {selectedPlan === "free" ? 
                             (<View style={style.plan_circle}>
                                 <FontAwesome name="check" color="#fff" size={13} />
                             </View>) : null}
-                        </TouchableOpacity>
-                        <TouchableOpacity 
+                        </Pressable>
+                        <Pressable 
                             style={[style.plan_card,selectedPlan === "threemonth" ? { borderColor: '#007AFF' } : {}]}
                             onPress={() => setSelectedPlan("threemonth")}>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>3 Months</Text>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹499</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Basic</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹299</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 100 Credits</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed every 3 months</Text>
                             {selectedPlan === "threemonth" ?
                             (<View style={style.plan_circle}>
                                 <FontAwesome name="check" color="#fff" size={13} />
                             </View>) : null}
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                     <View style={style.plan_card_view}>
-                        <TouchableOpacity 
+                        <Pressable 
                             style={[style.plan_card, selectedPlan === "sixmonth" ? { borderColor: '#007AFF' } : {}]}
                             onPress={() => setSelectedPlan("sixmonth")}>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>6 Months</Text>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹1,000</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Standard</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹499</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 300 Credits</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed every 6 months</Text>
                             {selectedPlan === "sixmonth" ? 
                             (<View style={style.plan_circle}>
                                 <FontAwesome name="check" color="#fff" size={13} />
                             </View>) : null}
-                        </TouchableOpacity>
-                        <TouchableOpacity 
+                        </Pressable>
+                        <Pressable 
                             style={[style.plan_card,selectedPlan === "yearly" ? { borderColor: '#007AFF' } : {}]}
                             onPress={() => setSelectedPlan("yearly")}>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Yearly</Text>
-                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹1,500</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Premium</Text>
+                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹1,000</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 500 Credits</Text>
                             <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed yearly</Text>
                             {selectedPlan === "yearly" ?
                             (<View style={style.plan_circle}>
                                 <FontAwesome name="check" color="#fff" size={13} />
                             </View>) : null}
-                        </TouchableOpacity>
+                        </Pressable>
                     </View>
                 </ScrollView>
                 <View style={style.subscribe_btn}>
-                    <TouchableOpacity style={style.subscribe_btn_to} activeOpacity={0.4} >
+                    <TouchableOpacity 
+                        style={style.subscribe_btn_to} 
+                        activeOpacity={0.4} 
+                        onPress={() => {navigation.navigate("paymethod", {plan:"Bacis",amount:499,credit:500})}}
+                        disabled={!selectedPlan}>
                         <Text style={style.subscribe_btn_text}>Subscribe now</Text>
                     </TouchableOpacity>
                 </View>
