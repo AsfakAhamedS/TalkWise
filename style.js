@@ -310,6 +310,7 @@ export default StyleSheet.create({
     disabledText: {
         color: '#808080' 
     },
+
     // UserDetailPage
     userdp_heading:{
         flex:1,
@@ -617,7 +618,7 @@ export default StyleSheet.create({
     },
     editprofile: {
         fontSize: 14,
-        color: 'blue',
+        color: '#3399ff',
         marginTop: 5,
     },
     settingitem: {
@@ -639,46 +640,41 @@ export default StyleSheet.create({
     logouttext: {
         fontSize: 17,
         fontWeight:600,
-        color: 'blue',
+        color: '#3399ff',
         textAlign: 'center',
     },
-    modalcontainer: {
+    theme_modal_btn:{
         flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "rgba(0,0,0,0.3)",
+        // backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    modalcontent: {
-        backgroundColor: "#fff",
-        padding: 20,
+    theme_modal_container:{
         borderRadius: 10,
-        width: 250,
-        alignItems: "center",
+        width: '80%',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        elevation: 5
     },
-    modaltitle: {
-        fontSize: 18,
-        fontWeight: "bold",
-        marginBottom: 15,
+    theme_modal_inside_btn:{
+        paddingVertical: 12,
+        borderBottomColor: '#ccc',
     },
-    modaloption: {
-        padding: 10,
-        width: "100%",
-        alignItems: "center",
-    },
-    modaloptiontxt: {
+    theme_modal_txt:{
         fontSize: 16,
+        textAlign: 'center'
     },
-    modalclosebtn: {
-        marginTop: 10,
-        padding: 10,
-        width: "100%",
-        alignItems: "center",
-        backgroundColor: "#ddd",
-        borderRadius: 5,
+    theme_modal_cancel_btn:{
+        marginTop: 6,
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc'
     },
-    modalclosebtntxt: {
+    theme_modal_cancel_txt:{
         fontSize: 16,
-        fontWeight: "bold",
+        color: '#3399ff',
+        textAlign: 'center',
+        fontWeight: '600'
     },
 
     // EditProfile Page
@@ -725,18 +721,84 @@ export default StyleSheet.create({
     },
     edit_input: {
         borderBottomWidth: 1,
-        borderBottomColor: "blue",
+        borderBottomColor: "#3399ff",
         fontSize: 16,
         paddingVertical: 5,
         width: '100%',
         textAlign: 'left',
     },
     edit_save_btn: {
-        fontSize: 16, 
+        fontSize: 18, 
         fontWeight: "bold", 
-        color: "#007AFF",
+        color: '#3399ff',
         textAlign:'center',
         marginTop:50,
+    },
+    age_modal_btn:{
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    age_modal_container:{
+        borderRadius: 10,
+        width: '80%',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        elevation: 5
+    },
+    age_modal_inside_btn:{
+        paddingVertical: 12,
+        borderBottomColor: '#ccc',
+    },
+    age_modal_txt:{
+        fontSize: 16,
+        textAlign: 'center'
+    },
+    age_modal_cancel_btn:{
+        marginTop: 15,
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc'
+    },
+    age_modal_cancel_txt:{
+        fontSize: 16,
+        color: '#3399ff',
+        textAlign: 'center',
+        fontWeight: '600'
+    },
+    level_modal_btn:{
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    level_modal_container:{
+        borderRadius: 10,
+        width: '80%',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        elevation: 5
+    },
+    level_modal_inside_btn:{
+        paddingVertical: 12,
+        borderBottomColor: '#ccc',
+    },
+    level_modal_txt:{
+        fontSize: 16,
+        textAlign: 'center'
+    },
+    level_modal_cancel_btn:{
+        marginTop: 10,
+        paddingVertical: 10,
+        borderTopWidth: 1,
+        borderTopColor: '#ccc'
+    },
+    level_modal_cancel_txt:{
+        fontSize: 16,
+        color: '#3399ff',
+        textAlign: 'center',
+        fontWeight: '600'
     },
 
     // HomePage

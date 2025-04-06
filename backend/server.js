@@ -267,7 +267,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
         if(!result){
             return res.status(404).json({ error: "User not found" })
         }
-        const fileUrl = `${process.env.EXPO_PUBLIC_API_URL}uploads/${req.file.filename}`
+        const fileUrl = `${process.env.API_URL}uploads/${req.file.filename}`
         const updateResult = await collection.updateOne({ email: useremail },{ $set: { userprofile: fileUrl } })
         if (updateResult.modifiedCount === 0) {
             return res.status(400).json({ error: 'Profile picture update failed' })
@@ -288,7 +288,7 @@ app.post('/get-user-avatar', async (req, res) => {
     let client
     try {
         const { type, useremail, name, email, phone, age , level  } = req.body
-        console.log(useremail)
+        console.log("server ==>",useremail)
         const dbconnection = await getCollection("TalkWise", "Users")
         client = dbconnection.client
         const collection = dbconnection.collection
@@ -309,7 +309,16 @@ app.post('/get-user-avatar', async (req, res) => {
                 image:result.userprofile})
         }
         if(type === 'updateuserdata'){
-            const updateresult = await collection.updateOne({ email:useremail },{ $set: { username:name.trim(),phone:phone,age:age,communicationlevel:level.trim() }})
+            const updatefield = {}
+            if(name) updatefield.username = name.trim()
+            if(phone) updatefield.phone = phone
+            if(age) updatefield.age = age
+            if(level) updatefield.communicationlevel = level.trim()
+
+            const updateresult = await collection.updateOne(
+                { email: useremail },
+                { $set: updatefield }
+            )
             res.status(200).json({message: "Updated Successfully"})
         }
     }catch(e){

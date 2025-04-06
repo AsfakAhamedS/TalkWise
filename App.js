@@ -228,21 +228,32 @@ export default function App() {
           <Stack.Screen 
             name="edit" 
             component={EditProfilePage}
-            options={({ navigation }) => ({
-              headerTitle: () => (
-                <Text style={{ fontSize: 18, fontWeight: "bold", textAlign: "center" }}>
-                  Edit Profile
-                </Text>),
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ marginLeft: 15 }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-              headerTitleAlign: "center",
-            })} 
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                headerTitle: () => (
+                  <Text style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: theme === 'Dark' ? '#fff' : '#000',
+                    textAlign: 'center'
+                  }}>
+                    Edit Profile
+                  </Text>
+                ),
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: {
+                  backgroundColor: theme === 'Dark' ? '#252525' : '#fff',
+                  elevation: 0
+                },
+                headerTitleAlign: 'center'
+              }
+            }}
           />
-
-
           
           
           

@@ -1,12 +1,12 @@
-import { useEffect, useState } from 'react'
-import { View, Text, Image, TouchableOpacity, TextInput } from 'react-native'
+import { useEffect, useState, useLayoutEffect } from 'react'
+import { View, Text, Image, TouchableOpacity, TextInput, Modal, FlatList } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native'
 import * as ImagePicker from 'expo-image-picker'
 import Toast from 'react-native-toast-message'
-import DropDownPicker from 'react-native-dropdown-picker'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
+import AntDesign from 'react-native-vector-icons/AntDesign'
 import style from '../style'
 
 const url = process.env.EXPO_PUBLIC_API_URL || ''
@@ -21,14 +21,27 @@ export default function EditProfilePage() {
     const [age, setAge] = useState('')
     const [level, setLevel] = useState('')
     const [updateimage, setUpdateimage] = useState('')
-    const [press, setPress] = useState('')
+    const [showagemodal, setShowagemodal] = useState(false)
+    const agegroups = ["Under 12", "12 - 15", "16 - 24", "25 - 34", "35 - 44", "45 - 54", "55 - 64", "65 or Older"]
+    const [showlevelmodal, setShowlevelmodal] = useState(false)
+    const levels = ["Beginner", "Intermediate", "Advanced"]
+    const [theme, setTheme] = useState('')
 
+    useEffect(() => {
+        (async () => {
+          const mode = await AsyncStorage.getItem('Mode')
+          setTheme(mode)
+          navigation.setParams({ theme: mode })
+        })()
+    }, [])
+    
     useEffect(() => {
         (async () => {
             const uemail = await AsyncStorage.getItem('Email')
             setUseremail( uemail)
         })()
     }, [])
+
     useEffect(() => {
         if (useremail) {
             console.log("avatar trigged")
@@ -141,13 +154,13 @@ export default function EditProfilePage() {
 
     return (
         <>
-        <View style={style.edit_pro_container}>
+        <View style={[style.edit_pro_container,theme === 'Dark' ? {backgroundColor:'#252525'} : {}]}>
             <View style={style.edit_avatar_container}>
                 {updateimage === '' ?  
                 (<>
                     <Image source={{ uri: image }} style={style.edit_pro_avatar} />
                     <TouchableOpacity 
-                        style={style.edit_pro_icon} 
+                        style={[style.edit_pro_icon,theme === 'Dark' ? {borderColor: "#252525"} : {}]} 
                         onPress={pickImage}>
                         <MaterialCommunityIcons name="camera-plus-outline" color="#fff" size={13} />
                     </TouchableOpacity>
@@ -155,7 +168,7 @@ export default function EditProfilePage() {
                 : (<>
                     <Image source={{ uri: updateimage }} style={style.edit_pro_avatar} />
                     <TouchableOpacity 
-                        style={style.edit_pro_icon} 
+                        style={[style.edit_pro_icon,theme === 'Dark' ? {borderColor: "#252525"} : {}]} 
                         onPress={pickImage}>
                         <MaterialCommunityIcons name="camera-plus-outline" color="#fff" size={13} />
                     </TouchableOpacity>
@@ -166,7 +179,7 @@ export default function EditProfilePage() {
                 <TextInput
                     value={name}
                     onChangeText={setName}
-                    style={style.edit_input}/>
+                    style={[style.edit_input,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}/>
             </View>
             <View style={style.edit_input_container}>
                 <Text style={style.edit_label}>EMAIL</Text>
@@ -180,24 +193,105 @@ export default function EditProfilePage() {
                 <TextInput
                     value={phone}
                     onChangeText={setPhone}
-                    style={style.edit_input}
+                    style={[style.edit_input,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}
                     keyboardType="numeric"/>
             </View>
             <View style={style.edit_input_container}>
-                <Text style={style.edit_label}>Age</Text>
-                <TextInput
-                    value={age}
-                    onChangeText={setAge}
-                    style={style.edit_input}/>
+                <Text style={style.edit_label}>AGE</Text>
+                <TouchableOpacity
+                    onPress={() => setShowagemodal(true)}
+                    style={[style.edit_input, { 
+                        justifyContent: 'center',
+                        justifyContent: 'space-between', 
+                        flexDirection: 'row', 
+                        alignItems: 'center', 
+                        paddingRight: 10  }]}>
+                    <Text style={{
+                        fontSize: 16,
+                        color: age ? (theme === 'Dark' ? '#FAFAFA' : '#000') : '#999'}}>
+                        {age || 'Select age group'}
+                    </Text>
+                    <AntDesign name="down" size={12} color={theme === 'Dark' ? '#FAFAFA' : '#000'} />
+                </TouchableOpacity>
             </View>
-            
+            <Modal
+                transparent={true}
+                visible={showagemodal}
+                animationType="fade"
+                onRequestClose={() => setShowagemodal(false)}>
+                <TouchableOpacity style={style.age_modal_btn}
+                    activeOpacity={1}
+                    onPressOut={() => setShowagemodal(false)}>
+                    <View style={[style.age_modal_container,theme === 'Dark' ? {backgroundColor:'#333'} : {backgroundColor:'#fff'}]}>
+                        {agegroups.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                onPress={() => {
+                                    setAge(item)
+                                    setShowagemodal(false)
+                                }}
+                                style={[style.age_modal_inside_btn,index !== agegroups.length - 1 ? {borderBottomWidth:1} : {borderBottomWidth:0}]}>
+                                <Text style={[style.age_modal_txt,theme === 'Dark' ? {color:'#FAFAFA'} : {color:'#000'}]}>
+                                    {item}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                        <TouchableOpacity
+                            onPress={() => setShowagemodal(false)}
+                            style={style.age_modal_cancel_btn}>
+                            <Text style={style.age_modal_cancel_txt}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            </Modal>
             <View style={style.edit_input_container}>
-                <Text style={style.edit_label}>Communication Level</Text>
-                <TextInput
-                    value={level}
-                    onChangeText={setLevel}
-                    style={style.edit_input}/>
+                <Text style={style.edit_label}>COMMUNICATION LEVEL</Text>
+                <TouchableOpacity
+                    onPress={() => setShowlevelmodal(true)}
+                    style={[style.edit_input,{
+                        justifyContent: 'center',
+                        justifyContent: 'space-between', 
+                        flexDirection: 'row', 
+                        alignItems: 'center', 
+                        paddingRight: 10 }]}>
+                    <Text style={{
+                        fontSize: 16,
+                        color: level ? (theme === 'Dark' ? '#FAFAFA' : '#000') : '#999'}}>
+                        {level || 'Select level'}
+                    </Text>
+                    <AntDesign name="down" size={12} color={theme === 'Dark' ? '#FAFAFA' : '#000'} />
+                </TouchableOpacity>
             </View>
+            <Modal
+                transparent={true}
+                visible={showlevelmodal}
+                animationType="fade"
+                onRequestClose={() => setShowlevelmodal(false)}>
+                <TouchableOpacity
+                    style={style.level_modal_btn}
+                    activeOpacity={1}
+                    onPressOut={() => setShowlevelmodal(false)}>
+                    <View style={[style.level_modal_container,theme === 'Dark' ? {backgroundColor:'#333'} : {backgroundColor:'#fff'}]}>
+                        {levels.map((item, index) => (
+                            <TouchableOpacity
+                                key={index}
+                                onPress={() => {
+                                    setLevel(item)
+                                    setShowlevelmodal(false)}}
+                                style={[style.level_modal_inside_btn,index !== levels.length - 1 ? {borderBottomWidth:1} : {borderBottomWidth:0}]}>
+                                <Text style={[style.level_modal_txt,theme === 'Dark' ? {color:'#FAFAFA'} : {color:'#000'}]}>
+                                    {item}
+                                </Text>
+                            </TouchableOpacity>
+                        ))}
+                        <TouchableOpacity
+                            onPress={() => setShowlevelmodal(false)}
+                            style={style.level_modal_cancel_btn}>
+                            <Text style={style.level_modal_cancel_txt}>Cancel</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+            </Modal>
             <TouchableOpacity 
                 style={{ marginRight: 25,fontSize:18 }}
                 onPress={updatedata}>
@@ -206,6 +300,6 @@ export default function EditProfilePage() {
         </View>
         <Toast />
         </>
-    );
+    )
 }
 
