@@ -47,6 +47,8 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage: storage })
 
+
+
 app.post('/user-login', async(req,res) => {
     let client
     try{
@@ -476,28 +478,128 @@ app.post("/lesson", async(req, res) => {
     }
 })
 
-app.post("/payment", async(req, res) => {
+app.post("/user-payment", async(req, res) => {
     let client
     try {
-        const { planoption, paymethod } = req.body
-        if (!planoption) {
-            return res.status(400).json({ error: "Plan is required" })
+        const { paidusername, paiduseremail, paiduserphone, plan, credits, paymethod, amount } = req.body
+        if (!plan || !credits || !paymethod || !amount || !paidusername || !paiduseremail || !paiduserphone) {
+            return res.status(400).json({ error: "All fields are required" })
         }
-        const dbConnection = await getCollection("TalkWise", "Lesson")
+        console.log(paiduseremail)
+        const dbConnection = await getCollection("TalkWise", "Payment")
         client = dbConnection.client
         const collection = dbConnection.collection
-        const lesson = await collection.findOne({ section:section })
-        if (!lesson) {
-            return res.status(404).json({ message: "No lessons found for this section" })
+        const result = await collection.findOne({ email:paiduseremail })
+        const transId = `UPI_${paiduserphone}${paiduserphone,Date.now()}`
+        const Paidat = new Date().toISOString()
+        if(!result){
+            const result = await collection.insertOne({
+                username:paidusername,
+                email:paiduseremail,
+                phone:paiduserphone,
+                PaymentHistory:[{
+                    plan:plan,
+                    credits:credits,
+                    paymethod:paymethod,
+                    transactionId:transId,
+                    amount:amount,
+                    status:"Success",
+                    paidAt:Paidat
+                }],
+            })
+            if(result.acknowledged){
+                let client
+                try {
+                    const dbConnection = await getCollection("TalkWise", "Subscription")
+                    client = dbConnection.client
+                    const collection = dbConnection.collection
+                    const subinsert = await collection.findOne({ email:paiduseremail })
+                    if(!subinsert){
+                        const insertval = await collection.insertOne({
+                            username:paidusername,
+                            email:paiduseremail,
+                            status:"Active",
+                            plan:plan,
+                            creditUsed:credits,
+                            SubscribledAt: Paidat
+                        }) 
+                    }
+                }catch(e){
+                    console.error("Error:", e)
+                    res.status(500).json({ error: "Server error", e })
+                }
+            }
         }
-        res.status(200).json({ 
-            message: "Get section", 
-            levels: lesson.levels.map(level => ({
-                level: level.level,
-                title: level.lesson_title,
-                description: level.description
-            }))})
+        console.log(paiduseremail === result.email)
+        if(paiduseremail === result.email){
+            const updateresult = await collection.updateOne(
+                { email:paiduseremail },
+                { $push: {PaymentHistory:{
+                    plan:plan,
+                    credits:credits,
+                    paymethod:paymethod,
+                    transactionId:transId,
+                    amount:amount,
+                    status:"Success",
+                    paidAt:Paidat
+                }}}
+            )
+            console.log(updateresult.acknowledged)
+            if(updateresult.acknowledged){
+                let client
+                try {
+                    const dbConnection = await getCollection("TalkWise", "Subscription")
+                    client = dbConnection.client
+                    const collection = dbConnection.collection
+                    const subupdate = await collection.findOne({ email:paiduseremail })
+                    if(subupdate){
+                        console.log("subs ===>",!subupdate)
+                        const insertval = await collection.updateOne(
+                            { email:paiduseremail },{ $set: {
+                            plan:plan,
+                            creditUsed:credits,
+                            SubscribledAt: Paidat
+                    }})}
+                }catch(e){
+                    console.error("Error:", e)
+                    res.status(500).json({ error: "Server error", e })
+                }
+            }
+        }
+        const mainacc = nodemailer.createTransport({
+            service: 'gmail', 
+            auth: { user: 'asfakahamed.a@gmail.com', pass: process.env.APP_PSD || '' }
+        })
+        const mailgenerate = {
+            from: 'asfakahamed.a@gmail.com',
+            to: paiduseremail,
+            // to: 'asfakamd.s@gmail.com',
+            subject: 'Payment Confirmation -TalkWise',
+            text: `
+                Hello ${result.username},
+                Thank you for your payment!
+                Here are your payment details:
+
+                - Plan: ${plan}
+                - Amount Paid: ₹${amount}
+                - Credits Purchased: ${credits}
+                - Payment Method: ${paymethod}
+                - Transaction ID: ${transId}
+                - Date: ${Paidat}
+
+                Your credits have been successfully added to your account.
+
+                You now have a total of ${credits} credits available to use.
+
+                Thank you for learning with TalkWise!
+
+                Best regards,  
+                The TalkWise Team`
+        }
+        await mainacc.sendMail(mailgenerate)
+        res.status(200).json({ message: "Payment completed successfully"})
     }catch(e){
+        console.error("Error:", e)
         res.status(500).json({ error: "Server error", e })
     }finally{
         if(client){
@@ -506,6 +608,31 @@ app.post("/payment", async(req, res) => {
         }
     }
 })
+
+app.post("/user-subscription", async(req, res) => {
+    let client
+    try {
+        const { useremail } = req.body
+        const dbConnection = await getCollection("TalkWise", "Subscription")
+        client = dbConnection.client
+        const collection = dbConnection.collection
+        console.log(useremail)
+        const result = await collection.findOne({ email:useremail })
+        if(!result){
+            return res.status(404).json({ message: "User not found" })
+        }
+        res.status(200).json({ message: "Get Image", credit: result.creditUsed, })
+    }catch(e){
+        console.error("Error:", e)
+        res.status(500).json({ error: "Server error", e })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
 
 
 

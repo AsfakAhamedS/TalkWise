@@ -172,33 +172,46 @@ export default function App() {
           <Stack.Screen 
             name="paymethod" 
             component={PayMethodPage}
-            options={({ navigation }) => ({
-              title: 'Payment', 
-              headerTitleAlign: 'center',       
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                title: 'Payment',
+                headerTitleAlign: 'center',
+                headerLeft: () => (
+                  <TouchableOpacity 
+                    onPress={() => navigation.goBack()} 
+                    style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: {
+                  backgroundColor: theme === 'Dark' ? '#252525' : '#fff',
+                  elevation: 0,
+                },
+                headerTintColor: theme === 'Dark' ? '#fff' : '#000',
+              }
+            }} 
           />
           <Stack.Screen 
             name="payment" 
             component={PaymentPage}
-            options={({ navigation }) => ({
-              title: 'Payment', 
-              headerTitleAlign: 'center',       
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                title: 'Payment', 
+                headerTitleAlign: 'center',       
+                headerLeft: () => (
+                  <TouchableOpacity 
+                    onPress={() => navigation.goBack('')} 
+                    style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: { backgroundColor: theme === 'Dark' ? '#252525' : '#fff', elevation: 0 },
+                headerTintColor: theme === 'Dark' ? '#fff' : '#000',
+              }
+            }} 
           />
-
-
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}

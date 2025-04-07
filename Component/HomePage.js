@@ -9,7 +9,7 @@ const url = process.env.EXPO_PUBLIC_API_URL || ''
 export default function HomePage(){
     const navigation = useNavigation()
     const [useremail, setUseremail] = useState('')
-    const [credit, setCredit] = useState(null)
+    const [usercredits, setUsercredits] = useState(0) 
     const [level, setLevel] = useState('')
 
     useEffect(() => {
@@ -23,14 +23,28 @@ export default function HomePage(){
         if (useremail) {
             console.log("avatar trigged")
             avatar()
+            subscription()
         }
     }, [useremail])
     
+    function subscription() {
+        axios.post(url + "user-subscription", { useremail: useremail })
+        .then(response => {
+            if(response.status == 200){
+                console.log(response?.data?.message)
+                setUsercredits(response?.data?.credit)
+            }
+            console.log("subs ===>",usercredits)
+        })
+        .catch(error => {
+            console.log("error ==> ", error.response?.data || "error")
+        })
+    }
+
     function avatar() {
         axios.post(url + "get-user-avatar", { type:'getuserdata', useremail: useremail })
             .then(response => {
                 if (response.status == 200) {
-                    setCredit(response?.data?.credit)
                     setLevel(response?.data?.level)
                     console.log("credit ==>",credit)
                 }
@@ -54,7 +68,7 @@ export default function HomePage(){
                     />
                 </View>
                 <View style={style.home_credit}>
-                    <Text style={style.home_credit_text}>{credit}</Text>
+                    <Text style={style.home_credit_text}>{usercredits}</Text>
                 </View>
             </View>
             <ScrollView 

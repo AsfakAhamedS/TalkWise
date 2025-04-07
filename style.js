@@ -501,7 +501,7 @@ export default StyleSheet.create({
         paddingVertical:20
     },
     payment_title: { 
-        fontSize: 22, 
+        fontSize: 24, 
         fontWeight: 'bold', 
         textAlign:'center',
         marginBottom: 30 
@@ -558,44 +558,62 @@ export default StyleSheet.create({
     },
 
     // PaymentPage
-    paycontainer: { 
+    payment_mainpaycon:{
         flex: 1, 
-        backgroundColor: '#fff', 
-        paddingHorizontal:20,
-        paddingVertical:20
+        backgroundColor: '#fff',
+        padding: 20
     },
-    paytitle: { 
-        fontSize: 22, 
+    payment_heading:{
+        fontSize: 26, 
         fontWeight: '700', 
-        textAlign: 'center', 
+        textAlign:'center', 
         marginBottom: 20 
     },
-    detailsbox: { 
-        padding: 15, 
-        backgroundColor: '#f5f5f5', 
-        borderRadius: 10, 
-        marginBottom: 20 
+    payment_detailscart: {
+        backgroundColor: '#f5f5f5',
+        borderRadius: 14,
+        padding: 18,
+        marginBottom: 20,
+        shadowColor: '#000',
+        shadowOpacity: 0.05,
+        shadowOffset: { width: 0, height: 1 },
+        shadowRadius: 4,
+        elevation: 2,
     },
-    courseTitle: { 
-        fontSize: 18, 
-        fontWeight: '700', 
-        color: '#333' 
+    payment_sectitle: {
+        fontSize: 20,
+        fontWeight: '600',
+        marginBottom: 8,
+        color: '#333',
     },
-    courseText: { 
-        fontSize: 16, 
-        color: '#666' 
+    payment_detaillabel: {
+        fontSize: 16,
+        color: '#888',
+        marginTop: 10,
     },
-    priceText: { 
-        fontSize: 18, 
-        fontWeight: '700', 
-        color: '#000', 
-        marginTop: 5 
+    payment_detailvalue: {
+        fontSize: 18,
+        fontWeight: '500',
+        color: '#111',
     },
-    creditText: { 
-        fontSize: 16, 
-        color: '#007AFF', 
-        marginTop: 5 
+    payment_detailtext: {
+        fontSize: 16,
+        color: '#444',
+        marginBottom: 6,
     },
+    payment_button: {
+        backgroundColor: '#252525',
+        paddingHorizontal:15,
+        paddingVertical:15,
+        borderRadius: 12,
+        alignItems: 'center',
+    },
+    payment_buttontext: {
+        color: '#fff',
+        fontSize: 18,
+        fontWeight: '600',
+    },
+
 
     // profile
     profile: {
@@ -860,7 +878,7 @@ export default StyleSheet.create({
         justifyContent:'center', 
         position:'relative',
         left:'10%',
-        top:'10%'   
+        top:'10%', 
     },
     home_credit_text: {
         width:45,
