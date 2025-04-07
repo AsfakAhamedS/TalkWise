@@ -212,6 +212,10 @@ export default function App() {
               }
             }} 
           />
+          
+
+
+
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}

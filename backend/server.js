@@ -12,6 +12,7 @@ import FormData from "form-data"
 import speakeasy from "speakeasy"
 import nodemailer from 'nodemailer'
 import { error } from "console"
+import { OutputFormat } from "elevenlabs/api"
 
 dotenv.config()
 
@@ -366,6 +367,7 @@ app.post("/get-lesson", async (req, res) => {
 
 app.post('/chat', upload.single('audioFile'), async (req, res) => {
     console.log('Processing audio file...')
+    const userEmail = req.query.useremail
     if (!req.file) {
         return res.status(400).json({ error: 'No file uploaded' })
     }
@@ -411,6 +413,22 @@ app.post('/chat', upload.single('audioFile'), async (req, res) => {
             }
         )
         const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
+        const dbConnection = await getCollection('TalkWise', 'Subscription')
+        client = dbConnection.client
+        const collection = dbConnection.collection
+
+        const userSub = await collection.findOne({ email: userEmail })
+        if (!userSub) {
+            return res.status(404).json({ error: 'User subscription not found' })
+        }
+        if (userSub.creditUsed <= 0) {
+            return res.status(402).json({ error: 'Insufficient credits' })
+        }
+
+        await collection.updateOne(
+            { email: userEmail },
+            { $inc: { creditUsed: -1 } }
+        )
         console.log('AI Response:', aiMessage)
         fs.unlinkSync(filePath)
         return res.json({
@@ -475,6 +493,25 @@ app.post("/lesson", async(req, res) => {
             await client.close()
             console.log("Connection closed")
         }
+    }
+})
+
+app.post("/txt-speech", async(req, res) => {
+    try{
+        const { user } = req.body
+        const aiResponse = await axios.post(
+            'https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?output_format=mp3_22050_32',
+            {
+                text: user,
+                model_id: "eleven_multilingual_v2"
+            },
+            {
+                headers: { Authorization: `Bearer ${process.env.xi_api_key}` },
+            }
+        )
+        res.status(200).json({ message: "success",aiResponse})
+    }catch(e){
+        res.status(500).json({ error: "Server error", e })
     }
 })
 

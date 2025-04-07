@@ -828,7 +828,7 @@ export default StyleSheet.create({
     home_card: {
         width: 320,
         padding: 20,
-        backgroundColor: 'white',
+        backgroundColor: '#fff',
         borderRadius: 10,
         shadowColor: '#000',
         shadowOpacity: 0.1,
@@ -878,7 +878,15 @@ export default StyleSheet.create({
         justifyContent:'center', 
         position:'relative',
         left:'10%',
-        top:'10%', 
+        top:'10%',
+        backgroundColor: 'white',
+        borderRadius: 50,
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        shadowRadius: 5,
+        elevation: 5,
+        height:30,
+        marginTop:35
     },
     home_credit_text: {
         width:45,
@@ -887,11 +895,11 @@ export default StyleSheet.create({
         textAlign:'center',
         borderWidth:1,
         borderRadius:50,
-        borderColor:'#252525',
+        borderColor:'#fff',
         backgroundColor:'transparent',
         color:'#252525',
         paddingHorizontal:10,
-        paddingVertical:5,  
+        paddingVertical:5, 
     },
 
     // LessonPage

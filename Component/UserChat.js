@@ -151,6 +151,8 @@ export default function UserChat() {
 
         
             <FlatList
+                showsVerticalScrollIndicator={false}
+                showsHorizontalScrollIndicator={false}
                 data={messages}
                 keyExtractor={(item) => item.id.toString()}
                 renderItem={({ item }) => (

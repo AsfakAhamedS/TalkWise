@@ -1,15 +1,33 @@
-import React, { useEffect, useState } from 'react'
-import { Text, View,Touchable, TouchableOpacity, TextInput, Image, ScrollView, Pressable } from 'react-native'
+import React, { useEffect, useState, useLayoutEffect, useCallback } from 'react'
+import { Text, View, TouchableOpacity, Image } from 'react-native'
 import { StatusBar } from 'expo-status-bar'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useFocusEffect} from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 import Octicons from 'react-native-vector-icons/Octicons'
 import FontAwesome from 'react-native-vector-icons/FontAwesome'
 import style from '../style'
+import { Pressable, ScrollView } from 'react-native-gesture-handler'
 
 export default function PlanPage(){
     const navigation = useNavigation()
-    const [selectedPlan, setSelectedPlan] = useState('free')
+    const [selectedplan, setSelectedplan] = useState('free')
+    const [theme, setTheme] = useState('')
+    const planinfo = {
+        free: { plan: 'Free', amount: 0, credit: 0 },
+        threemonth: { plan: 'Basic', amount: 299, credit: 100 },
+        sixmonth: { plan: 'Standard', amount: 499, credit: 300 },
+        yearly: { plan: 'Premium', amount: 1000, credit: 500 },
+    }
+
+    useFocusEffect(
+        useCallback(() => {
+            (async () => {
+              const mode = await AsyncStorage.getItem('Mode')
+              setTheme(mode)
+            })()
+        }, [])
+    )
     return(
         <>
             <StatusBar style='false'/>
@@ -32,29 +50,29 @@ export default function PlanPage(){
                         </View>
                     </View>
                 </View>
-                <View style={style.plan}>
+                <View style={[style.plan,theme === 'Dark' ? {backgroundColor:'#252525',borderColor:'#252525'} : {}]}>
                                 <ScrollView style={{marginTop:50}}>
                                     <View style={style.plan_card_view} >
                                         <Pressable 
-                                            style={[style.plan_card, selectedPlan === "free" ? { borderColor: '#007AFF' } : {}]}
-                                            onPress={() => setSelectedPlan("free")}>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Free</Text>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹0</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Limited Credits</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Limited access only</Text>
-                                            {selectedPlan === "free" ? 
+                                            style={[style.plan_card, selectedplan === "free" ? { borderColor: '#007AFF' } : {}]}
+                                            onPress={() => setSelectedplan("free")}>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35, color: theme === 'Dark' ? '#FAFAFA' : null }}>{planinfo.free.plan}</Text>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>₹{planinfo.free.amount}</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Limited Credits</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Limited access only</Text>
+                                            {selectedplan === "free" ? 
                                             (<View style={style.plan_circle}>
                                                 <FontAwesome name="check" color="#fff" size={13} />
                                             </View>) : null}
                                         </Pressable>
                                         <Pressable 
-                                            style={[style.plan_card,selectedPlan === "threemonth" ? { borderColor: '#007AFF' } : {}]}
-                                            onPress={() => setSelectedPlan("threemonth")}>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>3 Months</Text>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹299</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 100 Credits</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed every 3 months</Text>
-                                            {selectedPlan === "threemonth" ?
+                                            style={[style.plan_card,selectedplan === "threemonth" ? { borderColor: '#007AFF' } : {}]}
+                                            onPress={() => setSelectedplan("threemonth")}>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>{planinfo.threemonth.plan}</Text>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>₹{planinfo.threemonth.amount}</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Earned {planinfo.threemonth.credit} Credits</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Billed every 3 months</Text>
+                                            {selectedplan === "threemonth" ?
                                             (<View style={style.plan_circle}>
                                                 <FontAwesome name="check" color="#fff" size={13} />
                                             </View>) : null}
@@ -62,25 +80,25 @@ export default function PlanPage(){
                                     </View>
                                     <View style={style.plan_card_view}>
                                         <Pressable 
-                                            style={[style.plan_card, selectedPlan === "sixmonth" ? { borderColor: '#007AFF' } : {}]}
-                                            onPress={() => setSelectedPlan("sixmonth")}>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>6 Months</Text>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹499</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 300 Credits</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed every 6 months</Text>
-                                            {selectedPlan === "sixmonth" ? 
+                                            style={[style.plan_card, selectedplan === "sixmonth" ? { borderColor: '#007AFF' } : {}]}
+                                            onPress={() => setSelectedplan("sixmonth")}>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>{planinfo.sixmonth.plan}</Text>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>₹{planinfo.sixmonth.amount}</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Earned {planinfo.sixmonth.credit} Credits</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Billed every 6 months</Text>
+                                            {selectedplan === "sixmonth" ? 
                                             (<View style={style.plan_circle}>
                                                 <FontAwesome name="check" color="#fff" size={13} />
                                             </View>) : null}
                                         </Pressable>
                                         <Pressable 
-                                            style={[style.plan_card,selectedPlan === "yearly" ? { borderColor: '#007AFF' } : {}]}
-                                            onPress={() => setSelectedPlan("yearly")}>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35 }}>Yearly</Text>
-                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35 }}>₹1,000</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Earned 500 Credits</Text>
-                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20 }}>Billed yearly</Text>
-                                            {selectedPlan === "yearly" ?
+                                            style={[style.plan_card,selectedplan === "yearly" ? { borderColor: '#007AFF' } : {}]}
+                                            onPress={() => setSelectedplan("yearly")}>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginTop: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>{planinfo.yearly.plan}</Text>
+                                            <Text style={{ fontSize: 22, fontWeight: '700', lineHeight: 30, marginBottom: 35, color: theme === 'Dark' ? '#FAFAFA' : null  }}>₹{planinfo.yearly.amount}</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Earned {planinfo.yearly.credit} Credits</Text>
+                                            <Text style={{ fontSize: 14, fontWeight: '400', lineHeight: 20, color: theme === 'Dark' ? '#FAFAFA' : null  }}>Billed yearly</Text>
+                                            {selectedplan === "yearly" ?
                                             (<View style={style.plan_circle}>
                                                 <FontAwesome name="check" color="#fff" size={13} />
                                             </View>) : null}
@@ -89,10 +107,12 @@ export default function PlanPage(){
                                 </ScrollView>
                                 <View style={style.subscribe_btn}>
                                     <TouchableOpacity 
-                                        style={style.subscribe_btn_to} 
+                                        style={[style.subscribe_btn_to,theme === 'Dark' ? {backgroundColor: '#0A84FF'} : {}]} 
                                         activeOpacity={0.4} 
-                                        onPress={() => navigation.navigate("paymethod")}
-                                        disabled={!selectedPlan}>
+                                        onPress={() => {
+                                            const { plan, amount, credit } = planinfo[selectedplan]
+                                            navigation.navigate("paymethod", {plan, amount, credit})}}
+                                        disabled={!selectedplan}>
                                         <Text style={style.subscribe_btn_text}>Subscribe now</Text>
                                     </TouchableOpacity>
                                 </View>
@@ -100,7 +120,7 @@ export default function PlanPage(){
                                     <Text style={style.subscribe_txt}>Prices are in INR</Text>
                                     <Text style={style.subscribe_txt}>Auto renewal, Cancel anytime</Text>
                                 </View>
-                             </View>
+                            </View>
             </View>
         </>
     )
