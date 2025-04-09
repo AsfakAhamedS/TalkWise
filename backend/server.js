@@ -12,7 +12,6 @@ import FormData from "form-data"
 import speakeasy from "speakeasy"
 import nodemailer from 'nodemailer'
 import { error } from "console"
-import { OutputFormat } from "elevenlabs/api"
 
 dotenv.config()
 
@@ -47,7 +46,15 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage: storage })
-
+const audioStorage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, 'Audio/')
+    },
+    filename: (req, file, cb) => {
+      cb(null, Date.now() + '-' + file.originalname)
+    }
+  })
+  const uploadAudio = multer({ storage: audioStorage })
 
 
 app.post('/user-login', async(req,res) => {
@@ -365,59 +372,112 @@ app.post("/get-lesson", async (req, res) => {
     }
 })
 
-app.post('/chat', upload.single('audioFile'), async (req, res) => {
-    console.log('Processing audio file...')
-    const userEmail = req.query.useremail
-    if (!req.file) {
-        return res.status(400).json({ error: 'No file uploaded' })
-    }
-    const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/m4a']
-    if (!allowedTypes.includes(req.file.mimetype)) {
-        fs.unlinkSync(req.file.path)
-        return res.status(400).json({ error: 'Invalid file type' })
-    }
-    const filePath = req.file.path
-    const formData = new FormData()
-    formData.append('model', 'whisper-large-v3-turbo')
-    formData.append('file', fs.createReadStream(filePath))
-    formData.append('response_format', 'verbose_json')
-    try {
-        const transcriptionResponse = await axios.post(
-            'https://api.groq.com/openai/v1/audio/transcriptions',
-            formData,
-            {
-                headers: {
-                    Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
-                    ...formData.getHeaders(),
-                },
-            }
-        )
-        const transcription = transcriptionResponse.data.text
-        console.log('Transcription:', transcription)
+// app.post('/chat', upload.single('audioFile'), async (req, res) => {
+//     console.log('Processing audio file...')
+//     const userEmail = req.query.useremail
+//     if (!req.file) {
+//         return res.status(400).json({ error: 'No file uploaded' })
+//     }
+//     const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/m4a']
+//     if (!allowedTypes.includes(req.file.mimetype)) {
+//         fs.unlinkSync(req.file.path)
+//         return res.status(400).json({ error: 'Invalid file type' })
+//     }
+//     const filePath = req.file.path
+//     const formData = new FormData()
+//     formData.append('model', 'whisper-large-v3-turbo')
+//     formData.append('file', fs.createReadStream(filePath))
+//     formData.append('response_format', 'verbose_json')
+//     try {
+//         const transcriptionResponse = await axios.post(
+//             'https://api.groq.com/openai/v1/audio/transcriptions',
+//             formData,
+//             {
+//                 headers: {
+//                     Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+//                     ...formData.getHeaders(),
+//                 },
+//             }
+//         )
+//         const transcription = transcriptionResponse.data.text
+//         console.log('Transcription:', transcription)
 
-        if (!transcription) {
-            fs.unlinkSync(filePath)
-            return res.status(400).json({ error: 'Transcription failed' })
-        }
-        const aiResponse = await axios.post(
-            'https://api.groq.com/openai/v1/chat/completions',
-            {
-                model: 'llama-3.1-8b-instant',
-                messages: [{ role: 'user', content: transcription }],
-                temperature: 1,
-                max_tokens: 500,
-                stream: false,
-            },
-            {
-                headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
-            }
-        )
-        const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
-        const dbConnection = await getCollection('TalkWise', 'Subscription')
+//         if (!transcription) {
+//             fs.unlinkSync(filePath)
+//             return res.status(400).json({ error: 'Transcription failed' })
+//         }
+//         const aiResponse = await axios.post(
+//             'https://api.groq.com/openai/v1/chat/completions',
+//             {
+//                 model: 'llama-3.1-8b-instant',
+//                 messages: [{ role: 'user', content: transcription }],
+//                 temperature: 1,
+//                 max_tokens: 500,
+//                 stream: false,
+//             },
+//             {
+//                 headers: { Authorization: `Bearer ${process.env.GROQ_API_KEY}` },
+//             }
+//         )
+//         const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
+        // const dbConnection = await getCollection('TalkWise', 'Subscription')
+        // client = dbConnection.client
+        // const collection = dbConnection.collection
+
+        // const userSub = await collection.findOne({ email: userEmail })
+        // if (!userSub) {
+        //     return res.status(404).json({ error: 'User subscription not found' })
+        // }
+        // if (userSub.creditUsed <= 0) {
+        //     return res.status(402).json({ error: 'Insufficient credits' })
+        // }
+
+        // await collection.updateOne(
+        //     { email: userEmail },
+        //     { $inc: { creditUsed: -1 } }
+        // )
+//         console.log('AI Response:', aiMessage)
+//         fs.unlinkSync(filePath)
+        // return res.json({
+        //     status: 'success',
+        //     transcription: transcription,
+        //     aiResponse: aiMessage,
+        // })
+//     }catch(error){
+//         console.error('Error:', error.message || error)
+//         if (fs.existsSync(filePath)) {
+//             fs.unlinkSync(filePath)
+//         }
+//         return res.status(500).json({ error: 'Internal server error' })
+//     }
+// })
+
+app.post('/nextStep', async (req, res) => {
+    let client
+    try {
+        const { email, section, level, step } = req.body
+        console.log(section)
+        const dbConnection = await getCollection("TalkWise", "Lesson")
         client = dbConnection.client
         const collection = dbConnection.collection
 
-        const userSub = await collection.findOne({ email: userEmail })
+        const conversationSteps = await collection.findOne(
+            { section:section},
+            { projection: { levels: { $elemMatch: { level: level } } } },
+        )
+        const levelData = conversationSteps?.levels?.[0]
+        const stepIndex = step - 1
+        const aiPrompt = levelData?.conversations?.[stepIndex]
+        if(!aiPrompt){
+            return res.status(200).json({ aiPrompt:'You’ve completed this lesson! Great job!. Moved on Quiz...', status :'completed' })
+        }
+        const dbConnectionSub = await getCollection('TalkWise', 'Subscription')
+        const subClient = dbConnectionSub.client
+        const subCollection = dbConnectionSub.collection
+
+        const userSub = await subCollection.findOne({ email: email })
+        console.log(email)
+        console.log(userSub)
         if (!userSub) {
             return res.status(404).json({ error: 'User subscription not found' })
         }
@@ -425,51 +485,90 @@ app.post('/chat', upload.single('audioFile'), async (req, res) => {
             return res.status(402).json({ error: 'Insufficient credits' })
         }
 
-        await collection.updateOne(
-            { email: userEmail },
+        await subCollection.updateOne(
+            { email: email },
             { $inc: { creditUsed: -1 } }
         )
-        console.log('AI Response:', aiMessage)
-        fs.unlinkSync(filePath)
-        return res.json({
-            status: 'success',
-            transcription: transcription,
-            aiResponse: aiMessage,
-        })
-    }catch(error){
-        console.error('Error:', error.message || error)
-        if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath)
-        }
+        res.status(200).json({ aiPrompt,status: 'in-progress',})
+        
+    }catch (error) {
+        console.error('Error fetching nextStep:', error)
         return res.status(500).json({ error: 'Internal server error' })
+    }finally{
+        if(client){
+            await client.close()
+            console.log("Connection closed")
+        }
+    }
+})
+
+  
+app.post('/chat', uploadAudio.single('audioFile'), async (req, res) => {
+    console.log('Processing audio file...')
+  
+    if (!req.file) {
+      return res.status(400).json({ error: 'No file uploaded' })
+    }
+  
+    const allowedTypes = ['audio/mpeg', 'audio/wav', 'audio/x-wav', 'audio/m4a']
+    if (!allowedTypes.includes(req.file.mimetype)) {
+      fs.unlinkSync(req.file.path)
+      return res.status(400).json({ error: 'Invalid file type' })
+    }
+  
+    const filePath = req.file.path
+    const formData = new FormData()
+    formData.append('model', 'whisper-large-v3-turbo')
+    formData.append('file', fs.createReadStream(filePath))
+    formData.append('response_format', 'verbose_json')
+  
+    try {
+      const transcriptionResponse = await axios.post(
+        'https://api.groq.com/openai/v1/audio/transcriptions',
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${process.env.GROQ_API_KEY}`,
+            ...formData.getHeaders(),
+          },
+        }
+      )
+  
+      const transcription = transcriptionResponse.data.text
+      console.log('Transcription:', transcription)
+  
+      fs.unlinkSync(filePath)
+  
+      if (!transcription) {
+        return res.status(400).json({ error: 'Transcription failed' })
+      }
+  
+    //   return res.json({
+    //     status: 'success',
+    //     transcription,
+    //   })
+      return res.status(200).json({
+        status: 'success',
+        transcription: transcription,
+    })
+    } catch (error) {
+      console.error('Error:', error.message || error)
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath)
+      }
+      return res.status(500).json({ error: 'Internal server error' })
     }
 })
 
 app.post("/lesson", async(req, res) => {
-    let client
-    let aires
     try {
-        const { section, level, user } = req.body
-        if (!section) {
-            return res.status(400).json({ error: "Section is required" })
-        }
-        const dbConnection = await getCollection("TalkWise", "Lesson")
-        client = dbConnection.client
-        const collection = dbConnection.collection
-        const lesson = await collection.findOne({ section:section })
-        if (!lesson) {
-            return res.status(404).json({ message: "No lessons found for this section" })
-        }
-        if(level === lesson.levels[0].level){
-            console.log("level 1")
-          
-            aires = lesson.levels[0].conversations.map(step => ({
-                step:(step.step === 1 ? step.ai_prompt : null),
-            }))
-        }
-        let question = aires[0].step
-        let usercontent = `{This is system prompt,generate based on these, question: ${question} and expected answer : ${lesson.levels[0].conversations[0].expected_responses}, if user give correct answer : ${lesson.levels[0].conversations[0].correct_response} and user give wrong answer : ${lesson.levels[0].conversations[0].fallback_response}. if user tells not related these question,you says, focus on your lesson}`
-        console.log(usercontent)
+        const { question, expectedans, correctans, wrongans, user } = req.body
+        console.log("Works")
+
+        let usercontent = `{This is system prompt,generate based on these, question: ${question},
+                            expected answer : ${expectedans}, if user give correct answer : ${correctans},
+                            user give wrong answer : ${wrongans}. if user tells not related these question,you says, focus on your lesson}`
+        // console.log(usercontent)
         const aiResponse = await axios.post(
             'https://api.groq.com/openai/v1/chat/completions',
             {
@@ -485,34 +584,138 @@ app.post("/lesson", async(req, res) => {
         )
         const aiMessage = aiResponse.data.choices[0]?.message?.content?.trim() || 'No response from AI'
         console.log('AI Response:', aiMessage)
-        res.status(200).json({ message: `Get lesson for ${section}`, Question:question, User:user, Ai: aiMessage})
+        res.status(200).json({ aiPrompt:user, aiResponse: aiMessage})
     }catch(e){
         res.status(500).json({ error: "Server error", e })
-    }finally{
-        if(client){
-            await client.close()
-            console.log("Connection closed")
+    }
+})
+
+app.post("/txt-speech", async (req, res) => {
+    try {
+        const { text } = req.body;
+
+        const response = await axios.post(
+            'https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?output_format=mp3_44100_128',
+            {
+                text,
+                model_id: "eleven_multilingual_v2"
+            },
+            {
+                headers: {
+                    "Content-Type": "application/json",
+                    "xi-api-key": process.env.xi_api_key,
+                },
+                responseType: 'arraybuffer'
+            }
+        );
+
+        res.setHeader("Content-Type", "audio/mpeg");
+        res.send(response.data);
+    } catch (e) {
+        res.status(500).json({ error: "Server error", e });
+    }
+});
+
+app.post("/quiz", async (req, res) => {
+    console.log("Quiz API hit")
+    let client
+    try {
+      const { section, level } = req.body
+      console.log("Section:", section)
+      console.log("Level:", level)
+  
+      const dbConnection = await getCollection("TalkWise", "Lesson")
+      client = dbConnection.client
+      const collection = dbConnection.collection
+  
+      const conversationSteps = await collection.findOne(
+        { section: section },
+        { projection: { levels: { $elemMatch: { level: level } } } }
+      )
+  
+      const levelData = conversationSteps?.levels?.[0]
+      const quiz = levelData?.quiz
+  
+      if (!quiz || quiz.length === 0) {
+        return res.status(404).json({ error: "No quiz found for this level" })
+      }
+  
+      res.status(200).json({
+        message: "success",
+        questions: quiz
+      })
+  
+    }catch (error) {
+      console.error("Error fetching quiz:", error)
+      res.status(500).json({ error: "Internal server error" })
+    }finally {
+      if (client) {
+        await client.close()
+        console.log("DB connection closed")
+      }
+    }
+})
+  
+app.post("/support-ticket", async (req, res) => {
+    let client
+    try {
+        const { username, useremail, message } = req.body
+
+        const dbConnection = await getCollection("TalkWise", "SupportTicket")
+        client = dbConnection.client
+        const collection = dbConnection.collection
+        const userexist = await collection.findOne({ useremail:useremail })
+        const id = "userid_"+Date.now()
+        const ticid = "ticketid_"+Date.now()
+        if(!userexist){
+            const result = await collection.insertOne({
+                userId:id,
+                username,
+                useremail,
+                ticketHistory:[
+                    {
+                        ticketId:ticid,
+                        message,
+                        status: "open",
+                        createdAt: new Date(),
+                        response: ""
+                    }
+                ]
+            })
+        }
+        if(useremail === userexist.useremail){
+            const updateresult = await collection.updateOne(
+                { useremail:useremail },
+                { $push: {ticketHistory:{
+                    ticketId:ticid,
+                    message,
+                    status: "open",
+                    createdAt: new Date(),
+                    response: ""
+                }}}
+            )
+        }
+      res.status(200).json({ message: "Ticket submitted successfully!" })
+    }catch (error) {
+      res.status(500).json({ error: "Failed to submit ticket", error })
+    }finally {
+        if (client) {
+          await client.close()
+          console.log("DB connection closed")
         }
     }
 })
 
-app.post("/txt-speech", async(req, res) => {
-    try{
-        const { user } = req.body
-        const aiResponse = await axios.post(
-            'https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?output_format=mp3_22050_32',
-            {
-                text: user,
-                model_id: "eleven_multilingual_v2"
-            },
-            {
-                headers: { Authorization: `Bearer ${process.env.xi_api_key}` },
-            }
-        )
-        res.status(200).json({ message: "success",aiResponse})
-    }catch(e){
-        res.status(500).json({ error: "Server error", e })
-    }
+app.get("/support/faqs", (req, res) => {
+    res.json([
+      { question: "How to reset password?", answer: "Go to Profile > Reset Password." },
+      { question: "Credits not updating?", answer: "Please check your subscription status or contact support." },
+      { question: "Payment issue?", answer: "Please check your contact support" },
+      { question: "Bank server down?", answer: "Please check  contact support." },
+      
+      
+
+    ])
 })
 
 app.post("/user-payment", async(req, res) => {
@@ -592,11 +795,14 @@ app.post("/user-payment", async(req, res) => {
                     if(subupdate){
                         console.log("subs ===>",!subupdate)
                         const insertval = await collection.updateOne(
-                            { email:paiduseremail },{ $set: {
-                            plan:plan,
-                            creditUsed:credits,
-                            SubscribledAt: Paidat
-                    }})}
+                            { email:paiduseremail },
+                            {
+                                $set: {
+                                plan:plan,
+                                SubscribledAt: Paidat
+                            },
+                            $inc : {creditUsed:credits}}
+                    )}
                 }catch(e){
                     console.error("Error:", e)
                     res.status(500).json({ error: "Server error", e })

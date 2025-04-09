@@ -257,20 +257,23 @@ export default function ProfileSettings() {
                     <TouchableOpacity style={[style.settingitem,{borderBottomWidth:10}]}>
                         <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>MyProgress</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Privacy policy</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Terms of use</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Support</Text>
-                    </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[style.settingitem,{borderBottomWidth:10}]}
+                        style={style.settingitem}
                         onPress={() => navigation.navigate('plan')}>
                         <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Plan</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity style={style.settingitem}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Setting</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={style.settingitem}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Privacy policy</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity 
+                        style={[style.settingitem,{borderBottomWidth:10}]}
+                        onPress={() => navigation.navigate('support')}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Contact us 24X7</Text>
+                    </TouchableOpacity>
+                    
                 </View>
                 <TouchableOpacity 
                     style={style.logoutbutton}

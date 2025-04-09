@@ -908,12 +908,6 @@ export default StyleSheet.create({
         backgroundColor: '#f8f8f8',
         padding: 20,
     },
-    lesson_pagetitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
     lesson_card: {
         backgroundColor: 'white',
         padding: 20,
@@ -947,72 +941,5 @@ export default StyleSheet.create({
     },
 
     // UserChatPage
-    home_body: {
-        flex: 1,
-        backgroundColor: '#f8f8f8',
-        padding: 20,
-    },
-    pageTitle: {
-        fontSize: 24,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginBottom: 20,
-    },
-    chatControls: {
-        flexDirection: 'row',
-        justifyContent: 'center',
-        marginTop: 20,
-    },
-    recordButton: {
-        backgroundColor: '#e74c3c',
-        padding: 15,
-        borderRadius: 50,
-        alignItems: 'center',
-        marginHorizontal: 10,
-    },
-    playButtonTop: {
-        backgroundColor: '#2ecc71',
-        padding: 10,
-        borderRadius: 50,
-        alignItems: 'center',
-        marginHorizontal: 10,
-        marginTop:10
-    },
-    playButton: {
-        backgroundColor: '#2ecc71',
-        padding: 15,
-        borderRadius: 50,
-        alignItems: 'center',
-        marginHorizontal: 10,
-    },
-    sendButton: {
-        backgroundColor: '#252525',
-        padding: 15,
-        borderRadius: 50,
-        alignItems: 'center',
-        marginHorizontal: 10,
-    },
-    buttonText: {
-        color: 'white',
-        fontSize: 16,
-        fontWeight: 'bold',
-    },
-    messageCard: {
-        padding: 15,
-        borderRadius: 10,
-        marginBottom: 10,
-        maxWidth: '80%',
-    },
-    userMessage: {
-        backgroundColor: '#3498db',
-        alignSelf: 'flex-end',
-    },
-    botMessage: {
-        backgroundColor: '#2ecc71',
-        alignSelf: 'flex-start',
-    },
-    messageText: {
-        color: 'white',
-        fontSize: 14,
-    },
+   
 })

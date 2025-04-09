@@ -21,6 +21,8 @@ import PaymentPage from './Component/PaymentPage'
 import EditProfilePage from './Component/EditProfilePage'
 import LessonPage from './Component/LessonPage'
 import UserChat from './Component/UserChat'
+import QuizPage from './Component/QuizPage'
+import SupportPage from './Component/SupportPage'
 import AiChatPage from './Component/AiChatPage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
@@ -57,11 +59,14 @@ export default function App() {
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
             })} 
           /> */}
+          
           <Stack.Screen 
             name="main" 
             component={TabNavPage} 
             options={{headerShown:false}}
           />
+
+
           <Stack.Screen 
             name="landing" 
             component={LandingPage} 
@@ -214,34 +219,67 @@ export default function App() {
           />
           
 
-
-
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+            options={({ route, navigation }) => {
+              const section = route.params?.level
+             return {
+                headerTitle: () => (
+                  <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                    {section} Level
+                  </Text>
+                ),
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingHorizontal: 16 }}>
+                    <AntDesign name="arrowleft" color="#000" size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: { backgroundColor: '#fff', elevation: 0 },
+                headerTitleAlign: 'center'
+             }
+            }} 
           /> 
+         
+
           <Stack.Screen 
             name="chat" 
             component={UserChat}
             options={({ navigation }) => ({
-              title:false,
+              headerTitle: () => (
+                <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                  Chat
+                </Text>
+              ),
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingHorizontal: 16 }}>
                   <AntDesign name="arrowleft" color="#000" size={28} />
                 </TouchableOpacity>
               ),
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+              headerTitleAlign: 'center'
+            })}
           />
+          <Stack.Screen 
+            name="quiz" 
+            component={QuizPage}
+            options={({ navigation }) => ({
+              headerTitle: () => (
+                <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
+                  Quiz
+                </Text>
+              ),
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingHorizontal: 16 }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+              headerTitleAlign: 'center'
+            })}
+          />
+
+
           <Stack.Screen 
             name="edit" 
             component={EditProfilePage}
@@ -271,7 +309,35 @@ export default function App() {
               }
             }}
           />
-          
+          <Stack.Screen 
+            name="support" 
+            component={SupportPage}
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                headerTitle: () => (
+                  <Text style={{
+                    fontSize: 18,
+                    fontWeight: 'bold',
+                    color: theme === 'Dark' ? '#fff' : '#000',
+                    textAlign: 'center'
+                  }}>
+                    Support
+                  </Text>
+                ),
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: {
+                  backgroundColor: theme === 'Dark' ? '#252525' : '#fff',
+                  elevation: 0
+                },
+                headerTitleAlign: 'center'
+              }
+            }}
+          />
           
           
         </Stack.Navigator>

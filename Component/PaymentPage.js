@@ -100,7 +100,13 @@ export default function PaymentPage() {
         userpayment()
         Alert.alert(
             "Payment Successful",
-            `₹${amount} paid via ${method}\nYou’ve earned ${credit} new credits.`
+            `₹${amount} paid via ${method}\nYou’ve earned ${credit} new credits.`,
+            "A receipt has been sent to your email."
+            [{
+                text:"ok",
+                onPress: () => navigation.navigate("main"),
+            }],
+            {cancelable:false}
         )
         setUsercredits(prev => prev + credit)
     }
