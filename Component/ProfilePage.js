@@ -254,7 +254,9 @@ export default function ProfileSettings() {
                             </View>
                         </TouchableOpacity>
                     </Modal>
-                    <TouchableOpacity style={[style.settingitem,{borderBottomWidth:10}]}>
+                    <TouchableOpacity 
+                        style={[style.settingitem,{borderBottomWidth:10}]}
+                        onPress={() => navigation.navigate('myprogress')}>
                         <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>MyProgress</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
@@ -265,8 +267,10 @@ export default function ProfileSettings() {
                     <TouchableOpacity style={style.settingitem}>
                         <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Setting</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.settingitem}>
-                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Privacy policy</Text>
+                    <TouchableOpacity 
+                        style={style.settingitem}
+                        onPress={() => navigation.navigate('ticketstatus')}>
+                        <Text style={[style.settingtitle,theme === 'Dark' ? {color:'#FAFAFA'} : {}]}>Ticket</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
                         style={[style.settingitem,{borderBottomWidth:10}]}

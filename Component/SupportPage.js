@@ -8,41 +8,38 @@ import style from '../style'
 const url = process.env.EXPO_PUBLIC_API_URL || ''
 
 export default function SupportPage() {
-    const [username, setUsername] = useState('')
+    const [subject, setSubject] = useState('')
     const [useremail, setUseremail] = useState('')
     const [message, setMessage] = useState('')
     const [faqs, setFaqs] = useState([])
 
+    useEffect(() => {
+        (async () => {
+          const email = await AsyncStorage.getItem('Email')
+          setUseremail(email)
+        })()
+    }, [])
   useEffect(() => {
     axios.get(`${url}support/faqs`)
       .then(res => setFaqs(res.data))
       .catch(err => console.log("===>".err))
   }, [])
 
-  const handleSubmit = async () => {
-    const emailRegux = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
-    if(!username || !useremail || !message){
+  function handleSubmit(){
+    if(!subject || !useremail || !message){
         Toast.show(style.error({
             text1: "Updated Failed",
             text2: "All fields required",
         }))
         return
     }
-    if(!emailRegux.test(useremail)){
-        Toast.show(style.error({
-            text1: 'Invalid email',
-            text2: 'Enter a valid email',
-        }))
-        return
-    }
-    axios.post(`${url}support-ticket`, { username:username,useremail:useremail, message:message})
+    axios.post(`${url}support-ticket`, { subject:subject,useremail:useremail, message:message})
         .then((response) => {
             Toast.show(style.success({
                 text1: "Successfully ticket rised",
                 text2: response?.data?.message,
             }))
-            setUsername('')
-            setUseremail('')
+            setSubject('')
             setMessage('')
         })
       .catch(err => console.log(err))
@@ -62,15 +59,16 @@ export default function SupportPage() {
     <View style={[styles.container,{marginBottom:30}]}>
         <Text style={styles.heading}>Need Help?</Text>
         <TextInput 
-            placeholder='Enter your name'
-            value={username}
-            onChangeText={setUsername}
-            style={styles.userinput}
-        />
-        <TextInput 
             placeholder='Enter your email'
             value={useremail}
             onChangeText={setUseremail}
+            style={styles.userinput}
+            editable={false}
+        />
+        <TextInput 
+            placeholder='Subject'
+            value={subject}
+            onChangeText={setSubject}
             style={styles.userinput}
         />
         <TextInput
@@ -91,14 +89,15 @@ export default function SupportPage() {
 
 const styles = StyleSheet.create({
 container: { 
-    padding: 20 
+    padding: 20,    
 },
-heading: { fontSize: 22, 
+heading: { 
+    fontSize: 22, 
     fontWeight: 'bold', 
     marginVertical: 10 
 },
-faqItem: { marginBottom: 10 
-
+faqItem: { 
+    marginBottom: 10 
 },
 question: { 
     fontSize:18,

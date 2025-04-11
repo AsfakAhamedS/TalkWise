@@ -299,12 +299,6 @@ export default function UserChat() {
             setIsPlaying(false)
         }
     }
-    
-    
-
-
-
-
 //   const handleSpeak = () => {
 //     console.log("Trigged")
 //     fetchAndPlayAudio("Hello! Welcome to TalkWise.")

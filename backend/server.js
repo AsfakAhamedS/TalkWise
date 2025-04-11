@@ -123,6 +123,7 @@ app.post('/user-create-account', async(req,res) => {
             password: password,
             phone: userphoneno,
             age:null,
+            nativeLanguage:null,
             communicationlevel:null,
             createdAt: new Date()
         })
@@ -222,7 +223,7 @@ app.post('/password-change', async(req,res) => {
 app.post('/get-user-details', async(req,res) => {
     let client
     try{
-        const { type, useremail, username, userage, usercomlevel } = req.body
+        const { type, useremail, username, userage, usercomlevel, userlanguage } = req.body
         const dbconnection = await getCollection("TalkWise", "Users")
         client = dbconnection.client
         const collection = dbconnection.collection
@@ -244,6 +245,13 @@ app.post('/get-user-details', async(req,res) => {
             const updateResult = await collection.updateOne({ email:useremail },{ $set: { age:userage }})
             res.status(200).json({ message: "Age updated"})
         }
+        if(userlanguage === 'nativelan'){
+            if(!userlanguage){
+                return res.status(400).json({ error: "User communication level is required" })
+            }
+            const updateResult = await collection.updateOne({ email:useremail },{ $set: { nativeLanguage:userlanguage }})
+            res.status(200).json({ message: "Communication level is updated"})
+        }  
         if(type === 'comlevel'){
             if(!usercomlevel){
                 return res.status(400).json({ error: "User communication level is required" })
@@ -567,7 +575,9 @@ app.post("/lesson", async(req, res) => {
 
         let usercontent = `{This is system prompt,generate based on these, question: ${question},
                             expected answer : ${expectedans}, if user give correct answer : ${correctans},
-                            user give wrong answer : ${wrongans}. if user tells not related these question,you says, focus on your lesson}`
+                            user give wrong answer : ${wrongans}. if user tells not related these question,you says, focus on your lesson}
+                            if user speak tamil you reply tamil, if user native language, user ask question in english, you both english and tamil. 
+                            you like to tech spoken english.`
         // console.log(usercontent)
         const aiResponse = await axios.post(
             'https://api.groq.com/openai/v1/chat/completions',
@@ -659,7 +669,7 @@ app.post("/quiz", async (req, res) => {
 app.post("/support-ticket", async (req, res) => {
     let client
     try {
-        const { username, useremail, message } = req.body
+        const { subject, useremail, message } = req.body
 
         const dbConnection = await getCollection("TalkWise", "SupportTicket")
         client = dbConnection.client
@@ -670,15 +680,16 @@ app.post("/support-ticket", async (req, res) => {
         if(!userexist){
             const result = await collection.insertOne({
                 userId:id,
-                username,
                 useremail,
                 ticketHistory:[
                     {
                         ticketId:ticid,
-                        message,
-                        status: "open",
+                        status: "Open",
+                        subject:subject.trim(),
+                        message:message.trim(),
                         createdAt: new Date(),
-                        response: ""
+                        response: "",
+                        closedAt: "",
                     }
                 ]
             })
@@ -688,10 +699,12 @@ app.post("/support-ticket", async (req, res) => {
                 { useremail:useremail },
                 { $push: {ticketHistory:{
                     ticketId:ticid,
-                    message,
-                    status: "open",
+                    status: "Open",
+                    subject:subject.trim(),
+                    message:message.trim(),
                     createdAt: new Date(),
-                    response: ""
+                    response: "",
+                    closedAt: "",
                 }}}
             )
         }
@@ -716,6 +729,33 @@ app.get("/support/faqs", (req, res) => {
       
 
     ])
+})
+
+app.post("/ticket-status", async (req, res) => {
+    let client
+    try {
+        const { useremail } = req.body
+
+        const dbConnection = await getCollection("TalkWise", "SupportTicket")
+        client = dbConnection.client
+        const collection = dbConnection.collection
+        const ticket = await collection.findOne(
+            { useremail: useremail },
+            { projection: { ticketHistory: 1, _id: 0 } }
+          )          
+        if (ticket && ticket.ticketHistory) {
+            res.status(200).json(ticket.ticketHistory) 
+        }else{
+            res.status(404).json({ error: "No tickets found" })
+        }
+    }catch (error) {
+      res.status(500).json({ error: "Error", error })
+    }finally {
+        if (client) {
+          await client.close()
+          console.log("DB connection closed")
+        }
+    }
 })
 
 app.post("/user-payment", async(req, res) => {

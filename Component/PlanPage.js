@@ -44,7 +44,7 @@ export default function PlanPage(){
                             <Text style={[style.userdp_subhead,{marginBottom:20,color:'#fff'}]}>Full potential</Text>
                         </View>
                         <View style={style.subscription_icon}>
-                            <TouchableOpacity onPress={() => navigation.navigate('main')}>
+                            <TouchableOpacity onPress={() => navigation.goBack('')}>
                                 <Octicons name="x" color="#fff" size={22}/>
                             </TouchableOpacity>
                         </View>
