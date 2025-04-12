@@ -221,6 +221,7 @@ app.post('/password-change', async(req,res) => {
 })
 
 app.post('/get-user-details', async(req,res) => {
+    console.log("Works ===>")
     let client
     try{
         const { type, useremail, username, userage, usercomlevel, userlanguage } = req.body
@@ -238,6 +239,7 @@ app.post('/get-user-details', async(req,res) => {
             const updateResult = await collection.updateOne({ email:useremail },{ $set: { username:username.trim() }})
             res.status(200).json({ message: "Name updated"})
         }
+        console.log("===>",userage)
         if(type === 'age'){
             if(!userage){
                 return res.status(400).json({ error: "User age is required" })
@@ -245,12 +247,12 @@ app.post('/get-user-details', async(req,res) => {
             const updateResult = await collection.updateOne({ email:useremail },{ $set: { age:userage }})
             res.status(200).json({ message: "Age updated"})
         }
-        if(userlanguage === 'nativelan'){
+        if(type === 'nativelan'){
             if(!userlanguage){
                 return res.status(400).json({ error: "User communication level is required" })
             }
             const updateResult = await collection.updateOne({ email:useremail },{ $set: { nativeLanguage:userlanguage }})
-            res.status(200).json({ message: "Communication level is updated"})
+            res.status(200).json({ message: "Language is updated"})
         }  
         if(type === 'comlevel'){
             if(!usercomlevel){
@@ -322,6 +324,7 @@ app.post('/get-user-avatar', async (req, res) => {
                 email: result.email, 
                 phone:result.phone, 
                 age: result.age, 
+                language: nativeLanguage,
                 level:result.communicationlevel, 
                 credit:result.usercredit,
                 image:result.userprofile})

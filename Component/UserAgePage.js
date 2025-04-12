@@ -57,7 +57,8 @@ export default function UserAgePage() {
                         <TouchableOpacity
                             key={item}
                             style={[style.age_btn, age === item ? { backgroundColor: '#ECECEC' } : {}]}
-                            onPress={() => setAge(item)}>
+                            onPress={() => setAge(item)}
+                        >
                             <Text style={style.age_btn_text}>{item}</Text>
                         </TouchableOpacity>
                     ))}

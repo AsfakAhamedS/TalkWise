@@ -20,6 +20,7 @@ export default function ProfileSettings() {
     const [level, setLevel] = useState('')
     const [showLanguageModal, setShowLanguageModal] = useState(false)
     const [language, setLanguage] = useState('Tamil') 
+    const [lan, setLan] = useState('')
     const languages = [
         'Arabic',
         'Chinese',
@@ -72,6 +73,7 @@ export default function ProfileSettings() {
                 setName(response?.data?.name)
                 setImage(response?.data?.image)
                 setLevel(response?.data?.level)
+                setLan(response?.data?.language)
                 console.log("img url ==>",response?.data?.image)
         }})
         .catch(error => {
@@ -129,7 +131,7 @@ export default function ProfileSettings() {
                             Native language
                         </Text>
                         <View style={{ flexDirection: 'row', gap: 15 }}>
-                            <Text style={[style.settingtitle, { color: '#bababa' }]}>{language}</Text>
+                            <Text style={[style.settingtitle, { color: '#bababa' }]}>{lan}</Text>
                             <Fontisto name="angle-right" color="gray" size={14} style={{ marginTop: 3 }} />
                         </View>
                     </TouchableOpacity>

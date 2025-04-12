@@ -30,12 +30,14 @@ export default function UserNativeLanPage() {
       ] 
 
     useEffect(() => {
+        console.log("lan ===>",nativelan)
         if (nativelan !== null) {
             handleNext()
         }
     }, [nativelan]) 
 
     async function handleNext() {
+        console.log(nativelan)
         console.log("url ===>",url)
         const email = await AsyncStorage.getItem('Email')
         // const email = 'asfak@gmail.com'
@@ -49,7 +51,7 @@ export default function UserNativeLanPage() {
         .catch(error => {
             Toast.show(style.error({
                 text1: 'Update Failed',
-                text2: error.response?.data?.error,
+                text2: error?.data?.message,
             }))
         })
     }
@@ -60,6 +62,7 @@ export default function UserNativeLanPage() {
                 <Text style={[style.userdp_subhead,{fontWeight:300}]}>What's your</Text>
                 <Text style={[style.userdp_subhead,{marginBottom:20}]}>native language?</Text>
                 <View style={{marginBottom:40}}>
+                <TouchableOpacity>
                     <FlatList
                         showsHorizontalScrollIndicator={false}
                         showsVerticalScrollIndicator={false}
@@ -67,7 +70,7 @@ export default function UserNativeLanPage() {
                             keyExtractor={(item, index) => index.toString()}
                             renderItem={({ item }) => (
                             <TouchableOpacity 
-                                style={[style.age_btn, {elevation:3}, nativelan === "Arabic" ? { backgroundColor: '#ECECEC' } : {}]}
+                                style={[style.age_btn, {elevation:3}, nativelan === item ? { backgroundColor: '#ECECEC' } : {}]}
                                 onPress={() => setNativelan(item)}
                             >
                                     <Text style={style.age_btn_text}>{item}</Text>
@@ -75,8 +78,10 @@ export default function UserNativeLanPage() {
                         )}
                         ListEmptyComponent={<Text>No tickets found</Text>}
                     />
+                </TouchableOpacity>
                 </View>
             </View>
+            <Toast/>
         </View>
     )
 }

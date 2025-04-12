@@ -95,7 +95,7 @@ export default function UserProfilePage() {
                     text1: "Avatar Selected!",
                     text2: "Your profile picture has been updated",
                 }))
-                setTimeout(() => navigation.navigate('userlevel'), 1000)
+                setTimeout(() => navigation.navigate('nativelan'), 1000)
             }
         })
         .catch(error => {

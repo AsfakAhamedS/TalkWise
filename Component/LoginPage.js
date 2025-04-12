@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { Text, View,Touchable, TouchableOpacity, TextInput, Image } from 'react-native'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import axios from 'axios'
-import {useNavigation} from '@react-navigation/native'
+import {useNavigation, useRoute} from '@react-navigation/native'
 import Toast from 'react-native-toast-message'
 import Octicons from 'react-native-vector-icons/Octicons'
 import Feather from 'react-native-vector-icons/Feather'
@@ -33,7 +33,11 @@ export default function LoginPage() {
                         text1: response?.data?.message,
                         text2: 'Welcome back!',
                     }))
-                    setTimeout(() => navigation.navigate('main'), 1500)
+                    setTimeout(async () => {
+                        await AsyncStorage.setItem('FromLogin', 'true')
+                        navigation.navigate('main')
+                    }, 1500)
+                      
                 })
                 .catch(err => console.error("Token error:", err))
             }

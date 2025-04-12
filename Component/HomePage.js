@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback } from 'react'
 import { Text, View,Touchable, TouchableOpacity, TextInput, Image, FlatList, ScrollView } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import { useNavigation, useFocusEffect } from '@react-navigation/native'
+import { useNavigation, useFocusEffect, useRoute  } from '@react-navigation/native'
 import style from '../style'
 const url = process.env.EXPO_PUBLIC_API_URL || '' 
 
@@ -12,6 +12,31 @@ export default function HomePage(){
     const [usercredits, setUsercredits] = useState(20) 
     const [level, setLevel] = useState('')
     const [theme, setTheme] = useState('')
+
+   
+    useEffect(() => {
+        const checkFromLogin = async () => {
+        try {
+            const fromLogin = await AsyncStorage.getItem('FromLogin')
+
+            if (fromLogin === 'true') {
+            console.log('Redirecting to main screen...')
+            
+            await AsyncStorage.removeItem('FromLogin')
+
+            navigation.reset({
+                index: 0,
+                routes: [{ name: 'main' }],
+            });
+            } else {
+            console.log('Not from login. Staying on HomePage.')
+            }
+        } catch (error) {
+            console.log('Error checking FromLogin:', error)
+        }
+        }
+        checkFromLogin()
+    }, [])
 
     useFocusEffect(
         useCallback(() => {
@@ -50,7 +75,7 @@ export default function HomePage(){
             console.log("subs ===>",usercredits)
         })
         .catch(error => {
-            console.log("error ==> ", error.response?.data || "error")
+            console.log("Sub error ==> ", error.response?.data || "error")
         })
     }
 
@@ -63,7 +88,7 @@ export default function HomePage(){
                 }
             })
             .catch(error => {
-                console.log("error ==> ", error.response?.data || "error")
+                console.log("Avatar error ==> ", error.response?.data || "error")
             })
     }
     return(
