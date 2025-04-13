@@ -307,7 +307,7 @@ app.post('/upload-pro-pic', upload.single('file'), async(req, res) => {
 app.post('/get-user-avatar', async (req, res) => {
     let client
     try {
-        const { type, useremail, name, email, phone, age , level  } = req.body
+        const { type, useremail, name, email, phone, age , level, language  } = req.body
         console.log("server ==>",useremail)
         const dbconnection = await getCollection("TalkWise", "Users")
         client = dbconnection.client
@@ -324,9 +324,8 @@ app.post('/get-user-avatar', async (req, res) => {
                 email: result.email, 
                 phone:result.phone, 
                 age: result.age, 
-                language: nativeLanguage,
+                nativeLanguage: result.nativeLanguage,
                 level:result.communicationlevel, 
-                credit:result.usercredit,
                 image:result.userprofile})
         }
         if(type === 'updateuserdata'){
@@ -334,6 +333,7 @@ app.post('/get-user-avatar', async (req, res) => {
             if(name) updatefield.username = name.trim()
             if(phone) updatefield.phone = phone
             if(age) updatefield.age = age
+            if(language) updatefield.nativeLanguage = language
             if(level) updatefield.communicationlevel = level.trim()
 
             const updateresult = await collection.updateOne(

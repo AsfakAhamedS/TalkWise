@@ -28,7 +28,7 @@ export default function UserComLevelPage() {
         axios.post(url + 'get-user-details', { type:'comlevel', useremail:email,  usercomlevel: comlevel })
         .then(response => {
             if (response.status === 200) {
-                setTimeout(() => navigation.navigate('plan'), 1000)
+                setTimeout(() => navigation.navigate('lesson'), 500)
             }
         })
         .catch(error => {

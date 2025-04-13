@@ -26,7 +26,6 @@ import QuizPage from './Component/QuizPage'
 import SupportPage from './Component/SupportPage'
 import TicketPage from './Component/TicketPage'
 import MyProgressPage from './Component/MyProgressPage'
-import AiChatPage from './Component/AiChatPage'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 
 const Stack = createStackNavigator()
@@ -49,19 +48,6 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen 
-            name="ai" 
-            component={AiChatPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
-          /> */}
           
           <Stack.Screen 
             name="main" 
@@ -228,7 +214,7 @@ export default function App() {
           
 
 
-           <Stack.Screen 
+          <Stack.Screen 
             name="userlevel" 
             component={UserComLevelPage}
             options={({ navigation }) => ({

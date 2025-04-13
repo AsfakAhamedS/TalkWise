@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback  } from 'react'
-import { View, Text, Image, TouchableOpacity, styleheet, ScrollView, FlatList } from 'react-native'
+import { View, Text, Image, TouchableOpacity, FlatList } from 'react-native'
 import axios from 'axios'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation, useFocusEffect  } from '@react-navigation/native'
@@ -19,8 +19,7 @@ export default function ProfileSettings() {
     const [showlevelmodal, setShowlevelmodal] = useState(false)
     const [level, setLevel] = useState('')
     const [showLanguageModal, setShowLanguageModal] = useState(false)
-    const [language, setLanguage] = useState('Tamil') 
-    const [lan, setLan] = useState('')
+    const [language, setLanguage] = useState('') 
     const languages = [
         'Arabic',
         'Chinese',
@@ -65,19 +64,19 @@ export default function ProfileSettings() {
         }, [useremail])
     )
     
-    async function avatar(){
+    function avatar(){
         console.log("email ==>",useremail)
-        await axios.post(url+"get-user-avatar", {type:'getuserdata', useremail:useremail})
+        axios.post(url+"get-user-avatar", {type:'getuserdata', useremail:useremail})
         .then(response => {
             if(response.status==200){
                 setName(response?.data?.name)
                 setImage(response?.data?.image)
                 setLevel(response?.data?.level)
-                setLan(response?.data?.language)
+                setLanguage(response?.data?.nativeLanguage)
                 console.log("img url ==>",response?.data?.image)
         }})
         .catch(error => {
-            console.log("error ==> ",error.response?.data || "error")
+            console.log("Avatar error ==> ",error.response?.data || "error")
         }) 
     }
 
@@ -87,16 +86,16 @@ export default function ProfileSettings() {
         navigation.navigate('login')
     }
 
-    function updatedata(level){
+    function updatedata(language, level){
         console.log("User Email:", useremail)
-        if(!level || !useremail){
+        if(!level || !language || !useremail){
             Toast.show(style.error({
                 text1: "Updated Failed",
                 text2: "All fields require",
             }))
             return
         }
-        axios.post(url+"get-user-avatar", { type: 'updateuserdata', level:level, useremail:useremail })
+        axios.post(url+"get-user-avatar", { type: 'updateuserdata', level:level, useremail:useremail, language:language })
         .then(response => {
             if (response.status == 200) {
                 
@@ -108,7 +107,7 @@ export default function ProfileSettings() {
             }
         })
         .catch(error => {
-            console.log("error ==> ", error.response?.data || "error")
+            console.log("error ==> ", error?.response?.data || "error")
         })
     }
 
@@ -131,7 +130,7 @@ export default function ProfileSettings() {
                             Native language
                         </Text>
                         <View style={{ flexDirection: 'row', gap: 15 }}>
-                            <Text style={[style.settingtitle, { color: '#bababa' }]}>{lan}</Text>
+                            <Text style={[style.settingtitle, { color: '#bababa' }]}>{language}</Text>
                             <Fontisto name="angle-right" color="gray" size={14} style={{ marginTop: 3 }} />
                         </View>
                     </TouchableOpacity>
@@ -153,8 +152,10 @@ export default function ProfileSettings() {
                                     renderItem={({ item, index }) => (
                                     <TouchableOpacity
                                         onPress={() => {
-                                        setLanguage(item)
-                                        setShowLanguageModal(false)
+                                            const newLanguage = item
+                                            setLanguage(newLanguage)
+                                            setShowLanguageModal(false)
+                                            updatedata(newLanguage, level)
                                         }}
                                         style={[style.theme_modal_inside_btn,index !== languages.length - 1 ? { borderBottomWidth: 1 } : { borderBottomWidth: 0 },]} >
                                         <Text style={[style.theme_modal_txt,theme === 'Dark' ? { color: '#FAFAFA' } : { color: '#000' },]}>
@@ -192,9 +193,10 @@ export default function ProfileSettings() {
                                     <TouchableOpacity
                                         key={index}
                                         onPress={() => {
-                                            setLevel(item)          
+                                            const newLevel = item
+                                            setLevel(newLevel)
                                             setShowlevelmodal(false)
-                                            updatedata(item)         
+                                            updatedata(language, newLevel)
                                         }}
                                         style={[style.theme_modal_inside_btn,index !== levels.length - 1 ? { borderBottomWidth: 1 } : { borderBottomWidth: 0 },]}>
                                         <Text style={[style.theme_modal_txt,theme === 'Dark' ? { color: '#FAFAFA' } : { color: '#000' }]}>
