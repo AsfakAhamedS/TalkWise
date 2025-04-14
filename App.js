@@ -48,12 +48,20 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
-          
-          <Stack.Screen 
-            name="main" 
-            component={TabNavPage} 
-            options={{headerShown:false}}
+        <Stack.Screen 
+            name="username" 
+            component={UserNamePage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
           />
+       
          
          
 
@@ -108,19 +116,9 @@ export default function App() {
               ),
             })} 
           />
-          <Stack.Screen 
-            name="username" 
-            component={UserNamePage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
-          />
+          
+
+
           <Stack.Screen 
             name="userage" 
             component={UserAgePage}
@@ -211,63 +209,30 @@ export default function App() {
               }
             }} 
           />
-          
+          <Stack.Screen 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
+          />
 
 
           <Stack.Screen 
             name="userlevel" 
             component={UserComLevelPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+            options={{headerShown:false}} 
           />
 
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}
-            options={({ route, navigation }) => {
-              const section = route.params?.level
-             return {
-                headerTitle: () => (
-                  <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
-                    {section} Level
-                  </Text>
-                ),
-                headerLeft: () => (
-                  <TouchableOpacity onPress={() => navigation.goBack('')} style={{ paddingHorizontal: 16 }}>
-                    <AntDesign name="arrowleft" color="#000" size={28} />
-                  </TouchableOpacity>
-                ),
-                headerStyle: { backgroundColor: '#fff', elevation: 0 },
-                headerTitleAlign: 'center'
-             }
-            }} 
+            options={{headerShown:false}} 
           /> 
          
 
           <Stack.Screen 
             name="chat" 
             component={UserChat}
-            options={({ navigation }) => ({
-              headerTitle: () => (
-                <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
-                  Chat
-                </Text>
-              ),
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingHorizontal: 16 }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-              headerTitleAlign: 'center'
-            })}
+            options={{headerShown:false}}
           />
           <Stack.Screen 
             name="quiz" 

@@ -27,7 +27,7 @@ export default function TabNavPage() {
             return <Ionicons name={iconName} size={20} color={color} />
           }
         },
-        tabBarActiveTintColor: '#252525',
+        tabBarActiveTintColor: '#4F46E5',
         tabBarInactiveTintColor: '#bababa',
         tabBarStyle: {
           backgroundColor: '#fff', 

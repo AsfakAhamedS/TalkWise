@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Text, View, Button, TouchableOpacity, FlatList, ActivityIndicator, TextInput, StyleSheet } from 'react-native'
 import { Audio } from 'expo-av'
 import axios from 'axios'
@@ -10,13 +10,15 @@ import { Feather, MaterialIcons } from '@expo/vector-icons'
 import Fontisto from 'react-native-vector-icons/Fontisto'
 import Foundation from 'react-native-vector-icons/Foundation'
 import AntDesign from 'react-native-vector-icons/AntDesign'
+import { Ionicons } from '@expo/vector-icons'
 
 const url = process.env.EXPO_PUBLIC_API_URL || ''
 
 export default function UserChat() {
     const navigation = useNavigation()
     const route = useRoute()
-    const {level} = route.params || {}
+    const {level, topic} = route.params || {} 
+    const [username,setUsername] = useState('')
     const [recording, setRecording] = useState(null)
     const [recordedUri, setRecordedUri] = useState(null)
     const [messages, setMessages] = useState([])
@@ -26,16 +28,16 @@ export default function UserChat() {
     const [conversationStep, setConversationStep] = useState(1)
     const [section, setSection] = useState('')
     const [syetemprompt, setSystempromt] = useState('')
-    const [messageQueue, setMessageQueue] = useState([])
     const [userText, setUserText] = useState('')
     const [currentlyPlayingId, setCurrentlyPlayingId] = useState(null)
     const [isPlaying, setIsPlaying] = useState(false)
-
+    const flatListRef = useRef(null)
+    
     console.log(level)
     useEffect(() => {
         (async () => {
             const uemail = await AsyncStorage.getItem('Email')
-            setUseremail( uemail)
+            setUseremail(uemail)
         })()
     }, [])
     
@@ -51,6 +53,7 @@ export default function UserChat() {
         .then(response => {
             if (response.status == 200) {
                 setSection(response?.data?.level)
+                setUsername(response?.data?.name)
             }
         })
         .catch(error => {
@@ -59,47 +62,77 @@ export default function UserChat() {
     }
 
     const generateUniqueId = () => Date.now().toString() + Math.random().toString(36).slice(2, 7)
-    console.log(generateUniqueId())
 
     useEffect(() => {
-        console.log("trigger outside")
-        async function fetchFirstConversationStep() {
+        if (!section || !conversationStep) return
+    
+        const fetchNextQuestion = async () => {
             try {
-                console.log("trigger inside")
                 const response = await axios.post(`${url}nextStep`, {
-                    email:useremail, section:section, level:level, step: conversationStep
+                    email: useremail,
+                    section: section,
+                    level: level,
+                    step: conversationStep
                 })
+    
                 if (response.status === 200) {
                     const { aiPrompt, status } = response.data
-                    setSystempromt(aiPrompt)
-                    console.log("status ====>",status)
-                    // console.log("next lesson ==>",aiPrompt)
-                    const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                    setMessageQueue((prev) => [
-                    ...prev,
-                        {
-                            id: generateUniqueId(),
-                            text: aiPrompt.ai_prompt || aiPrompt,
-                            type: 'bot',
-                            sender: 'AI',
-                            time: currentTime,
-                        },
-                    ])
-                    if(status === "completed"){
-                        console.log("navigate ======>")
+    
+                    const newMessage = {
+                        id: generateUniqueId(),
+                        text: aiPrompt.ai_prompt || aiPrompt,
+                        type: 'bot',
+                        sender: 'AI',
+                        time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    }
+    
+                    // Only add if last message isn't the same (avoid duplicates).
+                    setMessages(prev => {
+                        const last = prev[prev.length - 1]
+                        if (!last || last.text !== newMessage.text) {
+                            return [...prev, newMessage]
+                        }
+                        return prev
+                    })
+    
+                    updateServerWithMessage(newMessage)
+    
+                    if (status === "completed") {
                         setTimeout(() => {
-                            navigation.navigate("quiz" ,{levels:level})
+                            navigation.navigate("quiz", { levels: level })
                         }, 3000)
                     }
                 }
+    
             } catch (error) {
-                console.error('Error fetching first conversation step:', error)
+                console.error('Error fetching next question:', error)
             }
         }
-        if (section) {
-            fetchFirstConversationStep()
+    
+        fetchNextQuestion()
+    
+    }, [section, conversationStep])
+    
+    
+
+    // Function to send a single message to the server
+    const updateServerWithMessage = async (message) => {
+        if (!useremail) return
+        
+        try {
+            await axios.post(`${url}update-progress`, {
+                userEmail: useremail,
+                userName: username,
+                section: section || 'general',
+                level: level || 'beginner',
+                topic: topic || 'conversation',
+                step: conversationStep || 1,
+                messages: [message] // Send just the new message
+            })
+        } catch (error) {
+            console.error('Error updating message on server:', error.response?.status || error.message)
         }
-    },[section, conversationStep])
+    }
 
     async function handleUserResponse(userInput) {
         if (!userInput.trim()) return
@@ -110,28 +143,36 @@ export default function UserChat() {
                 expectedans: syetemprompt.expected_responses,
                 correctans: syetemprompt.correct_response,
                 wrongans: syetemprompt.fallback_response,
-                user: userInput,
+                user: userInput, 
             })
             if (response.status === 200) {
                 const { aiPrompt, aiResponse } = response.data
                 const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                setMessageQueue((prevMessages) => [
-                    ...prevMessages,
-                    {
-                        id: generateUniqueId(),
-                        text: aiPrompt,
-                        type: 'user',
-                        sender: 'You',
-                        time: currentTime,
-                    },
-                    {
-                        id: generateUniqueId(),
-                        text: aiResponse,
-                        type: 'bot',
-                        sender: 'AI',
-                        time: currentTime,
-                    },
-                ])
+                
+                // Create new message objects with unique IDs
+                const userMessage = {
+                    id: generateUniqueId(),
+                    text: aiPrompt,
+                    type: 'user',
+                    sender: 'You',
+                    time: currentTime,
+                }
+                
+                const botMessage = {
+                    id: generateUniqueId(),
+                    text: aiResponse,
+                    type: 'bot',
+                    sender: 'AI',
+                    time: currentTime,
+                }
+                
+                // Update messages state directly
+                setMessages(prevMessages => [...prevMessages, userMessage, botMessage])
+                
+                // Send each message to server separately
+                await updateServerWithMessage(userMessage)
+                await updateServerWithMessage(botMessage)
+                
                 setConversationStep(conversationStep + 1)
                 setUserText('')
             }
@@ -180,9 +221,8 @@ export default function UserChat() {
             setIsPlaying(false)
           }
         })
-      }
+    }
       
-
     async function uploadRecording(uri) {
         setLoading(true)
         const formData = new FormData()
@@ -200,7 +240,6 @@ export default function UserChat() {
             })
             if (response.status === 200) {
                 const { transcription } = response.data
-                // console.log(response?.data?.transcription)
                 try {
                     const response = await axios.post(`${url}lesson`, {
                         question: syetemprompt.ai_prompt,
@@ -212,23 +251,32 @@ export default function UserChat() {
                     if (response.status === 200) {
                         const { aiPrompt, aiResponse } = response.data
                         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-                        setMessageQueue([...messageQueue,
-                            {
-                                id: generateUniqueId(),
-                                uri,
-                                text: aiPrompt,
-                                type: 'user',
-                                sender: 'You',
-                                time: currentTime,
-                            },
-                            {
-                                id: generateUniqueId(),
-                                text: aiResponse,
-                                type: 'bot',
-                                sender: 'AI',
-                                time: currentTime,
-                            },
-                        ])
+                        
+                        // Create new message objects with unique IDs
+                        const userMessage = {
+                            id: generateUniqueId(),
+                            uri,
+                            text: aiPrompt,
+                            type: 'user',
+                            sender: 'You',
+                            time: currentTime,
+                        }
+                        
+                        const botMessage = {
+                            id: generateUniqueId(),
+                            text: aiResponse,
+                            type: 'bot',
+                            sender: 'AI',
+                            time: currentTime,
+                        }
+                        
+                        // Update messages state directly
+                        setMessages(prevMessages => [...prevMessages, userMessage, botMessage])
+                        
+                        // Send each message to server separately
+                        await updateServerWithMessage(userMessage)
+                        await updateServerWithMessage(botMessage)
+                        
                         setConversationStep(conversationStep + 1)
                     }
                 } catch (error) {
@@ -239,25 +287,75 @@ export default function UserChat() {
             }
         } catch (error) {
             console.error('Upload error:', error)
-            setMessageQueue((prevMessages) => [
-                ...prevMessages,
-                {   id: generateUniqueId(), 
-                    text: 'Error occurred, please try again.', 
-                    type: 'bot' 
-                },
-            ])
+            
+            const errorMessage = {
+                id: generateUniqueId(),
+                text: 'Error occurred, please try again.',
+                type: 'bot',
+                sender: 'AI',
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+            }
+            
+            setMessages(prevMessages => [...prevMessages, errorMessage])
+            
         } finally {
             setRecordedUri(null)
             setLoading(false)
         }
     }
-    // console.log(messageQueue)
-    useEffect(() => {
-        if (messageQueue.length > 0) {
-            setMessages(messageQueue)
-        }
-    }, [messageQueue])
 
+   
+useEffect(() => {
+    const fetchChatHistory = async () => {
+        if (!useremail) return
+
+        try {
+            const response = await axios.post(`${url}update-progress`, {
+                userEmail: useremail
+            })
+
+            const chatHistory = response.data.chatHistory || []
+            const lastStep = response.data.lastStep || 1
+            
+            // Set the section from server response
+            if (response.data.lastSection) {
+                setSection(response.data.lastSection)
+            }
+
+            if (chatHistory.length > 0) {
+                const uniqueMessages = chatHistory.map(msg => ({
+                    ...msg,
+                    id: msg.id || generateUniqueId()
+                }))
+
+                setMessages(uniqueMessages)
+
+                // Check if the last message was from AI or user to determine next step
+                const lastMessage = chatHistory[chatHistory.length - 1]
+                
+                if (lastMessage.sender === 'You') {
+                    // If user replied last, set conversation step to continue with AI's next question
+                    setConversationStep(lastStep + 1)
+                } else {
+                    // If AI spoke last, keep same step as user still needs to respond
+                    setConversationStep(lastStep)
+                }
+            } else {
+                // No history, start fresh
+                setConversationStep(1)
+            }
+
+        } catch (error) {
+            console.error('Error fetching chat history:', error)
+        }
+    }
+
+    fetchChatHistory()
+}, [useremail])
+    
+    
+    
+    
     async function fetchAndPlayAudio(text, messageId) {
         let soundObject
     
@@ -281,10 +379,12 @@ export default function UserChat() {
             setSound(soundObject)
             setCurrentlyPlayingId(messageId)  
             setIsPlaying(true)
+            console.log("Playing audio...")
             await soundObject.playAsync()
     
             soundObject.setOnPlaybackStatusUpdate(async (status) => {
                 if (status.didJustFinish) {
+                    console.log("Audio finished, unloading...")
                     await soundObject.unloadAsync()
                     setCurrentlyPlayingId(null)
                     setIsPlaying(false)
@@ -299,18 +399,31 @@ export default function UserChat() {
             setIsPlaying(false)
         }
     }
-//   const handleSpeak = () => {
-//     console.log("Trigged")
-//     fetchAndPlayAudio("Hello! Welcome to TalkWise.")
-//   }
-
   
     return (
         <View style={styles.container}>
+            <View style={styles.header}>
+                <TouchableOpacity 
+                    style={styles.backButton} 
+                    onPress={() => navigation.goBack()}
+                >
+                    <Ionicons 
+                        name="arrow-back" 
+                        size={20} 
+                        color= '#111827' 
+                    />
+                </TouchableOpacity>
+                <View style={styles.headerTitleContainer}>
+                    <Text style={styles.headerTitle}>
+                        Chat
+                    </Text>
+                </View>
+            </View>
             <FlatList
+                ref={flatListRef}
                 showsVerticalScrollIndicator={false}
                 data={messages}
-                keyExtractor={(item) => item.id.toString()}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={{ marginVertical: 6, alignSelf: item.type === 'user' ? 'flex-end' : 'flex-start' }}>
                         <Text style={styles.senderName}>{item.sender}</Text>
@@ -318,47 +431,47 @@ export default function UserChat() {
                             {item.uri ? (
                                 <>
                                 <View style={styles.audioMessage}>
-                                <TouchableOpacity
-                                    onPress={async () => {
-                                        if (currentlyPlayingId === item.id && isPlaying) {
-                                        await sound?.pauseAsync()
-                                        setIsPlaying(false)
-                                        } else {
-                                        setCurrentlyPlayingId(item.id)
+                                    <TouchableOpacity
+                                        onPress={async () => {
+                                            if (currentlyPlayingId === item.id && isPlaying) {
+                                            await sound?.pauseAsync()
+                                            setIsPlaying(false)
+                                            } else {
+                                            setCurrentlyPlayingId(item.id)
 
-                                        if (sound) {
-                                            await sound.unloadAsync()
-                                            setSound(null)
-                                        }
+                                            if (sound) {
+                                                await sound.unloadAsync()
+                                                setSound(null)
+                                            }
 
-                                        try {
-                                            const { sound: newSound } = await Audio.Sound.createAsync({ uri: item.uri })
-                                            setSound(newSound)
+                                            try {
+                                                const { sound: newSound } = await Audio.Sound.createAsync({ uri: item.uri })
+                                                setSound(newSound)
 
-                                            await newSound.playAsync()
-                                            setIsPlaying(true)
+                                                await newSound.playAsync()
+                                                setIsPlaying(true)
 
-                                            newSound.setOnPlaybackStatusUpdate((status) => {
-                                            if (status.didJustFinish) {
-                                                newSound.unloadAsync()
+                                                newSound.setOnPlaybackStatusUpdate((status) => {
+                                                if (status.didJustFinish) {
+                                                    newSound.unloadAsync()
+                                                    setIsPlaying(false)
+                                                    setCurrentlyPlayingId(null)
+                                                }
+                                                })
+                                            } catch (error) {
+                                                console.log('Audio playback error:', error)
                                                 setIsPlaying(false)
                                                 setCurrentlyPlayingId(null)
                                             }
-                                            })
-                                        } catch (error) {
-                                            console.log('Audio playback error:', error)
-                                            setIsPlaying(false)
-                                            setCurrentlyPlayingId(null)
-                                        }
-                                        }
-                                    }}
-                                    style={styles.playButton}
-                                    >
-                                    {currentlyPlayingId === item.id && isPlaying ? (
-                                        <AntDesign name="pause" color="#fff" size={18} />
-                                    ) : (
-                                        <Feather name="play" size={18} color="#fff" style={{ position: 'relative', left: 2 }} />
-                                    )}
+                                            }
+                                        }}
+                                        style={styles.playButton}
+                                        >
+                                        {currentlyPlayingId === item.id && isPlaying ? (
+                                            <AntDesign name="pause" color="#fff" size={18} />
+                                        ) : (
+                                            <Feather name="play" size={18} color="#fff" style={{ position: 'relative', left: 2 }} />
+                                        )}
                                     </TouchableOpacity>
 
                                     <Text style={styles.recordedText}>Recorded Voice</Text>
@@ -400,10 +513,10 @@ export default function UserChat() {
 
                                 <Text style={styles.timestamp}>{item.time}</Text>
                             </View>
-
                         </View>
                     </View>
                 )}
+                onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
             />
             <View style={styles.inputWrapper}>
                 <TouchableOpacity onPress={recording ? stopRecording : startRecording} style={styles.micButton}>
@@ -438,6 +551,32 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingTop: 10,
     },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical:25,
+        paddingTop: 16,
+        paddingBottom: 16,
+    },
+    backButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    headerTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
+    headerTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#111827',
+    },
     messageCard: {
         paddingVertical:12,
         paddingHorizontal:20,
@@ -455,7 +594,6 @@ const styles = StyleSheet.create({
     },
     messageText: {
         fontSize: 16,
-        
         lineHeight:24,
         color: '#2d3436',
     },
@@ -476,7 +614,7 @@ const styles = StyleSheet.create({
         color: '#2d3436',
     },
     micButton: {
-        backgroundColor: '#3498db',
+        backgroundColor: '#4F46E5',
         padding: 10,
         borderRadius: 25,
     },
@@ -485,14 +623,13 @@ const styles = StyleSheet.create({
         color: '#636e72',
         marginBottom: 2,
         paddingLeft: 5,
-      },
-      timestamp: {
+    },
+    timestamp: {
         fontSize: 11,
         color: '#b2bec3',
         alignSelf: 'flex-end',
         marginTop: 4,
-      },
-      
+    },
     sendButton: {
         backgroundColor: '#2ecc71',
         padding: 10,
@@ -508,34 +645,14 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         gap: 10,
     },
-    
     playButton: {
         backgroundColor: '#0984e3',
         padding: 8,
         borderRadius: 20,
     },
-    
     recordedText: {
         fontSize: 15,
         color: '#2d3436',
         flexShrink: 1,
     },
-    audioMessage: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-      
-    playButton: {
-        backgroundColor: '#252525',
-        padding: 8,
-        borderRadius: 20,
-    },
-      
-      recordedText: {
-        fontSize: 15,
-        color: '#2d3436',
-        flexShrink: 1,
-    },
-      
 })
