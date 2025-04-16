@@ -28,7 +28,8 @@ export default StyleSheet.create({
         fontWeight:300,
     },
     subtext: {
-        fontWeight: 500
+        fontWeight: 500,
+        color:'#4F6CFF'
     },
     land_btn: {
         flex:1,
@@ -40,7 +41,7 @@ export default StyleSheet.create({
         width: 150,
         borderRadius: 25,
         alignItems: 'center',
-        backgroundColor: '#252525',
+        backgroundColor: '#2D4BDF',
         padding: 10,
     },
     land_btn_text: {
@@ -55,84 +56,107 @@ export default StyleSheet.create({
     },
 
     // Login Page
-    login_hero_img:{
-        flex:3,
-        width:'100%',
-        height:'100%'
+    safe_area: {
+        flex: 1,
+        backgroundColor: '#FFFFFF'
     },
-    login_signup_head: {
+    login_img_container: {
+        height: '40%',
+        minHeight: 180,
+        width: '100%',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    login_img: {
+        width: '100%',
+        height: '100%'
+    },
+    form_container: {
+        flex: 1,
+        padding: 24
+    },
+    header_title: {
         fontSize: 28,
-        fontWeight: 600,
-        marginBottom: 20,
-        textAlign: 'center',
+        fontWeight: '700',
+        color: '#252525',
+        marginBottom: 8
     },
-    inputcontainer: {
+    header_subtitle: {
+        fontSize: 16,
+        color: '#4F6CFF',
+        marginBottom: 25
+    },
+    input_wrap_container: {
+        marginBottom: 16
+    },
+    input_container: {
         flexDirection: 'row',
         alignItems: 'center',
-        borderBottomWidth: 1,
-        height: 50,
-        borderColor: '#ccc',
-        marginBottom: 20,
-        paddingVertical: 5, 
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        height: 52,
+        backgroundColor: '#F9F9F9'
+    },
+    input_error: {
+        borderColor: '#E53935'
     },
     icon: {
-        marginRight: 10,
-        color: '#bababa',
+        marginRight: 12
     },
     input: {
         flex: 1,
+        height: '100%',
         fontSize: 16,
-        color: '#000',
-        height: '100%', 
-        textAlignVertical: 'center',
+        color: '#333'
     },
-    login_error: {
-        color: 'red',
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 3,
-        marginBottom:5,
-        alignSelf: 'center',
+    error_text: {
+        color: '#E53935',
+        fontSize: 12,
+        marginTop: 4,
+        paddingLeft: 4
     },
-    log_forget_btn: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        textAlign: 'right',
-        color: '#252525',
-        marginBottom: 15,
+    forgot_psd_btn: {
+        alignSelf: 'flex-end',
+        marginBottom: 32
+    },
+    forgot_psd_text: {
+        color: '#2D4BDF',
+        fontSize: 14,
+        fontWeight: '500'
     },
     login_btn: {
+        backgroundColor: '#2D4BDF',
+        borderRadius: 8,
+        height: 50,
         justifyContent: 'center',
         alignItems: 'center',
+        marginBottom: 32
     },
-    login_btn_to: {
-        width: 120,
-        borderRadius: 30,
-        alignItems: 'center',
-        backgroundColor: '#252525',
-        paddingVertical: 10,
+    login_disabled_btn: {
+        backgroundColor: '#A9B4E8',
+        opacity: 0.8
     },
     login_btn_text: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
+        color: '#FFF',
+        fontSize: 17,
+        fontWeight: '600'
     },
-    log_signup: {
-        flex: 1,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-        position:'relative',
-        bottom:40
+    signup_btn_log: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
     },
-    log_signup_text: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#777',
+    signup_btn_text_log: {
+        fontSize: 14,
+        color: '#666',
+        marginRight: 4
     },
-    log_signup_btn:{
-        fontSize:17,
-        fontWeight:'bold',
+    signup_btn_link_log: {
+        fontSize: 14,
+        color: '#2D4BDF',
+        fontWeight: '600'
     },
     success: ({ text1, text2 }) => ({
         text1,
@@ -190,6 +214,87 @@ export default StyleSheet.create({
             elevation: 5,
         },
     }),
+
+    // // Login Page
+    // login_hero_img:{
+    //     flex:3,
+    //     width:'100%',
+    //     height:'100%'
+    // },
+    // login_signup_head: {
+    //     fontSize: 28,
+    //     fontWeight: 600,
+    //     marginBottom: 20,
+    //     textAlign: 'center',
+    // },
+    // inputcontainer: {
+    //     flexDirection: 'row',
+    //     alignItems: 'center',
+    //     borderBottomWidth: 1,
+    //     height: 50,
+    //     borderColor: '#ccc',
+    //     marginBottom: 20,
+    //     paddingVertical: 5, 
+    // },
+    // icon: {
+    //     marginRight: 10,
+    //     color: '#bababa',
+    // },
+    // input: {
+    //     flex: 1,
+    //     fontSize: 16,
+    //     color: '#000',
+    //     height: '100%', 
+    //     textAlignVertical: 'center',
+    // },
+    // login_error: {
+    //     color: 'red',
+    //     fontSize: 16,
+    //     fontWeight: 'bold',
+    //     textAlign: 'center',
+    //     marginTop: 3,
+    //     marginBottom:5,
+    //     alignSelf: 'center',
+    // },
+    // log_forget_btn: {
+    //     fontSize: 16,
+    //     fontWeight: 'bold',
+    //     textAlign: 'right',
+    //     color: '#252525',
+    //     marginBottom: 15,
+    // },
+    // login_btn: {
+    //     justifyContent: 'center',
+    //     alignItems: 'center',
+    // },
+    // login_btn_to: {
+    //     width: 120,
+    //     borderRadius: 30,
+    //     alignItems: 'center',
+    //     backgroundColor: '#252525',
+    //     paddingVertical: 10,
+    // },
+    // login_btn_text: {
+    //     fontSize: 18,
+    //     fontWeight: 'bold',
+    //     color: '#fff',
+    // },
+    // log_signup: {
+    //     flex: 1,
+    //     justifyContent: 'flex-end',
+    //     alignItems: 'center',
+    //     position:'relative',
+    //     bottom:40
+    // },
+    // log_signup_text: {
+    //     fontSize: 16,
+    //     fontWeight: '500',
+    //     color: '#777',
+    // },
+    // log_signup_btn:{
+    //     fontSize:17,
+    //     fontWeight:'bold',
+    // },
     
     
     // Forget Page
@@ -616,83 +721,451 @@ export default StyleSheet.create({
 
 
     // profile
-    profile: {
+    profile_safearea: {
+        flex: 1,
+        paddingVertical: 30,
+    },
+    profile_container: {
+        flex: 1,
+        paddingHorizontal: 16,
+    },
+    loadingText: {
+        marginTop: 12,
+        fontSize: 16,
+    },
+    profile_header: {
         flexDirection: 'row',
         alignItems: 'center',
-        paddingHorizontal:20,
-        paddingVertical: 20,
-        borderBottomWidth: 10,
-        borderBottomColor: '#f0f0f0',
+        paddingVertical: 24,
     },
-    pro_avatar: {
+    profile_image: {
         width: 60,
         height: 60,
         borderRadius: 30,
-        marginRight: 15,
     },
-    profileName: {
-        fontSize: 18,
-        fontWeight: 'bold',
-    },
-    editprofile: {
-        fontSize: 14,
-        color: '#3399ff',
-        marginTop: 5,
-    },
-    settingitem: {
-        flexDirection: 'row',
+    profile_img_placeholder: {
+        width: 80,
+        height: 80,
+        borderRadius: 40,
+        justifyContent: 'center',
         alignItems: 'center',
-        justifyContent: 'space-between',
-        paddingHorizontal:20,
-        paddingVertical: 20,
-        borderBottomWidth: 1,
-        borderBottomColor: '#f0f0f0',
+      },
+    profile_info: {
+        marginLeft: 16,
+        justifyContent: 'center',
     },
-    settingtitle: {
+    profile_name: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginBottom: 4,
+    },
+    edit_button: {
+        marginTop: 4,
+    },
+    edit_button_text: {
+        color: '#007AFF',
         fontSize: 16,
     },
-    logoutbutton: {
-        marginTop: 20,
-        paddingVertical: 15,
-    },
-    logouttext: {
-        fontSize: 17,
-        fontWeight:600,
-        color: '#3399ff',
-        textAlign: 'center',
-    },
-    theme_modal_btn:{
+    settings_container: {
         flex: 1,
-        // backgroundColor: 'rgba(0,0,0,0.4)',
+        paddingBottom: 24,
+    },
+    settings_section: {
+        marginBottom: 24,
+    },
+    section_header: {
+        fontSize: 13,
+        fontWeight: '600',
+        marginLeft: 16,
+        marginBottom: 8,
+    },
+    section_content: {
+        borderRadius: 10,
+        overflow: 'hidden',
+    },
+    setting_item: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        minHeight: 44,
+    },
+    setting_item_left: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    setting_title: {
+        fontSize: 17,
+    },
+    setting_item_right: {
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    setting_value: {
+        fontSize: 17,
+        color: '#8E8E93',
+        marginRight: 8,
+    },
+    logout_button: {
+        marginTop: 8,
+        borderRadius: 10,
+        paddingVertical: 16,
+        alignItems: 'center',
+    },
+    logout_text: {
+        color: '#FF3B30',
+        fontSize: 17,
+        fontWeight: '500',
+    },
+    modalContainer: {
+        justifyContent: 'flex-end',
+        margin: 0,
+    },
+    modalContent: {
+        borderTopLeftRadius: 12,
+        borderTopRightRadius: 12,
+        paddingTop: 16,
+        paddingBottom: 34,
+        maxHeight: '80%',
+    },
+    modalTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        textAlign: 'center',
+        marginBottom: 16,
+    },
+    modalListContainer: {
+        paddingHorizontal: 16,
+    },
+    modalItem: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        paddingVertical: 14,
+    },
+    modalItemText: {
+        fontSize: 17,
+    },
+    selectedItem: {
+        backgroundColor: 'rgba(0, 122, 255, 0.08)',
+    },
+    selectedItemText: {
+        fontWeight: '500',
+        color: '#007AFF',
+    },
+    cancelButton: {
+        marginTop: 16,
+        paddingVertical: 14,
+        alignItems: 'center',
+        borderTopWidth: 0.5,
+        borderTopColor: '#C6C6C8',
+    },
+    cancelButtonText: {
+        color: '#007AFF',
+        fontSize: 17,
+        fontWeight: '600',
+    },
+
+    //SupportPage
+    support_safeArea: {
+        flex: 1,
+        backgroundColor: '#fff',
+    },
+    support_container: {
+        flex: 1,
+        padding: 20,
+    },
+    support_loadingcontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff',
+    },
+    support_loadingtext: {
+        marginTop: 12,
+        fontSize: 16,
+        color: '#555',
+      },
+    support_header: {
+        marginBottom: 25,
+        paddingBottom: 15,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    support_title: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        color: '#252525',
+        marginBottom: 8,
+    },
+    support_subtitle: {
+        fontSize: 16,
+        color: '#666',
+    },
+    support_section: {
+        marginBottom: 30,
+    },
+    support_section_title: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#252525',
+        marginBottom: 16,
+    },
+    support_faqitem: {
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: '#eee',
+        borderRadius: 10,
+        overflow: 'hidden',
+      },
+    support_faqheader: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 16,
+        backgroundColor: '#f9f9f9',
+    },
+    support_question: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        flex: 1,
+        paddingRight: 10,
+    },
+    support_answer: {
+        fontSize: 15,
+        color: '#555',
+        padding: 16,
+        paddingTop: 0,
+        lineHeight: 22,
+        marginTop:10
+    },
+    support_nofaqs: {
+        fontSize: 16,
+        color: '#666',
+        fontStyle: 'italic',
+        textAlign: 'center',
+        padding: 20,
+    },
+    support_formsection: {
+        backgroundColor: '#f9f9f9',
+        padding: 20,
+        borderRadius: 12,
+        marginBottom: 30,
+    },
+    support_inputgroup: {
+        marginBottom: 16,
+    },
+    support_label: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 8,
+    },
+    support_input: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        fontSize: 16,
+    },
+    support_disabledinput: {
+        backgroundColor: '#f0f0f0',
+        color: '#666',
+    },
+    support_messageinput: {
+        backgroundColor: '#fff',
+        padding: 15,
+        borderRadius: 8,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        minHeight: 150,
+        fontSize: 16,
+    },
+    support_button: {
+        backgroundColor: '#2D4BDF',
+        padding: 16,
+        borderRadius: 8,
+        marginTop: 10,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 2,
+    },
+    support_buttontext: {
+        color: '#fff',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    support_contactinfo: {
+        marginBottom: 40,
+        padding: 20,
+        backgroundColor: '#f0f0f0',
+        borderRadius: 12,
+    },
+    support_contacttitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 16,
+    },
+    support_contactitem: {
+        fontSize: 15,
+        color: '#555',
+        marginBottom: 10,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+
+    // TicketPage
+    ticket_safearea: {
+        flex: 1,
+    },
+    ticket_container: {
+        flex: 1,
+        padding: 16,
+    },
+    ticket_headertop: {
+        marginBottom: 24,
+        paddingHorizontal: 4,
+    },
+    ticket_headingtop: {
+        fontSize: 28,
+        fontWeight: 'bold',
+        marginBottom: 6,
+    },
+    ticket_subheadingtop: {
+        fontSize: 16,
+        fontWeight: '400',
+    },
+    ticket_loadingcontainer: {
+        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
     },
-    theme_modal_container:{
-        borderRadius: 10,
-        width: '80%',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        elevation: 5
-    },
-    theme_modal_inside_btn:{
-        paddingVertical: 12,
-        borderBottomColor: '#ccc',
-    },
-    theme_modal_txt:{
+    ticket_loadingtext: {
+        marginTop: 16,
         fontSize: 16,
-        textAlign: 'center'
     },
-    theme_modal_cancel_btn:{
+    ticket_listcontainer: {
+        paddingBottom: 24,
+        flexGrow: 1,
+    },
+    ticket_cardcontainer: {
+        marginBottom: 16,
+        borderRadius: 12,
+        shadowColor: "#000",
+        shadowOffset: {width: 0,height: 2,},
+        shadowOpacity: 0.1,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    ticket_Card: {
+        padding: 16,
+        borderRadius: 12,
+    },
+    ticket_expandedcard: {
+        shadowOpacity: 0.2,
+        shadowRadius: 5.84,
+        elevation: 7,
+    },
+    ticket_header: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'flex-start',
+    },
+    ticket_title_container: {
+        flex: 1,
+        paddingRight: 12,
+    },
+    ticket_id: {
+        fontSize: 14,
+        marginBottom: 4,
+    },
+    ticket_subject: {
+        fontSize: 16,
+        fontWeight: '600',
+        lineHeight: 22,
+    },
+    ticket_headerright: {
+        alignItems: 'flex-end',
+        justifyContent: 'center',
+    },
+    ticket_statusbadge: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderRadius: 20,
+        marginBottom: 10,
+    },
+    ticket_statusdot: {
+        width: 8,
+        height: 8,
+        borderRadius: 4,
+        marginRight: 6,
+    },
+    ticket_statustext: {
+        fontSize: 13,
+        fontWeight: '600',
+    },
+    ticket_details: {
+        marginTop: 10,
+    },
+    ticket_detaildivider: {
+        height: 1,
+        backgroundColor: '#e0e0e0',
+        marginBottom: 16,
         marginTop: 6,
-        paddingVertical: 10,
-        borderTopWidth: 1,
-        borderTopColor: '#ccc'
+        opacity: 0.5,
     },
-    theme_modal_cancel_txt:{
-        fontSize: 16,
-        color: '#3399ff',
+    ticket_detailitem: {
+        marginBottom: 16,
+    },
+    ticket_detaillabel: {
+        fontSize: 14,
+        marginBottom: 6,
+        fontWeight: '500',
+    },
+    ticket_detailvalue: {
+        fontSize: 15,
+        lineHeight: 22,
+    },
+    ticket_responsebubble: {
+        padding: 12,
+        borderRadius: 8,
+    },
+    ticket_responsetext: {
+        fontSize: 15,
+        lineHeight: 22,
+    },
+    emptycontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 40,
+        marginTop: 60,
+    },
+    emptyimage: {
+        width: 100,
+        height: 100,
+        marginBottom: 20,
+        opacity: 0.7,
+    },
+    emptytext: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginBottom: 10,
         textAlign: 'center',
-        fontWeight: '600'
+    },
+    emptysubtext: {
+        fontSize: 15,
+        textAlign: 'center',
+        lineHeight: 22,
     },
 
     // EditProfile Page

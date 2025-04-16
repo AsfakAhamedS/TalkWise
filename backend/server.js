@@ -707,15 +707,12 @@ app.post("/support-ticket", async (req, res) => {
     }
 })
 
-app.get("/support/faqs", (req, res) => {
+app.get("/support-faqs", (req, res) => {
     res.json([
       { question: "How to reset password?", answer: "Go to Profile > Reset Password." },
       { question: "Credits not updating?", answer: "Please check your subscription status or contact support." },
       { question: "Payment issue?", answer: "Please check your contact support" },
       { question: "Bank server down?", answer: "Please check  contact support." },
-      
-      
-
     ])
 })
 

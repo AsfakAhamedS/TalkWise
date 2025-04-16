@@ -49,21 +49,37 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen 
-            name="username" 
-            component={UserNamePage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
-                </TouchableOpacity>
-              ),
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-            })} 
+            name="ticketstatus" 
+            component={TicketPage}
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                title: false,
+                headerLeft: () => (
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={{ 
+                    marginLeft:15,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: '#F3F4F6',
+                    justifyContent: 'center',
+                    alignItems: 'center', }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={20} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: {
+                  backgroundColor: theme === 'Dark' ? '#252525' : '#fff',
+                  elevation: 0
+                },
+                headerTitleAlign: 'center'
+              }
+            }}
           />
-       
-         
-         
+        <Stack.Screen 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
+          />
 
 
           <Stack.Screen 
@@ -116,7 +132,19 @@ export default function App() {
               ),
             })} 
           />
-          
+          <Stack.Screen 
+            name="username" 
+            component={UserNamePage}
+            options={({ navigation }) => ({
+              title:false,
+              headerLeft: () => (
+                <TouchableOpacity onPress={() => navigation.goBack('')} style={{ position:'relative',left:'80%' }}>
+                  <AntDesign name="arrowleft" color="#000" size={28} />
+                </TouchableOpacity>
+              ),
+              headerStyle: { backgroundColor: '#fff', elevation: 0 },
+            })} 
+          />
 
 
           <Stack.Screen 
@@ -209,11 +237,7 @@ export default function App() {
               }
             }} 
           />
-          <Stack.Screen 
-            name="main" 
-            component={TabNavPage} 
-            options={{headerShown:false}}
-          />
+          
 
 
           <Stack.Screen 
@@ -289,19 +313,17 @@ export default function App() {
             options={({ route, navigation }) => {
               const theme = route.params?.theme || 'Light'
               return {
-                headerTitle: () => (
-                  <Text style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    color: theme === 'Dark' ? '#fff' : '#000',
-                    textAlign: 'center'
-                  }}>
-                    Support
-                  </Text>
-                ),
+                title: false,
                 headerLeft: () => (
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
-                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  <TouchableOpacity onPress={() => navigation.goBack()} style={{  
+                    marginLeft:15,
+                    width: 40,
+                    height: 40,
+                    borderRadius: 20,
+                    backgroundColor: '#F3F4F6',
+                    justifyContent: 'center',
+                    alignItems: 'center', }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={20} />
                   </TouchableOpacity>
                 ),
                 headerStyle: {
@@ -312,35 +334,10 @@ export default function App() {
               }
             }}
           />
-          <Stack.Screen 
-            name="ticketstatus" 
-            component={TicketPage}
-            options={({ route, navigation }) => {
-              const theme = route.params?.theme || 'Light'
-              return {
-                headerTitle: () => (
-                  <Text style={{
-                    fontSize: 18,
-                    fontWeight: 'bold',
-                    color: theme === 'Dark' ? '#fff' : '#000',
-                    textAlign: 'center'
-                  }}>
-                    Token Status
-                  </Text>
-                ),
-                headerLeft: () => (
-                  <TouchableOpacity onPress={() => navigation.goBack()} style={{ marginLeft: 15 }}>
-                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
-                  </TouchableOpacity>
-                ),
-                headerStyle: {
-                  backgroundColor: theme === 'Dark' ? '#252525' : '#fff',
-                  elevation: 0
-                },
-                headerTitleAlign: 'center'
-              }
-            }}
-          />
+          
+
+
+
           <Stack.Screen 
             name="myprogress" 
             component={MyProgressPage}

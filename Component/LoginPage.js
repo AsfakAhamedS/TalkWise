@@ -1,323 +1,167 @@
-import React, { useState } from 'react';
-import { Text, View, TouchableOpacity, TextInput, Image, StyleSheet, KeyboardAvoidingView, Platform, ScrollView } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
-import Toast from 'react-native-toast-message';
-import Octicons from 'react-native-vector-icons/Octicons';
-import Feather from 'react-native-vector-icons/Feather';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { StatusBar } from 'expo-status-bar';
+import React, { useState } from 'react'
+import { Text, View, TouchableOpacity, TextInput, Image, Platform, ScrollView } from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import axios from 'axios'
+import { useNavigation } from '@react-navigation/native'
+import Toast from 'react-native-toast-message'
+import Octicons from 'react-native-vector-icons/Octicons'
+import Feather from 'react-native-vector-icons/Feather'
+import Ionicons from 'react-native-vector-icons/Ionicons'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { StatusBar } from 'expo-status-bar'
+import style from  '../style'
+const API_URL = process.env.EXPO_PUBLIC_API_URL || ''
 
-// Constants
-const API_URL = process.env.EXPO_PUBLIC_API_URL || '';
+export default function LoginPage(){
+  const navigation = useNavigation()
+  const [psdvisible, setPsdvisible] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [formdata, setFormdata] = useState({email: '',password: ''})
+  const [errors, setErrors] = useState({email: '',password: ''})
 
-const LoginPage = () => {
-  const navigation = useNavigation();
-  const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
-  const [errors, setErrors] = useState({
-    email: '',
-    password: ''
-  });
+  function validateForm(){
+    let valid = true
+    const newerrors = { email: '', password: '' }
 
-  // Validate input fields
-  const validateForm = () => {
-    let isValid = true;
-    const newErrors = { email: '', password: '' };
-
-    // Email validation
-    if (!formData.email.trim()) {
-      newErrors.email = 'Email is required';
-      isValid = false;
-    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formData.email)) {
-      newErrors.email = 'Please enter a valid email address';
-      isValid = false;
+    if (!formdata.email.trim()) {
+      newerrors.email = 'Email is required'
+      valid = false
+    } else if (!/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(formdata.email)) {
+      newerrors.email = 'Please enter a valid email address'
+      valid = false
     }
-
-    // Password validation
-    if (!formData.password) {
-      newErrors.password = 'Password is required';
-      isValid = false;
+    if (!formdata.password) {
+      newerrors.password = 'Password is required'
+      valid = false
     }
+    setErrors(newerrors)
+    return valid
+  }
 
-    setErrors(newErrors);
-    return isValid;
-  };
+  function handleInputChange(field, value){
 
-  // Handle input changes
-  const handleInputChange = (field, value) => {
-    setFormData({
-      ...formData,
-      [field]: value
-    });
-    
-    // Clear error when typing
-    if (errors[field]) {
-      setErrors({
-        ...errors,
-        [field]: ''
-      });
+    setFormdata({...formdata, [field]: value})
+    if(errors[field]) {
+      setErrors({...errors,[field]: ''})
     }
-  };
+  }
 
-  // Handle login submission
-  const handleLogin = async () => {
-    if (!validateForm()) return;
+  function handleLogin(){
+    if (!validateForm()) return
+    setLoading(true)
     
-    setIsLoading(true);
-    
-    try {
-      await AsyncStorage.setItem('Email', formData.email);
+    AsyncStorage.setItem('Email', formdata.email)
+    .then(() => {console.log('Email saved')})
+    .catch((error) => {console.log('Error:', error)})
       
-      const response = await axios.post(`${API_URL}user-login`, {
-        useremail: formData.email,
-        userpsd: formData.password
-      });
-      
-      if (response.status === 200) {
-        await AsyncStorage.setItem('Token', response.data.token);
+    axios.post(`${API_URL}user-login`, {
+        useremail: formdata.email,
+        userpsd: formdata.password
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        AsyncStorage.setItem('Token', res?.data?.token)
         
-        Toast.show({
-          type: 'success',
-          text1: 'Login Successful',
+        Toast.show(style.success({
+          text1: res?.data?.message,
           text2: 'Welcome back!',
           visibilityTime: 2000
-        });
+        }))
         
-        // Give time for the toast to be visible
         setTimeout(async () => {
-          await AsyncStorage.setItem('FromLogin', 'true');
-          navigation.navigate('main');
-        }, 1500);
+          await AsyncStorage.setItem('FromLogin', 'true')
+          navigation.navigate('main')
+        }, 1500)
       }
-    } catch (error) {
-      const errorMessage = error.response?.data?.error || 'Invalid email or password';
+    })
+    .catch((err) => {
+      const errorMessage = err.response?.data?.error || 'Invalid email or password'
       
-      Toast.show({
-        type: 'error',
+      Toast.show(style.error({
         text1: 'Login Failed',
         text2: errorMessage,
         visibilityTime: 3000
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      }))
+    })
+    .finally(() => {
+      setLoading(false)
+    })
+  }
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={style.safe_area}>
       <StatusBar style="dark" />
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.container}
-      >
-        <ScrollView 
-          contentContainerStyle={styles.scrollContent}
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
-          <View style={styles.heroImageContainer}>
-            <Image 
-              source={require('../assets/loginpage/loginimg.png')} 
-              style={styles.heroImage}
-              resizeMode="contain"
-            />
-          </View>
+      
+      <View style={style.login_img_container}>
+        <Image 
+          source={require('../assets/loginpage/loginimg.png')} 
+          style={style.login_img}
+          resizeMode="contain"/>
+      </View>
           
-          <View style={styles.formContainer}>
-            <Text style={styles.headerTitle}>Welcome Back!</Text>
-            <Text style={styles.headerSubtitle}>Sign in to continue</Text>
+      <View style={style.form_container}>
+        <Text style={style.header_title}>Welcome Back!</Text>
+        <Text style={style.header_subtitle}>Sign in to continue</Text>
             
-            <View style={styles.inputWrapper}>
-              <View style={[styles.inputContainer, errors.email ? styles.inputError : null]}>
-                <Feather name="user" size={22} color="#666" style={styles.icon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Email address"
-                  value={formData.email}
-                  onChangeText={(text) => handleInputChange('email', text)}
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  autoComplete="email"
-                />
-              </View>
-              {errors.email ? <Text style={styles.errorText}>{errors.email}</Text> : null}
-            </View>
-            
-            <View style={styles.inputWrapper}>
-              <View style={[styles.inputContainer, errors.password ? styles.inputError : null]}>
-                <Octicons name="lock" size={22} color="#666" style={styles.icon} />
-                <TextInput
-                  style={styles.input}
-                  placeholder="Password"
-                  value={formData.password}
-                  onChangeText={(text) => handleInputChange('password', text)}
-                  secureTextEntry={!isPasswordVisible}
-                  autoCapitalize="none"
-                  autoComplete="password"
-                />
-                <TouchableOpacity 
-                  onPress={() => setIsPasswordVisible(!isPasswordVisible)}
-                  hitSlop={{ top: 20, bottom: 20, left: 20, right: 20 }}
-                >
-                  <Ionicons 
-                    name={isPasswordVisible ? "eye-outline" : "eye-off-outline"} 
-                    size={22} 
-                    color="#666"
-                  />
-                </TouchableOpacity>
-              </View>
-              {errors.password ? <Text style={styles.errorText}>{errors.password}</Text> : null}
-            </View>
-            
-            <TouchableOpacity 
-              style={styles.forgotPasswordButton}
-              onPress={() => navigation.navigate('forget')}
-            >
-              <Text style={styles.forgotPasswordText}>Forgot password?</Text>
-            </TouchableOpacity>
-            
-            <TouchableOpacity
-              style={[styles.loginButton, isLoading && styles.disabledButton]}
-              activeOpacity={0.7}
-              onPress={handleLogin}
-              disabled={isLoading}
-            >
-              <Text style={styles.loginButtonText}>
-                {isLoading ? 'Signing In...' : 'Sign In'}
-              </Text>
-            </TouchableOpacity>
-            
-            <View style={styles.signupPrompt}>
-              <Text style={styles.signupPromptText}>Don't have an account?</Text>
-              <TouchableOpacity onPress={() => navigation.navigate('signup')}>
-                <Text style={styles.signupLink}>Sign up</Text>
-              </TouchableOpacity>
-            </View>
+        <View style={style.input_wrap_container}>
+          <View style={[style.input_container, errors.email ? style.input_error : null]}>
+            <Feather name="user" size={22} color="#666" style={style.icon} />
+            <TextInput
+              style={style.input}
+              placeholder="Email address"
+              value={formdata.email}
+              onChangeText={(text) => handleInputChange('email', text)}
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoComplete="email"/>
           </View>
-        </ScrollView>
-      </KeyboardAvoidingView>
+          {errors.email ? <Text style={style.error_text}>{errors.email}</Text> : null}
+        </View>
+            
+        <View style={style.input_wrap_container}>
+          <View style={[style.input_container, errors.password ? style.input_error : null]}>
+            <Octicons name="lock" size={22} color="#666" style={style.icon} />
+            <TextInput
+              style={style.input}
+              placeholder="Password"
+              value={formdata.password}
+              onChangeText={(text) => handleInputChange('password', text)}
+              secureTextEntry={!psdvisible}
+              autoCapitalize="none"
+              autoComplete="password"/>
+            <TouchableOpacity 
+              onPress={() => setPsdvisible(!psdvisible)}
+              hitSlop={20}>
+              <Ionicons 
+                name={psdvisible ? "eye-outline" : "eye-off-outline"} size={22} color="#666" />
+            </TouchableOpacity>
+          </View>
+          {errors.password ? <Text style={style.error_text}>{errors.password}</Text> : null}
+        </View>
+            
+        <TouchableOpacity 
+          style={style.forgot_psd_btn}
+          onPress={() => navigation.navigate('forget')}>
+          <Text style={style.forgot_psd_text}>Forgot password?</Text>
+        </TouchableOpacity>
+            
+        <TouchableOpacity
+          style={[style.login_btn, loading && style.login_disabled_btn]}
+          activeOpacity={0.7}
+          onPress={handleLogin}
+          disabled={loading}>
+          <Text style={style.login_btn_text}> {loading ? 'Signing In...' : 'Sign In'}</Text>
+        </TouchableOpacity>
+            
+        <View style={style.signup_btn_log}>
+          <Text style={style.signup_btn_text_log}>Don't have an account?</Text>
+          <TouchableOpacity onPress={() => navigation.navigate('signup')}>
+            <Text style={style.signup_btn_link_log}>Sign up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <Toast />
     </SafeAreaView>
-  );
-};
+  )
+}
 
-const styles = StyleSheet.create({
-  safeArea: {
-    flex: 1,
-    backgroundColor: '#FFFFFF'
-  },
-  container: {
-    flex: 1
-  },
-  scrollContent: {
-    flexGrow: 1
-  },
-  heroImageContainer: {
-    height: '30%',
-    minHeight: 180,
-    maxHeight: 250,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  heroImage: {
-    width: '100%',
-    height: '100%'
-  },
-  formContainer: {
-    flex: 1,
-    padding: 24
-  },
-  headerTitle: {
-    fontSize: 28,
-    fontWeight: '700',
-    color: '#333',
-    marginBottom: 8
-  },
-  headerSubtitle: {
-    fontSize: 16,
-    color: '#666',
-    marginBottom: 32
-  },
-  inputWrapper: {
-    marginBottom: 16
-  },
-  inputContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#E0E0E0',
-    borderRadius: 8,
-    paddingHorizontal: 12,
-    height: 56,
-    backgroundColor: '#F9F9F9'
-  },
-  inputError: {
-    borderColor: '#E53935'
-  },
-  icon: {
-    marginRight: 12
-  },
-  input: {
-    flex: 1,
-    height: '100%',
-    fontSize: 16,
-    color: '#333'
-  },
-  errorText: {
-    color: '#E53935',
-    fontSize: 12,
-    marginTop: 4,
-    paddingLeft: 4
-  },
-  forgotPasswordButton: {
-    alignSelf: 'flex-end',
-    marginBottom: 32
-  },
-  forgotPasswordText: {
-    color: '#4B68E9',
-    fontSize: 14,
-    fontWeight: '500'
-  },
-  loginButton: {
-    backgroundColor: '#4B68E9',
-    borderRadius: 8,
-    height: 56,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginBottom: 32
-  },
-  disabledButton: {
-    backgroundColor: '#A9B4E8',
-    opacity: 0.8
-  },
-  loginButtonText: {
-    color: '#FFFFFF',
-    fontSize: 16,
-    fontWeight: '600'
-  },
-  signupPrompt: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  signupPromptText: {
-    fontSize: 14,
-    color: '#666',
-    marginRight: 4
-  },
-  signupLink: {
-    fontSize: 14,
-    color: '#4B68E9',
-    fontWeight: '600'
-  }
-});
-
-export default LoginPage;
