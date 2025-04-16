@@ -499,167 +499,393 @@ export default StyleSheet.create({
     },
 
     //  Subscription
-    plan: {
-        flex:1,
-        borderWidth:1,
-        borderColor:'#fff',
-        backgroundColor:'#fff',
-        borderTopLeftRadius:35,
-        borderTopRightRadius:35,
-        zIndex:1,
-        position:'relative',
-        bottom:20,
+    subcription_container: {
+        flex: 1,
+        backgroundColor: '#F2F2F7',
     },
-    above_text:{
-        zIndex:10,
-        position:'relative',
+    subcription_containerdark: {
+        backgroundColor: '#121212',
     },
-    subscription_text:{
-        position:'relative',
-        bottom:150,
-        paddingHorizontal: 30,
-        flexDirection:'row',
-        gap:7,
-        marginBottom:10,
+    hero_section: {
+        overflow: 'hidden',
     },
-    subscription_main_text:{
-        position:'relative',
-        bottom:150,
-        paddingHorizontal: 30,
+    hero_image: {
+        width: '100%',
+        height: '100%',
     },
-    plan_text: {
-        fontSize: 16,
-        fontWeight:600,
-        color:'#fff'
+    hero_overlay: {
+        width: '100%',
+        height: '100%',
+        justifyContent: 'flex-end',
+        padding: 24,
     },
-    subscription_icon:{
-        position:'relative',
-        left:'85%',
-        bottom:'330%',
-        width:30,
-        height:30,
-        borderWidth:1,
-        borderRadius:50,
-        borderColor:'rgba(0,0,0,0.5)',
-        backgroundColor:'rgba(0,0,0,0.5)',
-        justifyContent:'center',
-        alignItems:'center',
-    },
-    plan_card_view:{
-        flexDirection:'row',
-        gap:30,
-        paddingHorizontal:30,
-        paddingVertical:20
-    },
-    plan_card:{
-        borderWidth:2,
-        width:150,
-        height:200,
-        borderRadius:20,
-        borderColor:'#bababa',
-        alignItems:'center',
-    },
-    plan_circle:{
-        position:'absolute',
-        top:'93%',
-        left:'41%',
-        borderWidth:1,
-        width:25,
-        height:25,
-        borderRadius:50,
-        borderColor: "#007AFF",
-        backgroundColor:'#007AFF',
-        justifyContent: "center", 
-        alignItems: "center", 
-    },
-    subscribe_btn: {
+    subcription_backbutton: {
+        position: 'absolute',
+        top: 24,
+        left: 16,
+        height: 40,
+        width: 40,
+        borderRadius: 20,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:20,
-        marginBottom:5
+        backgroundColor: 'rgba(0,0,0,0.3)',
     },
-    subscribe_btn_to: {
-        width: 120,
-        borderRadius: 30,
+    hero_content: {
+        marginBottom: 16,
+    },
+    hero_tagcontainer: {
+        flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: '#252525',
-        paddingVertical: 10,
+        backgroundColor: 'rgba(0,0,0,0.4)',
+        paddingVertical: 6,
+        paddingHorizontal: 12,
+        borderRadius: 20,
+        alignSelf: 'flex-start',
+        marginBottom: 12,
     },
-    subscribe_btn_text: {
+    hero_tag: {
+        color: '#FFFFFF',
+        fontSize: 12,
+        fontWeight: '600',
+        marginLeft: 6,
+    },
+    hero_title: {
+        color: '#FFFFFF',
+        fontSize: 28,
+        fontWeight: '300',
+        lineHeight: 32,
+    },
+    hero_titlebold: {
+        color: '#FFFFFF',
+        fontSize: 28,
+        fontWeight: '700',
+        lineHeight: 32,
+        marginBottom: 8,
+    },
+    hero_subtitle: {
+        color: '#FFFFFF',
         fontSize: 16,
-        fontWeight: 'bold',
-        color: '#fff',
+        opacity: 0.9,
+        marginTop: 4,
     },
-    subscribe_txt:{
-        fontSize:13,
-        fontWeight:400,
-        textAlign:'center',
-        color:'#bababa',
+    plans_section: {
+        flex: 1,
+        backgroundColor: '#F8F9FA',
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        marginTop: -20,
+        paddingHorizontal: 16,
+    },
+    plans_sectiondark: {
+        backgroundColor: '#1E1E1E',
+    },
+    scroll_content: {
+        paddingTop: 20,
+    },
+    plan_cardscontainer: {
+        paddingBottom: 24,
+    },
+    plan_cardcontainer: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 16,
+        marginBottom: 16,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.06,
+        shadowRadius: 8,
+        elevation: 3,
+        borderWidth: 1,
+        borderColor: '#E8E8E8',
+        position: 'relative',
+    },
+    selected_plancard: {
+        borderWidth: 2,
+        borderColor: '#007AFF',
+        backgroundColor: '#F0F8FF',
+    },
+    // popularBadge: {
+    //     position: 'absolute',
+    //     top: 0,
+    //     right: 16,
+    //     backgroundColor: '#FF9500',
+    //     paddingHorizontal: 10,
+    //     paddingVertical: 4,
+    //     borderBottomLeftRadius: 6,
+    //     borderBottomRightRadius: 6,
+    // },
+    // popularText: {
+    //     color: '#FFFFFF',
+    //     fontSize: 10,
+    //     fontWeight: '700',
+    // },
+    plan_header: {
+        marginBottom: 16,
+    },
+    plan_name: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#333333',
+        marginBottom: 8,
+    },
+    price_container: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginBottom: 4,
+    },
+    currency_symbol: {
+        fontSize: 20,
+        fontWeight: '700',
+        color: '#333333',
+        marginTop: 4,
+    },
+    plan_price: {
+        fontSize: 34,
+        fontWeight: '700',
+        color: '#333333',
+    },
+    billing_cycle: {
+        fontSize: 14,
+        color: '#666666',
+    },
+    divider: {
+        height: 1,
+        backgroundColor: '#E8E8E8',
+        marginVertical: 16,
+    },
+    features_container: {
+        marginTop: 4,
+    },
+    feature_row: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    checkicon_container: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        backgroundColor: '#E6F2FF',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 12,
+    },
+    selected_checkicon: {
+        backgroundColor: '#007AFF',
+    },
+    feature_text: {
+        fontSize: 15,
+        color: '#555555',
+    },
+    credits_text: {
+        fontSize: 15,
+        color: '#007AFF',
+        fontWeight: '600',
+        marginTop: 8,
+    },
+    selection_indicator: {
+        position: 'absolute',
+        top: 12,
+        right: 12,
+        width: 28,
+        height: 28,
+        borderRadius: 14,
+        backgroundColor: '#007AFF',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    subscribe_container: {
+        paddingVertical: 16,
+        borderTopWidth: 1,
+        borderTopColor: '#E8E8E8',
+        backgroundColor: '#F8F9FA',
+    },
+    subscribe_button: {
+        backgroundColor: '#2D4BDF',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    free_button: {
+        backgroundColor: '#2D4BDF',
+    },
+    subscribe_buttontext: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '700',
+    },
+    terms_container: {
+        alignItems: 'center',
+    },
+    terms_text: {
+        fontSize: 12,
+        color: '#888888',
+        marginBottom: 2,
     },
 
     // PaymentMethod
-    payment_container: { 
+    paymethod_container: {
         flex: 1,
-        // backgroundColor: '#f8f8f8',
+        backgroundColor: '#f5f5f7',
+    },
+    paymethod_summarycard: {
+        margin: 16,
         backgroundColor: '#fff',
-        paddingHorizontal:20,
-        paddingVertical:20
+        borderRadius: 12,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.08,
+        shadowRadius: 8,
+        elevation: 3,
     },
-    payment_title: { 
-        fontSize: 24, 
-        fontWeight: 'bold', 
-        textAlign:'center',
-        marginBottom: 30 
-    },
-    payment_option: { 
-        padding: 15, 
-        width: '100%',
-        height:70, 
-        backgroundColor: '#f5f5f5', 
-        marginBottom: 10, 
-        borderRadius: 10, 
+    paymethod_plandetails: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
         alignItems: 'center',
-        justifyContent:'center' 
+        marginBottom: 16,
     },
-    payment_inbtn:{
-        flex:1,
-        flexDirection:'row',
-        alignItems:'center',
+    paymethod_planname: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#333',
     },
-    pay_icon_container:{
-        flex:1,
-        justifyContent:'center',
-        alignItems:'center'
+    amount_container: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
     },
-    pay_txt_container:{
-        flex:4,
-        marginLeft:50
+    paymethod_currencysymbol: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginTop: 3,
     },
-    payment_text: { 
-        fontSize: 22,
-        fontWeight:600
+    paymethod_amounttext: {
+        fontSize: 24,
+        fontWeight: '700',
+        color: '#333',
     },
-    method_selected: { 
-        borderColor: '#252525', 
-        borderWidth: 2 
+    benefits_container: {
+        marginTop: 4,
     },
-    pay_btn_container:{
-        alignItems:'center'
+    benefit_row: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        marginTop: 8,
     },
-    pay_btn: { 
-        width:'100%',
-        justifyContent:'center',
-        alignItems:'center',
-        backgroundColor: '#252525', 
-        paddingHorizontal:15,
-        paddingVertical:15,
-        borderRadius: 10,
-        marginTop:30,
+    benefit_text: {
+        fontSize: 14,
+        color: '#666',
     },
-    pay_btn_txt: { 
-        color: '#fff', 
-        fontSize: 18, 
-        fontWeight: 'bold' 
+    paymethod_section_title: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginHorizontal: 16,
+        marginTop: 24,
+        marginBottom: 12,
+    },
+    paymethod_methodscontainer: {
+        flex: 1,
+        paddingHorizontal: 16,
+    },
+    paymethod_methodcard: {
+        backgroundColor: '#fff',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 12,
+        borderWidth: 1,
+        borderColor: '#e0e0e0',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    selectedmethodcard: {
+        borderColor: '#4a4aff',
+        borderWidth: 2,
+        backgroundColor: '#f8f8ff',
+    },
+    disabledmethodcard: {
+        opacity: 0.7,
+    },
+    methodcontent: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    methodiconcontainer: {
+        width: 48,
+        height: 48,
+        borderRadius: 24,
+        backgroundColor: '#f0f0f0',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 16,
+    },
+    selectedmethodiconcontainer: {
+        backgroundColor: '#e6e6ff',
+    },
+    payment_logo: {
+        width: 30,
+        height: 30,
+    },
+    methodtextcontainer: {
+        flex: 1,
+    },
+    methodtitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#333',
+        marginBottom: 4,
+    },
+    methodsubtitle: {
+        fontSize: 13,
+        color: '#666',
+    },
+    paymentunavailable: {
+        backgroundColor: '#f0f0f0',
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        borderRadius: 4,
+        marginLeft: 8,
+    },
+    paymentunavailabletext: {
+        fontSize: 10,
+        color: '#999',
+        fontWeight: '500',
+    },
+    securitynotice: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginVertical: 16,
+    },
+    securitytext: {
+        fontSize: 13,
+        color: '#666',
+        marginLeft: 6,
+    },
+    button_container: {
+        padding: 16,
+        paddingBottom: 16,
+    },
+    proceed_button: {
+        backgroundColor: '#4a4aff',
+        borderRadius: 12,
+        paddingVertical: 16,
+        alignItems: 'center',
+        justifyContent: 'center',
+        flexDirection: 'row',
+    },
+    disabled_button: {
+        backgroundColor: '#cccccc',
+    },
+    proceedbuttontext: {
+        color: '#ffffff',
+        fontSize: 16,
+        fontWeight: '600',
+        marginRight: 8,
     },
 
     // PaymentPage
@@ -1062,7 +1288,7 @@ export default StyleSheet.create({
         shadowOffset: {width: 0,height: 2,},
         shadowOpacity: 0.1,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 2,
     },
     ticket_Card: {
         padding: 16,
@@ -1150,22 +1376,11 @@ export default StyleSheet.create({
         padding: 40,
         marginTop: 60,
     },
-    emptyimage: {
-        width: 100,
-        height: 100,
-        marginBottom: 20,
-        opacity: 0.7,
-    },
     emptytext: {
         fontSize: 18,
         fontWeight: '600',
         marginBottom: 10,
         textAlign: 'center',
-    },
-    emptysubtext: {
-        fontSize: 15,
-        textAlign: 'center',
-        lineHeight: 22,
     },
 
     // EditProfile Page
@@ -1456,7 +1671,7 @@ export default StyleSheet.create({
         marginLeft: 6,
     },
     start_button: {
-        backgroundColor: '#2563EB',
+        backgroundColor: '#2D4BDF',
         borderRadius: 8,
         paddingVertical: 8,
         paddingHorizontal: 16,
@@ -1467,6 +1682,119 @@ export default StyleSheet.create({
         color: '#FFFFFF',
         fontSize: 14,
         fontWeight: '600',
+    },
+
+    //CommunicationLevel
+    comlevel_container: {
+        flex: 1,
+        backgroundColor: '#F9FAFB',
+        paddingVertical:20
+    },
+    comlevel_header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 16,
+        paddingBottom: 16,
+    },
+    comlevel_backbutton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    comlevel_headertitlecontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
+    comlevel_headertitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#111827',
+    },
+    comlevel_content: {
+        flex: 1,
+        paddingHorizontal: 20,
+        paddingTop: 10,
+    },
+    comlevel_question: {
+        fontSize: 16,
+        color: '#4B5563',
+        marginBottom: 24,
+        textAlign: 'center',
+    },
+    levelselection: {
+        marginBottom: 30,
+    },
+    leveloption: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+        borderWidth: 1,
+        borderColor: '#E5E7EB',
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 1 },
+        shadowOpacity: 0.05,
+        shadowRadius: 2,
+        elevation: 1,
+    },
+    selectedlevel: {
+        borderColor: '#4F46E5',
+        borderWidth: 2,
+    },
+    levelindicator: {
+        width: 36,
+        height: 36,
+        borderRadius: 18,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight: 16,
+    },
+    levelnumber: {
+        fontSize: 16,
+        fontWeight: '700',
+        color: '#4B5563',
+    },
+    leveltextcontainer: {
+        flex: 1,
+    },
+    leveltitle: {
+        fontSize: 16,
+        fontWeight: '600',
+        color: '#111827',
+        marginBottom: 4,
+    },
+    leveldescription: {
+        fontSize: 14,
+        color: '#6B7280',
+    },
+    checkicon: {
+        marginLeft: 8,
+    },
+    comnextbutton: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#2D4BDF',
+        paddingVertical: 16,
+        borderRadius: 12,
+        marginTop: 'auto',
+        marginBottom: 20,
+    },
+    comnextbuttontext: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '600',
+    },
+    comdisabledbutton: {
+        opacity: 0.6,
     },
     
 

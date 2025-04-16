@@ -13,7 +13,6 @@ export default function TicketPage() {
   const isDark = theme === 'dark'
   const [tickets, setTickets] = useState([])
   const [loading, setLoading] = useState(true)
-  const [refreshing, setRefreshing] = useState(false)
   const [userEmail, setUserEmail] = useState('')
   const [open, setOpen] = useState(null)
 
@@ -30,24 +29,20 @@ export default function TicketPage() {
     }
   }, [userEmail])
 
-  const fetchTickets = async () => {
-    try {
-      const response = await axios.post(url + 'ticket-status', { useremail: userEmail })
-      if (response.status === 200) {
-        setTickets(response?.data || [])
+  function fetchTickets(){
+    axios.post(url + 'ticket-status', { useremail: userEmail })
+    .then((res) => {
+      if (res.status === 200) {
+        setTickets(res?.data)
       }
-    } catch (error) {
+    })
+    .catch((err) => {
       console.log('Error fetching tickets:', error?.response?.data?.error || error)
-    } finally {
+    })
+    .finally(() => {
       setLoading(false)
-      setRefreshing(false)
-    }
+    })
   }
-
-  const onRefresh = useCallback(() => {
-    setRefreshing(true)
-    fetchTickets()
-  }, [userEmail])
 
   const formatDate = (dateString) => {
     if (!dateString) return 'N/A'
@@ -74,25 +69,10 @@ export default function TicketPage() {
     }
   }
 
-  const renderEmptyComponent = () => (
-    <View style={style.emptycontainer}>
-      <Image 
-        source={{ uri: 'https://cdn.iconscout.com/icon/free/png-256/free-data-not-found-1965034-1662569.png' }} 
-        style={style.emptyimage} 
-      />
-      <Text style={[style.emptytext, { color: isDark ? '#aaa' : '#555' }]}>
-        No tickets found
-      </Text>
-      <Text style={[style.emptysubtext, { color: isDark ? '#888' : '#777' }]}>
-        Any support requests you submit will appear here
-      </Text>
-    </View>
-  )
-
   return (
-    <SafeAreaView style={[style.ticket_safearea, { backgroundColor: isDark ? '#121212' : '#f7f7f7' }]}>
+    <SafeAreaView style={[style.ticket_safearea, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
       <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-      <View style={[style.ticket_container, { backgroundColor: isDark ? '#121212' : '#f7f7f7' }]}>
+      <View style={[style.ticket_container, { backgroundColor: isDark ? '#121212' : '#fff' }]}>
         <View style={style.ticket_headertop}>
           <Text style={[style.ticket_headingtop, { color: isDark ? '#fff' : '#000' }]}>Support Tickets</Text>
           <Text style={[style.ticket_subheadingtop, { color: isDark ? '#aaa' : '#666' }]}>
@@ -122,7 +102,7 @@ export default function TicketPage() {
                   onPress={() => setOpen(isExpanded ? null : item.ticketId)}>
                   <View style={[
                     style.ticket_Card, 
-                    { backgroundColor: isDark ? '#1f1f1f' : '#fff' },
+                    { backgroundColor: isDark ? '#1f1f1f' : '#f7f7f7' },
                     isExpanded && style.ticket_expandedcard]}>
                     <View style={style.ticket_header}>
                       <View style={style.ticket_title_container}>
@@ -146,58 +126,57 @@ export default function TicketPage() {
                         />
                       </View>
                     </View>
-            
-                      {isExpanded && (
-                        <View style={style.ticket_details}>
-                          <View style={style.ticket_detaildivider} />
-                          
-                          <View style={style.ticket_detailitem}>
-                            <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Created:</Text>
-                            <Text style={[style.ticket_detailvalue, { color: isDark ? '#fff' : '#000' }]}>
-                              {formatDate(item.createdAt)}
-                            </Text>
-                          </View>
-                          
-                          <View style={style.ticket_detailitem}>
-                            <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Description:</Text>
-                            <Text style={[style.ticket_detailvalue, { color: isDark ? '#fff' : '#000' }]}>
-                              {item.message}
-                            </Text>
-                          </View>
-                          
-                          <View style={style.ticket_detailitem}>
-                            <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Response:</Text>
-                            <View style={[style.ticket_responsebubble, { backgroundColor: isDark ? '#2d2d2d' : '#f5f5f5' }]}>
-                              <Text style={[style.ticket_responsetext, { color: isDark ? '#fff' : '#000' }]}>
-                                {item.response || 'No response yet. Our team will get back to you soon.'}
-                              </Text>
-                            </View>
-                          </View>
-                          
-                          {item.status.toLowerCase() === 'closed' && (
-                            <View style={style.ticket_detailitem}>
-                              <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Closed:</Text>
-                              <Text style={[style.ticket_detailvalue, { color: isDark ? '#fff' : '#000' }]}>
-                                {formatDate(item.closedAt)}
-                              </Text>
-                            </View>
-                          )}
+                    {isExpanded && (
+                      <View style={style.ticket_details}>
+                        <View style={style.ticket_detaildivider} /> 
+                        <View style={style.ticket_detailitem}>
+                          <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Created:</Text>
+                          <Text style={[style.ticket_detailvalue, { color: isDark ? '#fff' : '#000' }]}>
+                            {formatDate(item.createdAt)}
+                          </Text>
                         </View>
-                      )}
+                          
+                        <View style={style.ticket_detailitem}>
+                          <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Description:</Text>
+                          <Text style={[style.ticket_detailvalue, { 
+                            color: isDark ? '#fff' : '#000', 
+                            backgroundColor: isDark ? '#2d2d2d' : '#fff',
+                            padding: 12,
+                            borderRadius: 8,}]}>
+                            {item.message}
+                          </Text>
+                        </View>
+                          
+                        <View style={style.ticket_detailitem}>
+                          <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Response:</Text>
+                          <View style={[style.ticket_responsebubble, { backgroundColor: isDark ? '#2d2d2d' : '#fff' }]}>
+                            <Text style={[style.ticket_responsetext, { color: isDark ? '#fff' : '#000' }]}>
+                              {item.response || 'No response yet. Our team will get back to you soon.'}
+                            </Text>
+                          </View>
+                        </View>
+                          
+                        {item.status.toLowerCase() === 'closed' && (
+                          <View style={style.ticket_detailitem}>
+                            <Text style={[style.ticket_detaillabel, { color: isDark ? '#aaa' : '#666' }]}>Closed:</Text>
+                            <Text style={[style.ticket_detailvalue, { color: isDark ? '#fff' : '#000' }]}>
+                              {formatDate(item.closedAt)}
+                            </Text>
+                          </View>
+                        )}
+                      </View>
+                    )}
                   </View>
                 </TouchableOpacity>
               )
             }}
-            ListEmptyComponent={renderEmptyComponent}
+            ListEmptyComponent={
+              <View style={style.emptycontainer}>
+                <Text style={[style.emptytext, { color: isDark ? '#aaa' : '#555' }]}>
+                  No tickets found
+                </Text>
+              </View>}
             showsVerticalScrollIndicator={false}
-            refreshControl={
-              <RefreshControl
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                tintColor={isDark ? "#ffffff" : "#000000"}
-                colors={[isDark ? "#ffffff" : "#000000"]}
-              />
-            }
           />
         )}
       </View>

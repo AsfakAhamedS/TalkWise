@@ -254,14 +254,12 @@ export default function ProfilePage() {
   if (loading) {
     return (
       <View style={[
-        style.container,
-        theme === 'Dark' ? { backgroundColor: '#1C1C1E' } : { backgroundColor: '#F2F2F7' }
-      ]}>
+        style.container,{flex:1,justifyContent:'center',alignItems:'center'},
+        theme === 'Dark' ? { backgroundColor: '#1C1C1E' } : { backgroundColor: '#F2F2F7' }]}>
         <ActivityIndicator size="large" color={theme === 'Dark' ? '#0A84FF' : '#007AFF'} />
         <Text style={[
           style.loadingText,
-          theme === 'Dark' ? { color: '#FFFFFF' } : { color: '#000000' }
-        ]}>
+          theme === 'Dark' ? { color: '#FFFFFF' } : { color: '#000000' }]}>
           Loading profile...
         </Text>
       </View>

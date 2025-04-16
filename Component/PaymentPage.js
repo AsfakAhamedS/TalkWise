@@ -1,171 +1,150 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { View, Text, TouchableOpacity, Alert, ActivityIndicator, ScrollView, StatusBar } from 'react-native';
-import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native';
-import axios from 'axios';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import AntDesign from 'react-native-vector-icons/AntDesign';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import style from '../style';
+import React, { useState, useEffect, useCallback } from 'react'
+import { View, Text, TouchableOpacity, Alert, ActivityIndicator, ScrollView, StatusBar } from 'react-native'
+import { useNavigation, useRoute, useFocusEffect } from '@react-navigation/native'
+import axios from 'axios'
+import AsyncStorage from '@react-native-async-storage/async-storage'
+import AntDesign from 'react-native-vector-icons/AntDesign'
+import FontAwesome from 'react-native-vector-icons/FontAwesome'
+import style from '../style'
 
-const API_URL = process.env.EXPO_PUBLIC_API_URL || '';
+const API_URL = process.env.EXPO_PUBLIC_API_URL || ''
 
 export default function PaymentPage() {
-    const navigation = useNavigation();
-    const route = useRoute();
-    const { plan, amount, credit, method } = route.params || {};
-    
-    // State management
-    const [userData, setUserData] = useState({
-        email: '',
-        name: '',
-        phone: ''
-    });
-    const [userCredits, setUserCredits] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    const [isPaid, setIsPaid] = useState(false);
-    const [theme, setTheme] = useState('Light');
-    const [error, setError] = useState(null);
-    
-    // Theme setup
+    const navigation = useNavigation()
+    const route = useRoute()
+    // const { plan, amount, credit, method } = route.params || {}
+    const plan = "Premium"
+    const amount = 1000
+    const credit = 500
+    const method = "UPI"
+    const [userData, setUserData] = useState({email: '',name: '',phone: ''})
+    const [userCredits, setUserCredits] = useState(0)
+    const [isLoading, setIsLoading] = useState(true)
+    const [isPaid, setIsPaid] = useState(false)
+    const [theme, setTheme] = useState('Light')
+    const [error, setError] = useState(null)
+
     useFocusEffect(
         useCallback(() => {
             const loadTheme = async () => {
                 try {
-                    const mode = await AsyncStorage.getItem('Mode');
-                    setTheme(mode || 'Light');
-                    navigation.setParams({ theme: mode });
+                    const mode = await AsyncStorage.getItem('Mode')
+                    setTheme(mode || 'Light')
+                    navigation.setParams({ theme: mode })
                 } catch (err) {
-                    console.error("Failed to load theme:", err);
+                    console.error("Failed to load theme:", err)
                 }
-            };
-            
-            loadTheme();
+            }
+            loadTheme()
         }, [])
-    );
+    )
 
-    // Load user data
     useEffect(() => {
         const loadUserData = async () => {
             try {
-                const userEmail = await AsyncStorage.getItem('Email');
+                const userEmail = await AsyncStorage.getItem('Email')
                 if (!userEmail) {
-                    setError("User not authenticated");
-                    setIsLoading(false);
-                    return;
+                    setError("User not authenticated")
+                    setIsLoading(false)
+                    return
                 }
-                
-                setUserData(prev => ({ ...prev, email: userEmail }));
-                fetchUserInfo(userEmail);
-                fetchSubscriptionInfo(userEmail);
+                setUserData(prev => ({ ...prev, email: userEmail }))
+                fetchUserInfo(userEmail)
+                fetchSubscriptionInfo(userEmail)
             } catch (err) {
-                setError("Failed to load user data");
-                setIsLoading(false);
+                setError("Failed to load user data")
+                setIsLoading(false)
             }
-        };
+        }
         
-        loadUserData();
-    }, []);
+        loadUserData()
+    }, [])
     
-    // Fetch user profile information
-    const fetchUserInfo = async (userEmail) => {
-        try {
-            const response = await axios.post(`${API_URL}get-user-avatar`, { 
-                type: 'getuserdata', 
-                useremail: userEmail 
-            });
-            
-            if (response.status === 200) {
+    function fetchUserInfo(userEmail){
+        axios.post(`${API_URL}get-user-avatar`, { 
+            type: 'getuserdata', 
+            useremail: userEmail 
+        })
+        .then((res) => {
+            if (res.status === 200) {
                 setUserData({
-                    email: response.data.email,
-                    name: response.data.name,
-                    phone: response.data.phone
-                });
+                    email: res?.data?.email,
+                    name: res?.data?.name,
+                    phone: res?.data?.phone
+                })
             }
-        } catch (err) {
-            console.error("Error fetching user data:", err.response?.data || err.message);
-            setError("Could not load user information");
-        } finally {
-            setIsLoading(false);
-        }
-    };
+        })
+        .catch((err) => {
+            console.error("Error fetching user data:", err.res?.data || err.message)
+            setError("Could not load user information")
+        })
+        .finally(() => {
+            setIsLoading(false)
+        })
+    }
     
-    // Fetch subscription details
-    const fetchSubscriptionInfo = async (userEmail) => {
-        try {
-            const response = await axios.post(`${API_URL}user-subscription`, { 
-                useremail: userEmail 
-            });
-            
-            if (response.status === 200) {
-                setUserCredits(response.data.credit);
+    function fetchSubscriptionInfo(userEmail){
+        axios.post(`${API_URL}user-subscription`, { 
+            useremail: userEmail 
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                setUserCredits(res?.data?.credit)
             }
-        } catch (err) {
-            console.error("Error fetching subscription data:", err.response?.data || err.message);
-            setError("Could not load subscription information");
-        }
-    };
+        })
+        .catch((err) => {
+            console.error("Error fetching subscription data:", err.res?.data || err.message)
+            setError("Could not load subscription information")
+        })
+    }
     
-    // Process payment
-    const processPayment = async () => {
-        try {
-            const response = await axios.post(`${API_URL}user-payment`, {
-                paidusername: userData.name,
-                paiduseremail: userData.email,
-                paiduserphone: userData.phone,
-                plan: plan,
-                credits: credit,
-                paymethod: method,
-                amount: amount
-            });
-            
-            if (response.status === 200) {
-                return true;
+    function processPayment(){
+        axios.post(`${API_URL}user-payment`, {
+            paidusername: userData.name,
+            paiduseremail: userData.email,
+            paiduserphone: userData.phone,
+            plan: plan,
+            credits: credit,
+            paymethod: method,
+            amount: amount
+        })
+        .then((res) => {
+            if (res.status === 200) {
+                return true
             }
-            return false;
-        } catch (err) {
-            console.error("Payment error:", err.response?.data || err.message);
-            throw new Error("Payment processing failed");
-        }
-    };
+        })
+        .catch((err) => {
+            console.error("Payment error:", err.res?.data || err.message)
+            throw new Error("Payment processing failed")
+        })
+    }
 
-    // Handle payment button press
-    const handlePayment = async () => {
-        if (isPaid) return;
+    async function handlePayment(){
+        if (isPaid) return
         
-        setIsLoading(true);
-        try {
-            const success = await processPayment();
+        setIsLoading(true)
+        const success = await processPayment()
+        console.log("Payment ===>",processPayment())
             
-            if (success) {
-                setIsPaid(true);
-                setUserCredits(prev => prev + credit);
-                
-                Alert.alert(
-                    "Payment Successful",
-                    `₹${amount} paid via ${method}\nYou've earned ${credit} new credits.\nA receipt has been sent to your email.`,
-                    [{ text: "OK", onPress: () => navigation.navigate("main") }],
-                    { cancelable: false }
-                );
-            } else {
-                Alert.alert(
-                    "Payment Failed",
-                    "There was an issue processing your payment. Please try again.",
-                    [{ text: "OK" }]
-                );
-            }
-        } catch (err) {
+        if (success) {
+            setIsPaid(true)
+            setUserCredits(prev => prev + credit)
             Alert.alert(
-                "Payment Error",
-                err.message || "An unexpected error occurred",
+                "Payment Successful",
+                `₹${amount} paid via ${method}\nYou've earned ${credit} new credits.\nA receipt has been sent to your email.`,
+                [{ text: "OK", onPress: () => navigation.navigate("main") }],
+                { cancelable: false }
+            )
+        } else {
+            Alert.alert(
+                "Payment Failed",
+                "There was an issue processing your payment. Please try again.",
                 [{ text: "OK" }]
-            );
-        } finally {
-            setIsLoading(false);
+            )
         }
-    };
-
-    // Determine component colors based on theme
-    const isDark = theme === 'Dark';
+        setIsLoading(false)
+    }
+    const isDark = theme === 'Dark'
     const colors = {
         background: isDark ? '#252525' : '#F7F7F7',
         card: isDark ? '#2E2E2E' : '#FFFFFF',
@@ -175,36 +154,15 @@ export default function PaymentPage() {
         buttonText: '#FFFFFF',
         disabledButton: '#555555',
         border: isDark ? '#444444' : '#EEEEEE',
-    };
-
-    // Loading and error states
+    }
+  
     if (isLoading && !isPaid) {
         return (
             <View style={[style.payment_mainpaycon, { backgroundColor: colors.background, justifyContent: 'center' }]}>
                 <ActivityIndicator size="large" color={colors.primary} />
                 <Text style={{ color: colors.text, marginTop: 15, textAlign: 'center' }}>Loading payment details...</Text>
             </View>
-        );
-    }
-
-    if (error) {
-        return (
-            <View style={[style.payment_mainpaycon, { backgroundColor: colors.background, justifyContent: 'center' }]}>
-                <AntDesign name="exclamationcircle" size={50} color="#FF6B6B" />
-                <Text style={{ color: colors.text, marginTop: 15, textAlign: 'center', fontSize: 18 }}>{error}</Text>
-                <TouchableOpacity 
-                    style={{
-                        marginTop: 20,
-                        backgroundColor: colors.primary,
-                        paddingVertical: 12,
-                        paddingHorizontal: 24,
-                        borderRadius: 8,
-                    }}
-                    onPress={() => navigation.goBack()}>
-                    <Text style={{ color: colors.buttonText, fontWeight: '500' }}>Go Back</Text>
-                </TouchableOpacity>
-            </View>
-        );
+        )
     }
 
     return (
@@ -215,7 +173,6 @@ export default function PaymentPage() {
                     Payment Details
                 </Text>
 
-                {/* User Information Card */}
                 <View style={[
                     style.payment_detailscart, 
                     { 
@@ -398,5 +355,5 @@ export default function PaymentPage() {
                 </TouchableOpacity>
             </View>
         </ScrollView>
-    );
+    )
 }
