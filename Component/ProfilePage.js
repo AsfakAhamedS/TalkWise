@@ -16,7 +16,6 @@ export default function ProfilePage() {
   const navigation = useNavigation()
   const [loading, setLoading] = useState(true)
   const [userdata, setUserdata] = useState({email: null, name: null, image: null, level: '', language: ''})
-
   const [showthememodal, setShowthememodal] = useState(false)
   const [showlevelmodal, setShowlevelmodal] = useState(false)
   const [showlanguagemodal, setShowlanguagemodal] = useState(false)

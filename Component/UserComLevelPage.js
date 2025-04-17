@@ -7,7 +7,7 @@ import { MaterialCommunityIcons, Ionicons } from '@expo/vector-icons'
 import Toast from 'react-native-toast-message'
 import style from '../style'
 
-const url = process.env.EXPO_PUBLIC_API_URL || ''
+const API_URL = process.env.EXPO_PUBLIC_API_URL || ''
 
 export default function UserComLevelPage() {
     const navigation = useNavigation()
@@ -44,7 +44,7 @@ export default function UserComLevelPage() {
         }
         getTheme()
     }, [])
-     const darkmode = theme === 'Dark'
+    const darkmode = theme === 'Dark'
 
     // useEffect(() => {
     //     if (comlevel !== null) {
@@ -54,11 +54,11 @@ export default function UserComLevelPage() {
     
     async function handleNext() {
         setLoading(true)
-        console.log("url ===>", url)
+        console.log("API_URL ===>", API_URL)
         const email = await AsyncStorage.getItem('Email')
         console.log(email)
         
-        axios.post(url + 'get-user-details', { 
+        axios.post(`${API_URL}get-user-details`, { 
             type: 'comlevel', 
             useremail: email, 
             usercomlevel: comlevel,

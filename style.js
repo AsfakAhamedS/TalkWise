@@ -891,14 +891,8 @@ export default StyleSheet.create({
     // PaymentPage
     payment_mainpaycon:{
         flex: 1, 
-        backgroundColor: '#fff',
-        padding: 20
-    },
-    payment_heading:{
-        fontSize: 26, 
-        fontWeight: '700', 
-        textAlign:'center', 
-        marginBottom: 20 
+        backgroundColor: '#F7F7F7',
+        padding: 10
     },
     payment_detailscart: {
         backgroundColor: '#f5f5f5',
@@ -1799,43 +1793,361 @@ export default StyleSheet.create({
     
 
     // LessonPage
-    lessonpage_body: {
+    lesson_container: {
         flex: 1,
-        backgroundColor: '#f8f8f8',
+        backgroundColor: '#F9FAFB',
+        paddingVertical:20
+    },
+    lesson_centercontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
         padding: 20,
     },
-    lesson_card: {
-        backgroundColor: 'white',
-        padding: 20,
-        borderRadius: 10,
-        marginBottom: 15,
-        shadowColor: '#000',
-        shadowOpacity: 0.1,
-        shadowRadius: 5,
-        elevation: 5,
+    lesson_header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingTop: 16,
+        paddingBottom: 16,
     },
-    lesson_cardtitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    lesson_carddescription: {
-        fontSize: 14,
-        color: '#666',
-        marginBottom: 15,
-    },
-    lesson_cardbtn: {
-        backgroundColor: '#252525',
-        padding: 10,
-        borderRadius: 5,
+    lesson_backbutton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
         alignItems: 'center',
     },
-    lesson_cardbtntext: {
-        color: 'white',
+    lesson_headertitlecontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
+    lesson_headertitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#111827',
+    },
+    listContainer: {
+        padding: 16,
+    },
+    lesson_card: {
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+        elevation: 2,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+    },
+    lesson_header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 12,
+    },
+    lesson_level: {
+        backgroundColor: '#EFF6FF',
+        borderRadius: 8,
+        paddingHorizontal: 8,
+        paddingVertical: 4,
+        fontSize: 14,
+        fontWeight: 'bold',
+        color: '#3B82F6',
+        marginRight: 8,
+    },
+    lesson_title: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: '#212121',
+        flex: 1,
+    },
+    lesson_description: {
+        fontSize: 15,
+        color: '#757575',
+        marginBottom: 16,
+        lineHeight: 22,
+    },
+    lesson_startbutton: {
+        backgroundColor: '#4F46E5',
+        borderRadius: 8,
+        paddingVertical: 12,
+        paddingHorizontal: 16,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    lesson_buttontext: {
+        color: '#FFFFFF',
+        fontWeight: 'bold',
+        marginRight: 8,
+    },
+    lesson_emptycontainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 40,
+    },
+    lesson_emptytext: {
+        marginTop: 16,
         fontSize: 16,
+        color: '#757575',
+        textAlign: 'center',
+    },
+    loadingText: {
+        marginTop: 12,
+        fontSize: 16,
+        color: '#757575',
+    },
+    lesson_errortext: {
+        marginTop: 16,
+        fontSize: 16,
+        color: '#F44336',
+        textAlign: 'center',
+        marginBottom: 24,
+    },
+    lesson_retrybutton: {
+        backgroundColor: '#F44336',
+        borderRadius: 8,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+    },
+    lesson_retrytext: {
+        color: '#FFFFFF',
         fontWeight: 'bold',
     },
 
-    // UserChatPage
+    //QuizPage
+    quiz_container: {
+        flex: 1,
+    },
+    quiz_scrollcontent: {
+        flexGrow: 1,
+        padding: 20,
+    },
+    quiz_loadingcontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    quiz_loadingtext: {
+        marginTop: 16,
+        fontSize: 16,
+    },
+    quiz_emptycontainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: 20,
+    },
+    quiz_emptytext: {
+        fontSize: 18,
+        textAlign: 'center',
+        marginTop: 16,
+        marginBottom: 24,
+    },
+    quiz_retrybutton: {
+        paddingVertical: 12,
+        paddingHorizontal: 24,
+        backgroundColor: '#4a4aff',
+        borderRadius: 8,
+    },
+    quiz_retrybuttontext: {
+        color: '#fff',
+        fontWeight: '600',
+        fontSize: 16,
+    },
+    quiz_header: {
+        marginBottom: 24,
+    },
+    quiz_headertitle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+        textAlign: 'center',
+    },
+    quiz_progresscontainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginBottom: 8,
+    },
+    quiz_progresstext: {
+        marginLeft: 8,
+        fontSize: 14,
+        fontWeight: '500',
+    },
+    quiz_content: {
+        flex: 1,
+    },
+    quiz_questioncard: {
+        borderRadius: 12,
+        padding: 24,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        marginBottom: 24,
+    },
+    quiz_questiontext: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginBottom: 24,
+        lineHeight: 26,
+    },
+    quiz_optionscontainer: {
+        marginTop: 8,
+    },
+    quiz_optionbutton: {
+        borderRadius: 8,
+        marginBottom: 12,
+        borderWidth: 1,
+        overflow: 'hidden',
+    },
+    quiz_optioncontent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        padding: 16,
+    },
+    quiz_optionindicator: {
+        width: 20,
+        height: 20,
+        borderRadius: 10,
+        borderWidth: 2,
+        marginRight: 12,
+    },
+    quiz_optiontext: {
+        fontSize: 16,
+        flex: 1,
+    },
+    quiz_submitbutton: {
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginTop: 8,
+    },
+    quiz_submittuttontext: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    quiz_resultscontainer: {
+        flex: 1,
+    },
+    quiz_scorecardcontainer: {
+        marginBottom: 24,
+    },
+    quiz_scorecard: {
+        borderRadius: 12,
+        padding: 24,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        alignItems: 'center',
+    },
+    quiz_feedbacktext: {
+        fontSize: 24,
+        fontWeight: 'bold',
+        marginBottom: 16,
+    },
+    quiz_scorecirclecontainer: {
+        marginVertical: 16,
+      },
+      quiz_scorecircle: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        borderWidth: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    quiz_scorepercentage: {
+        fontSize: 28,
+        fontWeight: 'bold',
+    },
+    quiz_scoretext: {
+        fontSize: 18,
+        fontWeight: '500',
+        marginTop: 16,
+    },
+    quiz_answerscontainer: {
+        borderRadius: 12,
+        padding: 20,
+        shadowColor: '#000',
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
+        shadowRadius: 4,
+        elevation: 3,
+        marginBottom: 24,
+    },
+    quiz_answerstitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        marginBottom: 16,
+    },
+    quiz_answeritem: {
+        marginBottom: 16,
+        paddingBottom: 16,
+        borderBottomWidth: 1,
+        borderBottomColor: '#eee',
+    },
+    quiz_answerquestion: {
+        fontSize: 16,
+        fontWeight: '500',
+        marginBottom: 8,
+    },
+    quiz_answerdetails: {
+        flexDirection: 'row',
+        marginTop: 4,
+    },
+    quiz_answerlabel: {
+        fontSize: 14,
+        marginRight: 8,
+        width: 100,
+    },
+    quiz_answervalue: {
+        fontSize: 14,
+        fontWeight: '500',
+        flex: 1,
+    },
+    quiz_buttonscontainer: {
+        marginTop: 8,
+    },
+    quiz_primarybutton: {
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginVertical: 12,
+    },
+    quiz_primarybuttontext: {
+        color: '#fff',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    quiz_secondarybutton: {
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        marginBottom: 12,
+        borderWidth: 1,
+    },
+    quiz_secondarybuttontext: {
+        fontWeight: '600',
+        fontSize: 16,
+    },
+    quiz_outlinebutton: {
+        padding: 16,
+        borderRadius: 8,
+        alignItems: 'center',
+        borderWidth: 1,
+    },
+    quiz_outlinebuttontext: {
+        fontWeight: '600',
+        fontSize: 16,
+    },
    
 })

@@ -144,35 +144,31 @@ export default function PaymentPage() {
         }
         setIsLoading(false)
     }
-    const isDark = theme === 'Dark'
+    const darkmode = theme === 'Dark'
     const colors = {
-        background: isDark ? '#252525' : '#F7F7F7',
-        card: isDark ? '#2E2E2E' : '#FFFFFF',
-        text: isDark ? '#FAFAFA' : '#333333',
-        subtext: isDark ? '#BBBBBB' : '#666666',
-        primary: isDark ? '#0A84FF' : '#4285F4',
+        background: darkmode ? '#252525' : '#F7F7F7',
+        card: darkmode ? '#2E2E2E' : '#FFFFFF',
+        text: darkmode ? '#FAFAFA' : '#333333',
+        subtext: darkmode ? '#BBBBBB' : '#666666',
+        primary: darkmode ? '#0A84FF' : '#4285F4',
         buttonText: '#FFFFFF',
         disabledButton: '#555555',
-        border: isDark ? '#444444' : '#EEEEEE',
+        border: darkmode ? '#444444' : '#EEEEEE',
     }
   
     if (isLoading && !isPaid) {
         return (
-            <View style={[style.payment_mainpaycon, { backgroundColor: colors.background, justifyContent: 'center' }]}>
-                <ActivityIndicator size="large" color={colors.primary} />
-                <Text style={{ color: colors.text, marginTop: 15, textAlign: 'center' }}>Loading payment details...</Text>
+            <View style={[style.payment_mainpaycon, darkmode && { backgroundColor: '#252525'}]}>
+                <ActivityIndicator size="large" color={darkmode ? '#0A84FF' : '#4285F4'} />
+                <Text style={{ color:  darkmode ? '#FAFAFA' : '#333333', marginTop: 15, textAlign: 'center' }}>Loading payment details...</Text>
             </View>
         )
     }
 
     return (
-        <ScrollView style={{ flex: 1, backgroundColor: colors.background }}>
-            <StatusBar barStyle={isDark ? 'light-content' : 'dark-content'} />
-            <View style={[style.payment_mainpaycon, { backgroundColor: colors.background, paddingBottom: 30 }]}>
-                <Text style={[style.payment_heading, { color: colors.text, marginBottom: 20, fontSize: 24, fontWeight: '600' }]}>
-                    Payment Details
-                </Text>
-
+        <ScrollView style={[style.payment_mainpaycon, darkmode && {backgroundColor: '#252525'}]}>
+            <StatusBar barStyle={darkmode ? 'light-content' : 'dark-content'} />
+            <View style={[style.payment_mainpaycon, { backgroundColor: darkmode ? '#252525' : '#F7F7F7', paddingBottom: 10 }]}>
                 <View style={[
                     style.payment_detailscart, 
                     { 
@@ -182,7 +178,7 @@ export default function PaymentPage() {
                         marginBottom: 16,
                         shadowColor: "#000",
                         shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: isDark ? 0.3 : 0.1,
+                        shadowOpacity: darkmode ? 0.3 : 0.1,
                         shadowRadius: 4,
                         elevation: 3,
                         borderWidth: 1,
@@ -225,7 +221,7 @@ export default function PaymentPage() {
                         marginBottom: 16,
                         shadowColor: "#000",
                         shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: isDark ? 0.3 : 0.1,
+                        shadowOpacity: darkmode ? 0.3 : 0.1,
                         shadowRadius: 4,
                         elevation: 3,
                         borderWidth: 1,
@@ -279,7 +275,7 @@ export default function PaymentPage() {
                         marginBottom: 24,
                         shadowColor: "#000",
                         shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: isDark ? 0.3 : 0.1,
+                        shadowOpacity: darkmode ? 0.3 : 0.1,
                         shadowRadius: 4,
                         elevation: 3,
                         borderWidth: 1,

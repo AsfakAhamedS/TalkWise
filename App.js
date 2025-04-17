@@ -48,17 +48,28 @@ export default function App() {
       <StatusBar style='auto'/>
       <NavigationContainer>
         <Stack.Navigator>
+         
         <Stack.Screen 
-            name="userlevel" 
-            component={UserComLevelPage}
-            options={{headerShown:false}} 
+            name="payment" 
+            component={PaymentPage}
+            options={({ route, navigation }) => {
+              const theme = route.params?.theme || 'Light'
+              return {
+                title: 'Payment', 
+                headerTitleAlign: 'center',       
+                headerLeft: () => (
+                  <TouchableOpacity 
+                    onPress={() => navigation.goBack('')} 
+                    style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
+                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
+                  </TouchableOpacity>
+                ),
+                headerStyle: { backgroundColor: theme === 'Dark' ? '#252525' : '#fff', elevation: 0 },
+                headerTintColor: theme === 'Dark' ? '#fff' : '#000',
+              }
+            }} 
           />
-          
-        <Stack.Screen 
-            name="main" 
-            component={TabNavPage} 
-            options={{headerShown:false}}
-          />
+         
 
 
           <Stack.Screen 
@@ -222,60 +233,55 @@ export default function App() {
               }
             }} 
           />
+          
           <Stack.Screen 
-            name="payment" 
-            component={PaymentPage}
-            options={({ route, navigation }) => {
-              const theme = route.params?.theme || 'Light'
-              return {
-                title: 'Payment', 
-                headerTitleAlign: 'center',       
-                headerLeft: () => (
-                  <TouchableOpacity 
-                    onPress={() => navigation.goBack('')} 
-                    style={{ paddingLeft: 15, alignItems: 'center', justifyContent: 'center', height: '100%'  }}>
-                    <AntDesign name="arrowleft" color={theme === 'Dark' ? '#fff' : '#000'} size={28} />
-                  </TouchableOpacity>
-                ),
-                headerStyle: { backgroundColor: theme === 'Dark' ? '#252525' : '#fff', elevation: 0 },
-                headerTintColor: theme === 'Dark' ? '#fff' : '#000',
-              }
-            }} 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
           />
 
-
-          
-
+          <Stack.Screen 
+            name="userlevel" 
+            component={UserComLevelPage}
+            options={{headerShown:false}} 
+          />
           <Stack.Screen 
             name="lesson" 
             component={LessonPage}
             options={{headerShown:false}} 
           /> 
-         
-
           <Stack.Screen 
             name="chat" 
             component={UserChat}
             options={{headerShown:false}}
           />
-          <Stack.Screen 
+           <Stack.Screen 
             name="quiz" 
             component={QuizPage}
             options={({ navigation }) => ({
-              headerTitle: () => (
-                <Text style={{ fontSize: 24, fontWeight: 'bold', textAlign: 'center', width: '100%' }}>
-                  Quiz
-                </Text>
-              ),
+              title:false,
               headerLeft: () => (
-                <TouchableOpacity onPress={() => navigation.goBack()} style={{ paddingHorizontal: 16 }}>
-                  <AntDesign name="arrowleft" color="#000" size={28} />
+                <TouchableOpacity onPress={() => navigation.goBack()} style={{
+                  marginLeft:15, 
+                  width: 40,
+                  height: 40,
+                  borderRadius: 20,
+                  backgroundColor: '#F3F4F6',
+                  justifyContent: 'center',
+                  alignItems: 'center', }}>
+                  <Ionicons 
+                    name="arrow-back" 
+                    size={20} 
+                    color={ '#111827'} 
+                  />
                 </TouchableOpacity>
               ),
               headerStyle: { backgroundColor: '#fff', elevation: 0 },
               headerTitleAlign: 'center'
             })}
           />
+          
+          
 
 
           <Stack.Screen 
