@@ -13,16 +13,16 @@ export default StyleSheet.create({
         backgroundColor: '#fff',
         justifyContent: 'center',
     },
-    container: {
+    land_container: {
         flex:1,
     },
-    text: {
+    land_text: {
         fontSize: 12,
         color:"blue",
         marginBottom: 20,
         fontFamily: 'Poppins_400Regular'
     },
-    maintext: {
+    land_maintext: {
         fontSize: 28,
         lineHeight: 40,
         fontWeight:300,
@@ -214,87 +214,6 @@ export default StyleSheet.create({
             elevation: 5,
         },
     }),
-
-    // // Login Page
-    // login_hero_img:{
-    //     flex:3,
-    //     width:'100%',
-    //     height:'100%'
-    // },
-    // login_signup_head: {
-    //     fontSize: 28,
-    //     fontWeight: 600,
-    //     marginBottom: 20,
-    //     textAlign: 'center',
-    // },
-    // inputcontainer: {
-    //     flexDirection: 'row',
-    //     alignItems: 'center',
-    //     borderBottomWidth: 1,
-    //     height: 50,
-    //     borderColor: '#ccc',
-    //     marginBottom: 20,
-    //     paddingVertical: 5, 
-    // },
-    // icon: {
-    //     marginRight: 10,
-    //     color: '#bababa',
-    // },
-    // input: {
-    //     flex: 1,
-    //     fontSize: 16,
-    //     color: '#000',
-    //     height: '100%', 
-    //     textAlignVertical: 'center',
-    // },
-    // login_error: {
-    //     color: 'red',
-    //     fontSize: 16,
-    //     fontWeight: 'bold',
-    //     textAlign: 'center',
-    //     marginTop: 3,
-    //     marginBottom:5,
-    //     alignSelf: 'center',
-    // },
-    // log_forget_btn: {
-    //     fontSize: 16,
-    //     fontWeight: 'bold',
-    //     textAlign: 'right',
-    //     color: '#252525',
-    //     marginBottom: 15,
-    // },
-    // login_btn: {
-    //     justifyContent: 'center',
-    //     alignItems: 'center',
-    // },
-    // login_btn_to: {
-    //     width: 120,
-    //     borderRadius: 30,
-    //     alignItems: 'center',
-    //     backgroundColor: '#252525',
-    //     paddingVertical: 10,
-    // },
-    // login_btn_text: {
-    //     fontSize: 18,
-    //     fontWeight: 'bold',
-    //     color: '#fff',
-    // },
-    // log_signup: {
-    //     flex: 1,
-    //     justifyContent: 'flex-end',
-    //     alignItems: 'center',
-    //     position:'relative',
-    //     bottom:40
-    // },
-    // log_signup_text: {
-    //     fontSize: 16,
-    //     fontWeight: '500',
-    //     color: '#777',
-    // },
-    // log_signup_btn:{
-    //     fontSize:17,
-    //     fontWeight:'bold',
-    // },
     
     
     // Forget Page
@@ -341,7 +260,7 @@ export default StyleSheet.create({
         width: 100,
         borderRadius: 30,
         alignItems: 'center',
-        backgroundColor: '#252525',
+        backgroundColor: '#2D4BDF',
         padding: 7,
     },
     forget_btn_text: {
@@ -372,49 +291,110 @@ export default StyleSheet.create({
     },
 
     // Signup Page
-    section: {
+    signup_body: {
+        flex: 1,
+        backgroundColor: '#FFFFFF',
+        paddingHorizontal:20
+    },
+    signup_container: {
+        flex: 1
+    },
+    signup_scrollcontent: {
+        flexGrow: 1,
+        padding: 24
+    },
+    signup_header: {
+        marginBottom: 30
+    },
+    signup_headertitle: {
+        fontSize: 28,
+        fontWeight: '700',
+        color: '#333',
+        marginBottom: 8
+    },
+    signup_headersubtitle: {
+        fontSize: 16,
+        color: '#4F6CFF',
+        marginBottom: 16
+    },
+      inputContainer: {
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop:15,
-        marginBottom:10
-    },
-    paragraph: {
-        fontSize: 17,
-    },
-    checkbox: {
-        marginRight:10,
-        width: 16, 
-        height: 16,
-    },
-    errortext: {
-        color: 'red',
-        fontSize: 13,
-        position:'relative',
-        bottom:15
-    },
-    signup_btn: {
+        borderWidth: 1,
+        borderColor: '#E0E0E0',
+        borderRadius: 8,
+        paddingHorizontal: 12,
+        marginBottom: 12,
+        height: 56,
+        backgroundColor: '#F9F9F9'
+      },
+      icon: {
+        marginRight: 12
+      },
+      input: {
+        flex: 1,
+        height: '100%',
+        fontSize: 16,
+        color: '#333'
+      },
+      errorText: {
+        color: '#E53935',
+        fontSize: 12,
+        marginBottom: 12,
+        marginTop: -6,
+        paddingLeft: 4
+      },
+      termsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginVertical: 20
+      },
+      checkbox: {
+        marginRight: 10,
+        borderRadius: 4
+      },
+      termsText: {
+        fontSize: 14,
+        color: '#555',
+        flex: 1
+      },
+      termsLink: {
+        color: '#4B68E9',
+        fontWeight: '500'
+      },
+      signupButton: {
+        backgroundColor: '#4B68E9',
+        borderRadius: 8,
+        height: 56,
         justifyContent: 'center',
         alignItems: 'center',
-        marginTop:20
-    },
-    signup_btn_to: {
-        width: 120,
-        borderRadius: 30,
+        marginBottom: 24
+      },
+      disabledButton: {
+        backgroundColor: '#A9B4E8',
+        opacity: 0.8
+      },
+      signupButtonText: {
+        color: '#FFFFFF',
+        fontSize: 16,
+        fontWeight: '600'
+      },
+      loginPrompt: {
+        flexDirection: 'row',
+        justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#252525',
-        paddingVertical: 10,
-    },
-    disabledButton: {
-        backgroundColor: '#b0b0b0', 
-    },
-    signup_btn_text: {
-        fontSize: 18,
-        fontWeight: 'bold',
-        color: '#fff',
-    },
-    disabledText: {
-        color: '#808080' 
-    },
+        marginTop: 8
+      },
+      loginPromptText: {
+        fontSize: 14,
+        color: '#666',
+        marginRight: 4
+      },
+      loginLink: {
+        fontSize: 14,
+        color: '#4B68E9',
+        fontWeight: '600'
+      },
 
     // UserDetailPage
     userdp_heading:{
@@ -425,7 +405,7 @@ export default StyleSheet.create({
     },
     userdp_subhead:{
         fontSize:32,
-        fontWeight:600
+        fontWeight:600,
     },
     age_btn: {
         borderWidth: 1,
@@ -521,8 +501,8 @@ export default StyleSheet.create({
     },
     subcription_backbutton: {
         position: 'absolute',
-        top: 24,
-        left: 16,
+        top: 30,
+        left: '95%',
         height: 40,
         width: 40,
         borderRadius: 20,
@@ -895,21 +875,28 @@ export default StyleSheet.create({
         padding: 10
     },
     payment_detailscart: {
-        backgroundColor: '#f5f5f5',
-        borderRadius: 14,
-        padding: 18,
-        marginBottom: 20,
-        shadowColor: '#000',
-        shadowOpacity: 0.05,
-        shadowOffset: { width: 0, height: 1 },
+        backgroundColor: '#FFFFFF',
+        borderRadius: 12,
+        padding: 16,
+        marginBottom: 16,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 2,
+        elevation: 1,
+        borderWidth: 1,
+        borderColor: '#EEEEEE'
+    },
+    payment_userinfoheadind:{
+        flexDirection: 'row', 
+        alignItems: 'center', 
+        marginBottom: 12 
     },
     payment_sectitle: {
-        fontSize: 20,
-        fontWeight: '600',
-        marginBottom: 8,
-        color: '#333',
+        color: '#333333', 
+        marginLeft: 8,
+        fontSize: 18,
+        fontWeight: '600' 
     },
     payment_detaillabel: {
         fontSize: 16,
@@ -923,8 +910,9 @@ export default StyleSheet.create({
     },
     payment_detailtext: {
         fontSize: 16,
-        color: '#444',
-        marginBottom: 6,
+        color:  '#333333',
+        fontWeight:'500',
+        marginBottom: 8 
     },
     payment_button: {
         backgroundColor: '#252525',
@@ -2149,5 +2137,116 @@ export default StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
-   
+
+    //UserChat
+    chatContainer: {
+        flex: 1,
+        backgroundColor: '#f7f7f7',
+        paddingHorizontal: 10,
+        paddingTop: 10,
+    },
+    chatHeader: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        paddingHorizontal: 20,
+        paddingVertical:25,
+        paddingTop: 16,
+        paddingBottom: 16,
+    },
+    chatBackButton: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        backgroundColor: '#F3F4F6',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    chatHeaderTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginLeft: 12,
+    },
+    chatHeaderTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+        color: '#111827',
+    },
+    messageCard: {
+        paddingVertical:12,
+        paddingHorizontal:20,
+        marginVertical: 6,
+        borderRadius: 12,
+        maxWidth: '80%',
+    },
+    userMessage: {
+        backgroundColor: '#dff9fb',
+        alignSelf: 'flex-end',
+    },
+    botMessage: {
+        backgroundColor: '#f1f2f6',
+        alignSelf: 'flex-start',
+    },
+    messageText: {
+        fontSize: 16,
+        lineHeight:24,
+        color: '#2d3436',
+    },
+    inputWrapper: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        backgroundColor: '#ecf0f1',
+        borderRadius: 30,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+        marginVertical: 10,
+        width: '100%',
+        gap: 10,
+    },
+    textInput: {
+        flex: 1,
+        fontSize: 16,
+        color: '#2d3436',
+    },
+    micButton: {
+        backgroundColor: '#4F46E5',
+        padding: 10,
+        borderRadius: 25,
+    },
+    senderName: {
+        fontSize: 12,
+        color: '#636e72',
+        marginBottom: 2,
+        paddingLeft: 5,
+    },
+    timestamp: {
+        fontSize: 11,
+        color: '#b2bec3',
+        alignSelf: 'flex-end',
+        marginTop: 4,
+    },
+    sendButton: {
+        backgroundColor: '#2ecc71',
+        padding: 10,
+        borderRadius: 25,
+    },
+    senderLabel: {
+        fontSize: 12,
+        color: '#636e72',
+        marginBottom: 4,
+    },
+    audioMessage: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 10,
+    },
+    playButton: {
+        backgroundColor: '#0984e3',
+        padding: 8,
+        borderRadius: 20,
+    },
+    recordedText: {
+        fontSize: 15,
+        color: '#2d3436',
+        flexShrink: 1,
+    },
 })

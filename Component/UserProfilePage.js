@@ -107,10 +107,10 @@ export default function UserProfilePage() {
     }
     
     return (
-        <View style={style.body}>
+        <View style={[style.body, {paddingHorizontal:20}]}>
             <View style={style.userdp_heading}>
                 <Text style={[style.userdp_subhead, { fontWeight: '300' }]}>Let's set up your</Text>
-                <Text style={[style.userdp_subhead, { marginBottom: 20 }]}>Profile picture</Text>
+                <Text style={[style.userdp_subhead, { marginBottom: 20, color:'#4F6CFF' }]}>Profile picture</Text>
                 <View style={style.propic_upload}>
                     <TouchableOpacity onPress={pickImage}>
                         <View style={style.propic_circle}>
@@ -125,7 +125,7 @@ export default function UserProfilePage() {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <Text style={style.alter_text}>or choose an avatar</Text>
+                <Text style={[style.alter_text,{color:'#4F6CFF' }]}>or choose an avatar</Text>
                 <View style={style.avatar}>
                     {avatar.map((avatar, index) => (
                         <TouchableOpacity key={index} onPress={() => uploadavatar(avatar)}>

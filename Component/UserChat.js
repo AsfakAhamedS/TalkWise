@@ -11,6 +11,7 @@ import Fontisto from 'react-native-vector-icons/Fontisto'
 import Foundation from 'react-native-vector-icons/Foundation'
 import AntDesign from 'react-native-vector-icons/AntDesign'
 import { Ionicons } from '@expo/vector-icons'
+import style from '../style'
 
 const url = process.env.EXPO_PUBLIC_API_URL || ''
 
@@ -74,10 +75,8 @@ export default function UserChat() {
                     level: level,
                     step: conversationStep
                 })
-    
                 if (response.status === 200) {
                     const { aiPrompt, status } = response.data
-    
                     const newMessage = {
                         id: generateUniqueId(),
                         text: aiPrompt.ai_prompt || aiPrompt,
@@ -85,8 +84,6 @@ export default function UserChat() {
                         sender: 'AI',
                         time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
                     }
-    
-                    // Only add if last message isn't the same (avoid duplicates).
                     setMessages(prev => {
                         const last = prev[prev.length - 1]
                         if (!last || last.text !== newMessage.text) {
@@ -94,31 +91,22 @@ export default function UserChat() {
                         }
                         return prev
                     })
-    
                     updateServerWithMessage(newMessage)
-    
                     if (status === "completed") {
                         setTimeout(() => {
                             navigation.navigate("quiz", { levels: level })
                         }, 3000)
                     }
                 }
-    
             } catch (error) {
                 console.error('Error fetching next question:', error)
             }
         }
-    
         fetchNextQuestion()
-    
     }, [section, conversationStep])
     
-    
-
-    // Function to send a single message to the server
     const updateServerWithMessage = async (message) => {
         if (!useremail) return
-        
         try {
             await axios.post(`${url}update-progress`, {
                 userEmail: useremail,
@@ -127,13 +115,12 @@ export default function UserChat() {
                 level: level || 'beginner',
                 topic: topic || 'conversation',
                 step: conversationStep || 1,
-                messages: [message] // Send just the new message
+                messages: [message] 
             })
         } catch (error) {
             console.error('Error updating message on server:', error.response?.status || error.message)
         }
     }
-
     async function handleUserResponse(userInput) {
         if (!userInput.trim()) return
         setLoading(true)
@@ -149,7 +136,6 @@ export default function UserChat() {
                 const { aiPrompt, aiResponse } = response.data
                 const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                 
-                // Create new message objects with unique IDs
                 const userMessage = {
                     id: generateUniqueId(),
                     text: aiPrompt,
@@ -166,10 +152,8 @@ export default function UserChat() {
                     time: currentTime,
                 }
                 
-                // Update messages state directly
                 setMessages(prevMessages => [...prevMessages, userMessage, botMessage])
                 
-                // Send each message to server separately
                 await updateServerWithMessage(userMessage)
                 await updateServerWithMessage(botMessage)
                 
@@ -182,7 +166,6 @@ export default function UserChat() {
             setLoading(false)
         }
     }
-
     async function startRecording() {
         try {
             const { status } = await Audio.requestPermissionsAsync()
@@ -196,7 +179,6 @@ export default function UserChat() {
             console.error('Failed to start recording:', err)
         }
     }
-
     async function stopRecording() {
         if (!recording) return
         await recording.stopAndUnloadAsync()
@@ -205,7 +187,6 @@ export default function UserChat() {
         setRecordedUri(uri)
         uploadRecording(uri)
     }
-
     async function playAudio(uri) {
         if (sound) {
           await sound.unloadAsync()
@@ -222,7 +203,6 @@ export default function UserChat() {
           }
         })
     }
-      
     async function uploadRecording(uri) {
         setLoading(true)
         const formData = new FormData()
@@ -252,7 +232,6 @@ export default function UserChat() {
                         const { aiPrompt, aiResponse } = response.data
                         const currentTime = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
                         
-                        // Create new message objects with unique IDs
                         const userMessage = {
                             id: generateUniqueId(),
                             uri,
@@ -261,7 +240,6 @@ export default function UserChat() {
                             sender: 'You',
                             time: currentTime,
                         }
-                        
                         const botMessage = {
                             id: generateUniqueId(),
                             text: aiResponse,
@@ -269,14 +247,9 @@ export default function UserChat() {
                             sender: 'AI',
                             time: currentTime,
                         }
-                        
-                        // Update messages state directly
                         setMessages(prevMessages => [...prevMessages, userMessage, botMessage])
-                        
-                        // Send each message to server separately
                         await updateServerWithMessage(userMessage)
                         await updateServerWithMessage(botMessage)
-                        
                         setConversationStep(conversationStep + 1)
                     }
                 } catch (error) {
@@ -287,7 +260,6 @@ export default function UserChat() {
             }
         } catch (error) {
             console.error('Upload error:', error)
-            
             const errorMessage = {
                 id: generateUniqueId(),
                 text: 'Error occurred, please try again.',
@@ -295,16 +267,13 @@ export default function UserChat() {
                 sender: 'AI',
                 time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
             }
-            
             setMessages(prevMessages => [...prevMessages, errorMessage])
-            
         } finally {
             setRecordedUri(null)
             setLoading(false)
         }
     }
 
-   
 useEffect(() => {
     const fetchChatHistory = async () => {
         if (!useremail) return
@@ -317,7 +286,6 @@ useEffect(() => {
             const chatHistory = response.data.chatHistory || []
             const lastStep = response.data.lastStep || 1
             
-            // Set the section from server response
             if (response.data.lastSection) {
                 setSection(response.data.lastSection)
             }
@@ -330,18 +298,14 @@ useEffect(() => {
 
                 setMessages(uniqueMessages)
 
-                // Check if the last message was from AI or user to determine next step
                 const lastMessage = chatHistory[chatHistory.length - 1]
                 
                 if (lastMessage.sender === 'You') {
-                    // If user replied last, set conversation step to continue with AI's next question
                     setConversationStep(lastStep + 1)
                 } else {
-                    // If AI spoke last, keep same step as user still needs to respond
                     setConversationStep(lastStep)
                 }
             } else {
-                // No history, start fresh
                 setConversationStep(1)
             }
 
@@ -349,16 +313,11 @@ useEffect(() => {
             console.error('Error fetching chat history:', error)
         }
     }
-
     fetchChatHistory()
 }, [useremail])
     
-    
-    
-    
     async function fetchAndPlayAudio(text, messageId) {
         let soundObject
-    
         try {
             if (sound) {
                 await sound.unloadAsync()
@@ -401,22 +360,14 @@ useEffect(() => {
     }
   
     return (
-        <View style={styles.container}>
-            <View style={styles.header}>
+        <View style={style.chatContainer}>
+            <View style={style.chatHeader}>
                 <TouchableOpacity 
-                    style={styles.backButton} 
-                    onPress={() => navigation.goBack()}
-                >
-                    <Ionicons 
-                        name="arrow-back" 
-                        size={20} 
-                        color= '#111827' 
-                    />
+                    style={style.chatBackButton}  >
+                    <Ionicons name="arrow-back" size={20}  color= '#111827' />
                 </TouchableOpacity>
-                <View style={styles.headerTitleContainer}>
-                    <Text style={styles.headerTitle}>
-                        Chat
-                    </Text>
+                <View style={style.chatHeaderTitleContainer}>
+                    <Text style={style.chatHeaderTitle}>Chat</Text>
                 </View>
             </View>
             <FlatList
@@ -426,73 +377,65 @@ useEffect(() => {
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <View style={{ marginVertical: 6, alignSelf: item.type === 'user' ? 'flex-end' : 'flex-start' }}>
-                        <Text style={styles.senderName}>{item.sender}</Text>
-                        <View style={[styles.messageCard, item.type === 'user' ? styles.userMessage : styles.botMessage]}>
+                        <Text style={style.senderName}>{item.sender}</Text>
+                        <View style={[style.messageCard, item.type === 'user' ? style.userMessage : style.botMessage]}>
                             {item.uri ? (
                                 <>
-                                <View style={styles.audioMessage}>
+                                <View style={style.audioMessage}>
                                     <TouchableOpacity
                                         onPress={async () => {
                                             if (currentlyPlayingId === item.id && isPlaying) {
-                                            await sound?.pauseAsync()
-                                            setIsPlaying(false)
-                                            } else {
-                                            setCurrentlyPlayingId(item.id)
-
-                                            if (sound) {
-                                                await sound.unloadAsync()
-                                                setSound(null)
-                                            }
-
-                                            try {
-                                                const { sound: newSound } = await Audio.Sound.createAsync({ uri: item.uri })
-                                                setSound(newSound)
-
-                                                await newSound.playAsync()
-                                                setIsPlaying(true)
-
-                                                newSound.setOnPlaybackStatusUpdate((status) => {
-                                                if (status.didJustFinish) {
-                                                    newSound.unloadAsync()
+                                                await sound?.pauseAsync()
+                                                setIsPlaying(false)
+                                            } 
+                                            else {
+                                                setCurrentlyPlayingId(item.id)
+                                                if (sound) {
+                                                    await sound.unloadAsync()
+                                                    setSound(null)
+                                                }
+                                                try {
+                                                    const { sound: newSound } = await Audio.Sound.createAsync({ uri: item.uri })
+                                                    setSound(newSound)
+                                                    await newSound.playAsync()
+                                                    setIsPlaying(true)
+                                                    newSound.setOnPlaybackStatusUpdate((status) => {
+                                                    if (status.didJustFinish) {
+                                                        newSound.unloadAsync()
+                                                        setIsPlaying(false)
+                                                        setCurrentlyPlayingId(null)
+                                                    }})
+                                                } catch (error) {
+                                                    console.log('Audio playback error:', error)
                                                     setIsPlaying(false)
                                                     setCurrentlyPlayingId(null)
                                                 }
-                                                })
-                                            } catch (error) {
-                                                console.log('Audio playback error:', error)
-                                                setIsPlaying(false)
-                                                setCurrentlyPlayingId(null)
                                             }
-                                            }
-                                        }}
-                                        style={styles.playButton}
-                                        >
+                                        }}style={style.playButton}>
                                         {currentlyPlayingId === item.id && isPlaying ? (
                                             <AntDesign name="pause" color="#fff" size={18} />
                                         ) : (
                                             <Feather name="play" size={18} color="#fff" style={{ position: 'relative', left: 2 }} />
                                         )}
                                     </TouchableOpacity>
-
-                                    <Text style={styles.recordedText}>Recorded Voice</Text>
+                                    <Text style={style.recordedText}>Recorded Voice</Text>
                                 </View>
-
-                                <Text style={[styles.messageText,{marginTop:20}]}>{item.text}</Text>
+                                <Text style={[style.messageText,{marginTop:20}]}>{item.text}</Text>
                                 </>
                             ) : (
-                                <Text style={styles.messageText}>{item.text}</Text>
+                                <Text style={style.messageText}>{item.text}</Text>
                             )}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', marginTop:10 }}>
                                 {item.type === "bot" && (
                                     <TouchableOpacity
                                         onPress={() => {
                                             if (currentlyPlayingId === item.id && isPlaying) {
-                                            sound?.pauseAsync()
-                                            setIsPlaying(false)
-                                            } else {
-                                            fetchAndPlayAudio(item.text, item.id)
+                                                sound?.pauseAsync()
+                                                setIsPlaying(false)
+                                            }else {
+                                                fetchAndPlayAudio(item.text, item.id)
                                             }
-                                        }}
+                                            }}
                                         style={{
                                             borderWidth: 1,
                                             borderRadius: 12,
@@ -500,9 +443,7 @@ useEffect(() => {
                                             height: 20,
                                             justifyContent: 'center',
                                             alignItems: 'center',
-                                            marginRight: 8,
-                                        }}
-                                        >
+                                            marginRight: 8,}}>
                                         {currentlyPlayingId === item.id && isPlaying ? (
                                             <Foundation name="pause" color="#000" size={14} />
                                         ) : (
@@ -510,29 +451,25 @@ useEffect(() => {
                                         )}
                                     </TouchableOpacity>
                                 )}
-
-                                <Text style={styles.timestamp}>{item.time}</Text>
+                                <Text style={style.timestamp}>{item.time}</Text>
                             </View>
                         </View>
                     </View>
                 )}
-                onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })}
-            />
-            <View style={styles.inputWrapper}>
-                <TouchableOpacity onPress={recording ? stopRecording : startRecording} style={styles.micButton}>
+                onContentSizeChange={() => flatListRef.current?.scrollToEnd({ animated: true })} />
+            <View style={style.inputWrapper}>
+                <TouchableOpacity onPress={recording ? stopRecording : startRecording} style={style.micButton}>
                     <Feather name={recording ? 'square' : 'mic'} size={20} color="#fff" />
                 </TouchableOpacity>
 
                 <TextInput
-                    style={styles.textInput}
+                    style={style.textInput}
                     placeholder="Type a message..."
                     placeholderTextColor="#aaa"
                     value={userText}
                     onChangeText={setUserText}
-                    editable={!loading}
-                />
-
-                <TouchableOpacity onPress={() => handleUserResponse(userText)} disabled={loading} style={styles.sendButton}>
+                    editable={!loading} />
+                <TouchableOpacity onPress={() => handleUserResponse(userText)} disabled={loading} style={style.sendButton}>
                     {loading ? (
                         <ActivityIndicator size="small" color="#fff" />
                     ) : (
@@ -544,115 +481,3 @@ useEffect(() => {
     )
 }
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#f7f7f7',
-        paddingHorizontal: 10,
-        paddingTop: 10,
-    },
-    header: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        paddingHorizontal: 20,
-        paddingVertical:25,
-        paddingTop: 16,
-        paddingBottom: 16,
-    },
-    backButton: {
-        width: 40,
-        height: 40,
-        borderRadius: 20,
-        backgroundColor: '#F3F4F6',
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    headerTitleContainer: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        marginLeft: 12,
-    },
-    headerTitle: {
-        fontSize: 18,
-        fontWeight: '600',
-        color: '#111827',
-    },
-    messageCard: {
-        paddingVertical:12,
-        paddingHorizontal:20,
-        marginVertical: 6,
-        borderRadius: 12,
-        maxWidth: '80%',
-    },
-    userMessage: {
-        backgroundColor: '#dff9fb',
-        alignSelf: 'flex-end',
-    },
-    botMessage: {
-        backgroundColor: '#f1f2f6',
-        alignSelf: 'flex-start',
-    },
-    messageText: {
-        fontSize: 16,
-        lineHeight:24,
-        color: '#2d3436',
-    },
-    inputWrapper: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#ecf0f1',
-        borderRadius: 30,
-        paddingHorizontal: 10,
-        paddingVertical: 8,
-        marginVertical: 10,
-        width: '100%',
-        gap: 10,
-    },
-    textInput: {
-        flex: 1,
-        fontSize: 16,
-        color: '#2d3436',
-    },
-    micButton: {
-        backgroundColor: '#4F46E5',
-        padding: 10,
-        borderRadius: 25,
-    },
-    senderName: {
-        fontSize: 12,
-        color: '#636e72',
-        marginBottom: 2,
-        paddingLeft: 5,
-    },
-    timestamp: {
-        fontSize: 11,
-        color: '#b2bec3',
-        alignSelf: 'flex-end',
-        marginTop: 4,
-    },
-    sendButton: {
-        backgroundColor: '#2ecc71',
-        padding: 10,
-        borderRadius: 25,
-    },
-    senderLabel: {
-        fontSize: 12,
-        color: '#636e72',
-        marginBottom: 4,
-    },
-    audioMessage: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        gap: 10,
-    },
-    playButton: {
-        backgroundColor: '#0984e3',
-        padding: 8,
-        borderRadius: 20,
-    },
-    recordedText: {
-        fontSize: 15,
-        color: '#2d3436',
-        flexShrink: 1,
-    },
-})

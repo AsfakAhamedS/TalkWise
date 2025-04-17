@@ -490,7 +490,6 @@ app.post('/chat', uploadAudio.single('audioFile'), async (req, res) => {
     }
 })
 
-
 app.post("/lesson", async(req, res) => {
     let client
     try {
@@ -590,7 +589,7 @@ app.post("/lesson", async(req, res) => {
 
 app.post("/txt-speech", async (req, res) => {
     try {
-        const { text } = req.body;
+        const { text } = req.body
 
         const response = await axios.post(
             'https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?output_format=mp3_44100_128',
@@ -605,14 +604,14 @@ app.post("/txt-speech", async (req, res) => {
                 },
                 responseType: 'arraybuffer'
             }
-        );
+        )
 
-        res.setHeader("Content-Type", "audio/mpeg");
-        res.send(response.data);
+        res.setHeader("Content-Type", "audio/mpeg")
+        res.send(response.data)
     } catch (e) {
-        res.status(500).json({ error: "Server error", e });
+        res.status(500).json({ error: "Server error", e })
     }
-});
+})
 
 app.post("/quiz", async (req, res) => {
     console.log("Quiz API hit")
@@ -903,66 +902,59 @@ app.post("/user-subscription", async(req, res) => {
 
 app.post('/update-progress', async (req, res) => {
     try {
-        console.log('Request received for update-progress', req.method);
-        console.log('Request body:', req.body);
+        console.log('Request received for update-progress', req.method)
+        console.log('Request body:', req.body)
         
-        const { userEmail, userName, section, level, topic, step, messages } = req.body;
+        const { userEmail, userName, section, level, topic, step, messages } = req.body
         
-        // If this is a request for fetching chat history (no messages data)
         if (!messages) {
-            console.log('Fetching chat history for:', userEmail || req.query.userEmail);
+            console.log('Fetching chat history for:', userEmail || req.query.userEmail)
             
-            const dbConnection = await getCollection('TalkWise', 'MyProgress');
-            const collection = dbConnection.collection;
+            const dbConnection = await getCollection('TalkWise', 'MyProgress')
+            const collection = dbConnection.collection
             
-            // Use query params or body for email
-            const email = req.query.userEmail || userEmail;
+            const email = req.query.userEmail || userEmail
             
             if (!email) {
-                console.log('Missing userEmail parameter');
-                return res.status(400).json({ error: 'User email is required' });
+                console.log('Missing userEmail parameter')
+                return res.status(400).json({ error: 'User email is required' })
             }
             
             try {
-                const user = await collection.findOne({ userEmail: email });
-                console.log('User found:', !!user);
+                const user = await collection.findOne({ userEmail: email })
+                console.log('User found:', !!user)
                 
                 if (user) {
-                    // Return lastStep along with chatHistory
                     return res.status(200).json({ 
                         chatHistory: user.chatHistory || [],
                         lastStep: user.currentStep || 1,
                         lastSection: user.currentSection || 'general',
                         lastLevel: user.currentLevel || 'beginner'
-                    });
+                    })
                 } else {
                     return res.status(200).json({ 
                         chatHistory: [],
                         lastStep: 1
-                    });
+                    })
                 }
             } catch (dbError) {
-                console.error('Database error while fetching user:', dbError);
-                return res.status(500).json({ error: 'Database error while fetching user', details: dbError.message });
+                console.error('Database error while fetching user:', dbError)
+                return res.status(500).json({ error: 'Database error while fetching user', details: dbError.message })
             }
         }
         
-        console.log('Updating chat history for:', userEmail);
+        console.log('Updating chat history for:', userEmail)
         
-        // For updating chat history with new messages
-        // Get the database collection
-        const dbConnection = await getCollection('TalkWise', 'MyProgress');
-        const collection = dbConnection.collection;
+        const dbConnection = await getCollection('TalkWise', 'MyProgress')
+        const collection = dbConnection.collection
         
-        // Check if we have valid data
         if (!userEmail || !messages || messages.length === 0) {
-            console.log('Missing required data');
-            return res.status(400).json({ error: 'Missing required data' });
+            console.log('Missing required data')
+            return res.status(400).json({ error: 'Missing required data' })
         }
         
         try {
-            console.log('Starting user document upsert');
-            // Ensure the user document exists or insert it if not
+            console.log('Starting user document upsert')
             await collection.updateOne(
                 { userEmail: userEmail },
                 {
@@ -975,18 +967,15 @@ app.post('/update-progress', async (req, res) => {
                     }
                 },
                 { upsert: true }
-            );
-            
-            // Get the latest message from the messages array
-            const latestMessage = messages[messages.length - 1];
+            )
+            const latestMessage = messages[messages.length - 1]
             console.log('Latest message:', {
                 id: latestMessage.id,
                 sender: latestMessage.sender,
                 type: latestMessage.type
-            });
+            })
             
-            console.log('Pushing message to chat history');
-            // Add the message to chat history and update current progress
+            console.log('Pushing message to chat history')
             await collection.updateOne(
                 { userEmail: userEmail },
                 {
@@ -1011,34 +1000,33 @@ app.post('/update-progress', async (req, res) => {
                         currentStep: step || 1
                     }
                 }
-            );
+            )
             
-            console.log('Getting updated chat history');
-            // Fetch the updated chat history
-            const updatedUser = await collection.findOne({ userEmail: userEmail });
+            console.log('Getting updated chat history')
+            const updatedUser = await collection.findOne({ userEmail: userEmail })
             
-            console.log('Successfully updated chat history');
+            console.log('Successfully updated chat history')
             return res.status(200).json({
                 message: 'User progress and chat history updated successfully',
                 chatHistory: updatedUser.chatHistory || []
-            });
+            })
             
         } catch (dbError) {
-            console.error('Database operation error:', dbError);
+            console.error('Database operation error:', dbError)
             return res.status(500).json({ 
                 error: 'Database operation failed', 
                 details: dbError.message,
                 operation: 'update chat history'
-            });
+            })
         }
     } catch (error) {
-        console.error('General error in update-progress:', error);
+        console.error('General error in update-progress:', error)
         return res.status(500).json({ 
             error: 'Internal server error', 
             details: error.message 
-        });
+        })
     }
-});
+})
 
 
 

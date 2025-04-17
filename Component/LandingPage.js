@@ -14,9 +14,9 @@ export default function LandingPage() {
       })
   return (
     <View style={style.body}>
-        <View style={style.container}>
-            <Text style={style.text}>DID YOU KNOW?</Text>
-            <Text style={style.maintext}>TalkWise is the only app where you really <Text style={style.subtext}>speak English, anytime.</Text></Text>
+        <View style={style.land_container}>
+            <Text style={style.land_text}>DID YOU KNOW?</Text>
+            <Text style={style.land_maintext}>TalkWise is the only app where you really <Text style={style.subtext}>speak English, anytime.</Text></Text>
         </View>
         <View style={style.land_logo}>
             <Image source={require('../assets/landingimg.png')} style={{width:300,height:270}}/>

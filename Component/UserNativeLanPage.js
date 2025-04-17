@@ -57,10 +57,10 @@ export default function UserNativeLanPage() {
     }
 
     return(
-        <View style={style.body}>
+        <View style={[style.body, {paddingHorizontal:20}]}>
             <View style={style.userdp_heading}>
                 <Text style={[style.userdp_subhead,{fontWeight:300}]}>What's your</Text>
-                <Text style={[style.userdp_subhead,{marginBottom:20}]}>native language?</Text>
+                <Text style={[style.userdp_subhead,{marginBottom:20, color:'#4F6CFF' }]}>native language?</Text>
                 <View style={{marginBottom:40}}>
                 <TouchableOpacity>
                     <FlatList

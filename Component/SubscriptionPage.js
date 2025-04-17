@@ -14,7 +14,7 @@ const { width, height } = Dimensions.get('window')
 
 export default function SubscriptionPage() {
   const navigation = useNavigation()
-  const [selectedplan, setSelectedplan] = useState('threemonth')
+  const [selectedplan, setSelectedplan] = useState('yearly')
   const [theme, setTheme] = useState('')
 
   const planInfo = {
@@ -145,11 +145,6 @@ export default function SubscriptionPage() {
           <LinearGradient
             colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.7)']}
             style={style.hero_overlay}>
-            <TouchableOpacity 
-              style={style.subcription_backbutton}
-              onPress={() => navigation.goBack()}>
-              <Ionicons name="arrow-back" size={24} color="#FFFFFF" />
-            </TouchableOpacity>
             <View style={style.hero_content}>
               <View style={style.hero_tagcontainer}>
                 <MaterialCommunityIcons name="key" color="#fff" size={16} />

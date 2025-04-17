@@ -23,7 +23,7 @@ const MyProgressPage = () => {
   }
 
   return (
-    <ScrollView style={[styles.container, { backgroundColor: colors.background }]}>
+    <ScrollView style={[styles.myprogress_container, { backgroundColor: colors.background }]}>
       <View style={[styles.card, { backgroundColor: colors.card }]}>
         <Text style={[styles.title, { color: colors.text }]}>Your Progress</Text>
         <Circle
@@ -100,7 +100,7 @@ const MyProgressPage = () => {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  myprogress_container: {
     flex: 1,
     padding: 16
   },

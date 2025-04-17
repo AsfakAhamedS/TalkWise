@@ -36,11 +36,11 @@ export default function UserNamePage() {
     }
 
     return(
-        <View style={style.body}>
+        <View style={[style.body, {paddingHorizontal:20}]}>
             <View style={style.userdp_heading}>
                 <Text style={[style.userdp_subhead,{fontWeight:300}]}>So nice to meet you.</Text>
-                <Text style={[style.userdp_subhead,{marginBottom:20}]}>What's your name?</Text>
-                <View style={style.inputcontainer}>
+                <Text style={[style.userdp_subhead,{marginBottom:20,  color:'#4F6CFF'}]}>What's your name?</Text>
+                <View style={style.input_container}>
                     <Feather name="user" size={22} style={style.icon} />
                     <TextInput
                         style={[style.input,{fontSize:18}]}

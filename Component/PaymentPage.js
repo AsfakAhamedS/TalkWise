@@ -12,11 +12,7 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL || ''
 export default function PaymentPage() {
     const navigation = useNavigation()
     const route = useRoute()
-    // const { plan, amount, credit, method } = route.params || {}
-    const plan = "Premium"
-    const amount = 1000
-    const credit = 500
-    const method = "UPI"
+    const { plan, amount, credit, method } = route.params || {}
     const [userData, setUserData] = useState({email: '',name: '',phone: ''})
     const [userCredits, setUserCredits] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
@@ -98,25 +94,24 @@ export default function PaymentPage() {
         })
     }
     
-    function processPayment(){
-        axios.post(`${API_URL}user-payment`, {
-            paidusername: userData.name,
-            paiduseremail: userData.email,
-            paiduserphone: userData.phone,
-            plan: plan,
-            credits: credit,
-            paymethod: method,
-            amount: amount
-        })
-        .then((res) => {
+    async function processPayment(){
+        try {
+            const res = await axios.post(`${API_URL}user-payment`, {
+                paidusername: userData.name,
+                paiduseremail: userData.email,
+                paiduserphone: userData.phone,
+                plan: plan,
+                credits: credit,
+                paymethod: method,
+                amount: amount
+            })
             if (res.status === 200) {
                 return true
             }
-        })
-        .catch((err) => {
-            console.error("Payment error:", err.res?.data || err.message)
-            throw new Error("Payment processing failed")
-        })
+        } catch (err) {
+            console.error("Payment error:", err.response?.data || err.message)
+        }
+        return false
     }
 
     async function handlePayment(){
@@ -169,49 +164,26 @@ export default function PaymentPage() {
         <ScrollView style={[style.payment_mainpaycon, darkmode && {backgroundColor: '#252525'}]}>
             <StatusBar barStyle={darkmode ? 'light-content' : 'dark-content'} />
             <View style={[style.payment_mainpaycon, { backgroundColor: darkmode ? '#252525' : '#F7F7F7', paddingBottom: 10 }]}>
-                <View style={[
-                    style.payment_detailscart, 
-                    { 
-                        backgroundColor: colors.card,
-                        borderRadius: 12,
-                        padding: 16,
-                        marginBottom: 16,
-                        shadowColor: "#000",
-                        shadowOffset: { width: 0, height: 2 },
-                        shadowOpacity: darkmode ? 0.3 : 0.1,
-                        shadowRadius: 4,
-                        elevation: 3,
-                        borderWidth: 1,
-                        borderColor: colors.border
-                    }
-                ]}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                        <FontAwesome name="user-circle" size={18} color={colors.primary} />
-                        <Text style={[
-                            style.payment_sectitle, 
-                            { 
-                                color: colors.text, 
-                                marginLeft: 8,
-                                fontSize: 18,
-                                fontWeight: '600' 
-                            }
-                        ]}>User Information</Text>
+                <View style={[style.payment_detailscart, darkmode && { backgroundColor:'#252525',borderColor:'#444444',shadowOpacity:0.3} ]}>
+                    <View style={style.payment_userinfoheadind}>
+                        {/* <FontAwesome name="user-circle" size={18} color={colors.primary} /> */}
+                        <Text style={[style.payment_sectitle, darkmode && {color:'#FAFAFA'} ]}>
+                            User Information
+                        </Text>
                     </View>
-                    
                     <View style={{ marginLeft: 4 }}>
-                        <Text style={[style.payment_detailtext, { color: colors.text, marginBottom: 8 }]}>
-                            <Text style={{ fontWeight: '500' }}>Name:</Text> {userData.name}
+                        <Text style={[style.payment_detailtext, darkmode && { color:'#BBBBBB' }]}>
+                            <Text style={{color:colors.subtext,fontWeight:'400'}}>Name:</Text> {userData.name}
                         </Text>
-                        <Text style={[style.payment_detailtext, { color: colors.text, marginBottom: 8 }]}>
-                            <Text style={{ fontWeight: '500' }}>Email:</Text> {userData.email}
+                        <Text style={[style.payment_detailtext, darkmode && { color:'#BBBBBB' }]}>
+                            <Text style={{color:colors.subtext,fontWeight:'400'}}>Email:</Text> {userData.email}
                         </Text>
-                        <Text style={[style.payment_detailtext, { color: colors.text }]}>
-                            <Text style={{ fontWeight: '500' }}>Phone:</Text> {userData.phone}
+                        <Text style={[style.payment_detailtext, darkmode && { color:'#BBBBBB' }]}>
+                            <Text style={{color:colors.subtext,fontWeight:'400'}}>Phone:</Text> {userData.phone}
                         </Text>
                     </View>
                 </View>
 
-                {/* Plan Details Card */}
                 <View style={[
                     style.payment_detailscart,
                     { 
@@ -229,7 +201,7 @@ export default function PaymentPage() {
                     }
                 ]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                        <FontAwesome name="credit-card" size={18} color={colors.primary} />
+                        {/* <FontAwesome name="credit-card" size={18} color={colors.primary} /> */}
                         <Text style={[
                             style.payment_sectitle, 
                             { 
@@ -241,7 +213,6 @@ export default function PaymentPage() {
                         ]}>Plan Details</Text>
                     </View>
 
-                    {/* Plan info with better formatting */}
                     <View style={{ marginBottom: 18 }}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 }}>
                             <Text style={{ color: colors.subtext, fontSize: 15 }}>Plan</Text>
@@ -265,7 +236,6 @@ export default function PaymentPage() {
                     </View>
                 </View>
 
-                {/* Credit Summary Card */}
                 <View style={[
                     style.payment_detailscart,
                     { 
@@ -283,7 +253,7 @@ export default function PaymentPage() {
                     }
                 ]}>
                     <View style={{ flexDirection: 'row', alignItems: 'center', marginBottom: 12 }}>
-                        <FontAwesome name="star" size={18} color={colors.primary} />
+                        {/* <FontAwesome name="star" size={18} color={colors.primary} /> */}
                         <Text style={[
                             style.payment_sectitle, 
                             { 
@@ -312,7 +282,6 @@ export default function PaymentPage() {
                     </Text>
                 </View>
 
-                {/* Payment Button */}
                 <TouchableOpacity
                     style={{
                         backgroundColor: isPaid ? colors.disabledButton : colors.primary,
@@ -338,7 +307,6 @@ export default function PaymentPage() {
                     )}
                 </TouchableOpacity>
 
-                {/* Back Button */}
                 <TouchableOpacity 
                     onPress={() => navigation.goBack()} 
                     style={{ alignSelf: 'center', padding: 10 }}>

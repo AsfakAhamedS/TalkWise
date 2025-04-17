@@ -51,14 +51,13 @@ export default function UserAgePage() {
         <View style={style.body}>
             <View style={style.userdp_heading}>
                 <Text style={[style.userdp_subhead,{fontWeight:300}]}>Hi {username}</Text>
-                <Text style={[style.userdp_subhead,{marginBottom:20}]}>How old are you?</Text>
+                <Text style={[style.userdp_subhead,{marginBottom:20, color:'#4F6CFF'}]}>How old are you?</Text>
                 <View>
                     {agegroups.map((item) => (
                         <TouchableOpacity
                             key={item}
                             style={[style.age_btn, age === item ? { backgroundColor: '#ECECEC' } : {}]}
-                            onPress={() => setAge(item)}
-                        >
+                            onPress={() => setAge(item)}>
                             <Text style={style.age_btn_text}>{item}</Text>
                         </TouchableOpacity>
                     ))}
