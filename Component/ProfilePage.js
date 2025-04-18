@@ -271,8 +271,7 @@ export default function ProfilePage() {
         style={[
           style.profile_container,
           theme === 'Dark' ? { backgroundColor: '#1C1C1E' } : { backgroundColor: '#F2F2F7' }]}
-        showsVerticalScrollIndicator={false}
-      >
+        showsVerticalScrollIndicator={false}>
         <View style={style.profile_header}>
           {userdata.image ? (
             <Image source={{ uri: userdata.image }} style={style.profile_image}/>
@@ -296,7 +295,7 @@ export default function ProfilePage() {
             </TouchableOpacity>
           </View>
         </View>
-
+        
         <View style={style.settings_container}>
           <View style={style.settings_section}>
             <Text style={[

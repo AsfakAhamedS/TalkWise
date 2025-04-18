@@ -49,6 +49,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen 
+            name="main" 
+            component={TabNavPage} 
+            options={{headerShown:false}}
+          />
+          <Stack.Screen 
             name="landing" 
             component={LandingPage} 
             options={{
@@ -59,16 +64,7 @@ export default function App() {
           <Stack.Screen 
             name="login" 
             component={LoginPage}
-            options={({ navigation }) => ({
-              title:false,
-              headerLeft: () => null,
-              headerStyle: { backgroundColor: '#fff', elevation: 0 },
-              headerRight: () => (
-                <TouchableOpacity onPress={() => navigation.navigate('landing')} style={{ marginRight: 20 }}>
-                  <Ionicons name="close" size={28} color="black" />
-                </TouchableOpacity>
-              ),
-            })} 
+            options={{headerShown:false}}
           />
           <Stack.Screen 
             name="forget" 
@@ -277,11 +273,8 @@ export default function App() {
               }
             }} 
           />
-          <Stack.Screen 
-            name="main" 
-            component={TabNavPage} 
-            options={{headerShown:false}}
-          />
+          
+
           <Stack.Screen 
             name="userlevel" 
             component={UserComLevelPage}

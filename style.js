@@ -61,15 +61,34 @@ export default StyleSheet.create({
         backgroundColor: '#FFFFFF'
     },
     login_img_container: {
-        height: '40%',
-        minHeight: 180,
+        height: '50%',
+        minHeight: 200,
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
     },
     login_img: {
         width: '100%',
-        height: '100%'
+        height: '100%',
+        borderBottomLeftRadius:60,
+        borderBottomRightRadius:60,
+    },
+    login_logocontainer: {
+        borderWidth:5,
+        borderColor:'#fff',
+        backgroundColor:'#dddddd',
+        width:110,
+        height:110,
+        borderRadius:55,
+        position:'relative',
+        bottom:50,
+    },
+    login_logoimg:{
+        width:75,
+        height:75,
+        position:'absolute',
+        top:12,
+        left:16
     },
     form_container: {
         flex: 1,

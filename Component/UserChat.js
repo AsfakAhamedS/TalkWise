@@ -316,12 +316,6 @@ useEffect(() => {
     fetchChatHistory()
 }, [useremail])
 
-useEffect(()=>{
-
-    return()=>{
- 
-    }
-})
     
     async function fetchAndPlayAudio(text, messageId) {
         let soundObject
@@ -370,7 +364,8 @@ useEffect(()=>{
         <View style={style.chatContainer}>
             <View style={style.chatHeader}>
                 <TouchableOpacity 
-                    style={style.chatBackButton}  >
+                    style={style.chatBackButton} 
+                    onPress={() => navigation.goBack()} >
                     <Ionicons name="arrow-back" size={20}  color= '#111827' />
                 </TouchableOpacity>
                 <View style={style.chatHeaderTitleContainer}>

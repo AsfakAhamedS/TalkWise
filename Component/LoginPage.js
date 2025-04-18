@@ -89,16 +89,21 @@ export default function LoginPage(){
   }
 
   return (
+    <>
     <SafeAreaView style={style.safe_area}>
-      <StatusBar style="dark" />
-      
+      <StatusBar style={'light'} />
       <View style={style.login_img_container}>
         <Image 
-          source={require('../assets/loginpage/loginimg.png')} 
+          source={require('../assets/loginpage/LoginHeroImg.png')} 
           style={style.login_img}
-          resizeMode="contain"/>
-      </View>
-          
+          resizeMode="cover"/>
+        <View style={style.login_logocontainer}>
+          <Image 
+            source={require('../assets/talkwisepng/Asset 2.png')} 
+            style={style.login_logoimg}
+            resizeMode="contain"/>
+        </View>
+      </View>  
       <View style={style.form_container}>
         <Text style={style.header_title}>Welcome Back!</Text>
         <Text style={style.header_subtitle}>Sign in to continue</Text>
@@ -162,6 +167,7 @@ export default function LoginPage(){
       </View>
       <Toast />
     </SafeAreaView>
+    </>
   )
 }
 
