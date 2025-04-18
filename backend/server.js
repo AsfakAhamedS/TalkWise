@@ -590,13 +590,9 @@ app.post("/lesson", async(req, res) => {
 app.post("/txt-speech", async (req, res) => {
     try {
         const { text } = req.body
-
         const response = await axios.post(
             'https://api.elevenlabs.io/v1/text-to-speech/JBFqnCBsd6RMkjVDRZzb?output_format=mp3_44100_128',
-            {
-                text,
-                model_id: "eleven_multilingual_v2"
-            },
+            { text, model_id: "eleven_multilingual_v2"},
             {
                 headers: {
                     "Content-Type": "application/json",

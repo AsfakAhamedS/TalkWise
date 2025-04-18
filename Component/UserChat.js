@@ -315,6 +315,13 @@ useEffect(() => {
     }
     fetchChatHistory()
 }, [useremail])
+
+useEffect(()=>{
+
+    return()=>{
+ 
+    }
+})
     
     async function fetchAndPlayAudio(text, messageId) {
         let soundObject

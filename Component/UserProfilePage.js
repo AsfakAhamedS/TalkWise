@@ -134,9 +134,9 @@ export default function UserProfilePage() {
                     ))}
                 </View>
             </View>
-            <View style={[style.login_btn, { marginBottom: 80 }]}>
+            <View style={[style.login_btn_to, { marginBottom: 80 }]}>
                 <TouchableOpacity 
-                    style={style.login_btn_to} 
+                    style={style.login_btn} 
                     activeOpacity={0.4} 
                     onPress={uploadImage}> 
                     <Text style={[style.login_btn_text, { padding: 3 }]}>Next</Text>

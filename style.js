@@ -132,7 +132,6 @@ export default StyleSheet.create({
         height: 50,
         justifyContent: 'center',
         alignItems: 'center',
-        marginBottom: 32
     },
     login_disabled_btn: {
         backgroundColor: '#A9B4E8',
@@ -146,7 +145,8 @@ export default StyleSheet.create({
     signup_btn_log: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        marginTop:20
     },
     signup_btn_text_log: {
         fontSize: 14,

@@ -28,15 +28,12 @@ export default function SignupPage() {
             phone: /^\d{10}$/, 
             password: /^.{6,}$/
         }
-
         if (patterns[name]) {
             errorText = value.length > 0 && !patterns[name].test(value) ? `${name} is invalid` : ''
         }
-
         if (name === 'confirmPassword') {
             errorText = value !== formdata.password ? 'Passwords do not match' : ''
         }
-
         setErrors((prev) => ({ ...prev, [name]: errorText }))
         setFormdata((prev) => ({ ...prev, [name]: value }))
     }

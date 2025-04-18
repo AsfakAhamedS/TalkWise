@@ -12,7 +12,7 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL || ''
 export default function PaymentPage() {
     const navigation = useNavigation()
     const route = useRoute()
-    const { plan, amount, credit, method } = route.params || {}
+    const { plan, amount, credit, item } = route.params || {}
     const [userData, setUserData] = useState({email: '',name: '',phone: ''})
     const [userCredits, setUserCredits] = useState(0)
     const [isLoading, setIsLoading] = useState(true)
@@ -102,7 +102,7 @@ export default function PaymentPage() {
                 paiduserphone: userData.phone,
                 plan: plan,
                 credits: credit,
-                paymethod: method,
+                paymethod: item,
                 amount: amount
             })
             if (res.status === 200) {
@@ -126,7 +126,7 @@ export default function PaymentPage() {
             setUserCredits(prev => prev + credit)
             Alert.alert(
                 "Payment Successful",
-                `₹${amount} paid via ${method}\nYou've earned ${credit} new credits.\nA receipt has been sent to your email.`,
+                `₹${amount} paid via ${item}\nYou've earned ${credit} new credits.\nA receipt has been sent to your email.`,
                 [{ text: "OK", onPress: () => navigation.navigate("main") }],
                 { cancelable: false }
             )
@@ -226,7 +226,7 @@ export default function PaymentPage() {
                         
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 8 }}>
                             <Text style={{ color: colors.subtext, fontSize: 15 }}>Payment Method</Text>
-                            <Text style={{ color: colors.text, fontWeight: '500', fontSize: 15 }}>{method || "N/A"}</Text>
+                            <Text style={{ color: colors.text, fontWeight: '500', fontSize: 15 }}>{item || "N/A"}</Text>
                         </View>
                         
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>

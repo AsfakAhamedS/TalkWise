@@ -7,7 +7,6 @@ import { AntDesign, MaterialIcons, FontAwesome5 } from '@expo/vector-icons'
 const MyProgressPage = () => {
   const route = useRoute()
   const theme = route.params?.theme || 'Light'
-
   const currentSection = "Intermediate"
   const currentLevel = 4
   const totalLevels = 5
