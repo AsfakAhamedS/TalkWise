@@ -20,7 +20,7 @@ export default function HomePage(){
             id: '1',
             title: 'English',
             description: 'Master English communication skills through real-world conversations, quizzes, and AI-guided practice.',
-            image: require('../assets/course/EnglishCourse.png'),
+            image: require('../assets/course/english_course.jpg'),
             level: 'Beginner to Advanced',
             lessons: 25
         },
@@ -28,7 +28,7 @@ export default function HomePage(){
             id: '2',
             title: 'Chinese',
             description: 'Learn Mandarin Chinese through daily conversations, pronunciation practice, and AI-powered speaking feedback.',
-            image: require('../assets/course/ChineseCouse.png'),
+            image: require('../assets/course/chinese_couse.jpg'),
             level: 'Beginner to Advanced',
             lessons: 25
         },
@@ -36,7 +36,7 @@ export default function HomePage(){
             id: '3',
             title: 'Japanese',
             description: 'Master Japanese through real-world conversations, polite expressions, and speaking practice.',
-            image: require('../assets/course/JapaneseCourse.jpg'),
+            image: require('../assets/course/japanese_course.jpg'),
             level: 'Beginner to Intermediate',
             lessons: 25
         },

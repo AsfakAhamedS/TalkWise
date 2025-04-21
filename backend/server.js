@@ -58,6 +58,10 @@ const audioStorage = multer.diskStorage({
 
 
 app.post('/user-login', async(req,res) => {
+
+    console.log("Login API hit")
+    console.log("Request body:", req.body)
+    
     let client
     try{
         const { useremail, userpsd } = req.body
